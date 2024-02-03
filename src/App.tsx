@@ -1,24 +1,10 @@
-import React, {useState} from 'react';
-import './App.css';
-import api from './api/axiosConfig';
+import React from 'react';
+import MainPage from "./pages/MainPage";
 
 function App() {
-
-  const [helloString, setHelloString] = useState<string>('');
-
-  const getHelloString = async () => {
-    const response = await api.get("/root");
-    setHelloString(response.data);
-  }
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={getHelloString}>
-          Press Me
-        </button>
-        {helloString}
-      </header>
+    <div>
+      <MainPage />
     </div>
   );
 }
