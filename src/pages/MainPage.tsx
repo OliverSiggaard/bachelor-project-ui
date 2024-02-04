@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {Button} from "@mui/material";
+import {Button, Divider} from "@mui/material";
 import api from "../api/axiosConfig";
+import Navbar from "../components/Navbar";
 
 const MainPage: React.FC = () => {
 
@@ -12,12 +13,17 @@ const MainPage: React.FC = () => {
   }
 
   return (
-    <div className="bg-zinc-200 h-screen flex flex-col justify-center items-center">
-      <div>
-        <Button variant="contained" onClick={getHelloString}>Call Spring Boot</Button>
-      </div>
-      <div>
-        {helloString}
+    <div className="h-screen flex flex-col">
+      <Navbar />
+      <div className="flex flex-row h-full">
+        <div className="flex flex-col w-1/5 items-center justify-center">
+          Here goes the blocks
+        </div>
+        <Divider orientation="vertical" flexItem sx={{ borderRightWidth: 3 }} />
+        <div className="flex flex-col w-4/5 items-center justify-center">
+          <Button variant="contained" onClick={getHelloString}>Call Spring Boot</Button>
+          {helloString}
+        </div>
       </div>
     </div>
   );
