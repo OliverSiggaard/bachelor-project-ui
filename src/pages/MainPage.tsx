@@ -2,14 +2,19 @@ import React, {useState} from 'react';
 import {Button, Divider} from "@mui/material";
 import api from "../api/axiosConfig";
 import Navbar from "../components/Navbar";
+import EmptyBlock from "../components/blocks/EmptyBlock";
 
 const MainPage: React.FC = () => {
 
   const [helloString, setHelloString] = useState<string>('');
 
   const getHelloString = async () => {
-    const response = await api.get("/root");
-    setHelloString(response.data);
+    try {
+      const response = await api.get("/root");
+      setHelloString(response.data);
+    } catch (err) {
+      setHelloString("Error connecting to Spring Boot - check if it is running")
+    }
   }
 
   return (
@@ -23,6 +28,7 @@ const MainPage: React.FC = () => {
         <div className="flex flex-col w-4/5 items-center justify-center">
           <Button variant="contained" onClick={getHelloString}>Call Spring Boot</Button>
           {helloString}
+          <EmptyBlock />
         </div>
       </div>
     </div>
