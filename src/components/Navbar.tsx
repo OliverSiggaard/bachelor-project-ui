@@ -4,7 +4,7 @@ import {RamenDining} from "@mui/icons-material";
 
 const Navbar: React.FC = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ height: '64px' }}>
       <Toolbar>
         <Typography
           variant="h5"
