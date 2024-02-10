@@ -1,10 +1,10 @@
 import React from 'react';
 import {AppBar, Box, IconButton, Toolbar, Typography} from "@mui/material";
-import {RamenDining} from "@mui/icons-material";
+import {Save, PlayCircleFilled} from "@mui/icons-material";
 
 const Navbar: React.FC = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ height: '64px' }}>
       <Toolbar>
         <Typography
           variant="h5"
@@ -19,7 +19,13 @@ const Navbar: React.FC = () => {
           size="large"
           color="inherit"
         >
-          <RamenDining />
+          <Save />
+        </IconButton>
+        <IconButton
+          size="large"
+          color="inherit"
+        >
+          <PlayCircleFilled />
         </IconButton>
       </Toolbar>
     </AppBar>
