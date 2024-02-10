@@ -19,8 +19,11 @@ const BlockSidebar: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center" style={{width: "300px"}}>
       <EmptyBlock/>
+      <div style={{ height: '40px' }} />
       <Button variant="contained" onClick={getHelloString}>Call Spring Boot</Button>
-      {helloString}
+      <div style={{ textAlign: 'center' }}>
+        {helloString}
+      </div>
     </div>
   );
 };
