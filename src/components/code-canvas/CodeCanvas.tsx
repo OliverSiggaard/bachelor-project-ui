@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import PanZoom from "react-easy-panzoom";
 import ZoomControls from "./controls/ZoomControls";
 import DPadControls from "./controls/DPadControls";
+import EmptyBlock from "../blocks/EmptyBlock";
 
 const CodeCanvas: React.FC = () => {
   // Reference to access the methods of the PanZoom component
@@ -11,16 +12,16 @@ const CodeCanvas: React.FC = () => {
     const { moveBy, autoCenter } = panZoomRef.current;
     switch (direction) {
       case 'up':
-        moveBy(0, -50);
-        break;
-      case 'down':
         moveBy(0, 50);
         break;
+      case 'down':
+        moveBy(0, -50);
+        break;
       case 'left':
-        moveBy(-50, 0);
+        moveBy(50, 0);
         break;
       case 'right':
-        moveBy(50, 0);
+        moveBy(-50, 0);
         break;
       case 'center':
         autoCenter(0.7);
@@ -53,11 +54,7 @@ const CodeCanvas: React.FC = () => {
         className="w-full h-full"
         style={{ overflow: 'auto' }} // Show scrollbars when needed
       >
-        <div style={{backgroundColor: "hotpink", width: '150px', height: '150px'}}/>
-        <div style={{backgroundColor: "green", width: '150px', height: '150px'}}/>
-        <div style={{backgroundColor: "beige", width: '150px', height: '150px'}}/>
-        <div style={{backgroundColor: "blue", width: '150px', height: '150px'}}/>
-        <div style={{backgroundColor: "black", width: '150px', height: '150px'}}/>
+        <EmptyBlock />
       </PanZoom>
       <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
         <ZoomControls handleZoom={handleZoom} />
