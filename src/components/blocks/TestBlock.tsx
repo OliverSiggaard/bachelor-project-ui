@@ -45,12 +45,12 @@ const TestBlock: React.FC<BlockProps> = ({index, color}) => {
   const [, drag] = useDrag({
     type: draggableItemTypes.BLOCK,
     item: {index},
-  })
+  });
 
-  drag(drop(ref))
+  drag(drop(ref));
   return (
-    <div ref={ref} style={{width: 150, height: 150, backgroundColor: color, borderRadius: 10, margin: 10}}/>
-  )
+    <div ref={ref} style={{width: 150, height: 150, backgroundColor: color, borderRadius: 10, margin: 15}}/>
+  );
 };
 
 export default TestBlock;
