@@ -8,7 +8,7 @@ const EmptyBlock: React.FC = () => {
   return (
     <Draggable nodeRef={nodeRef}>
       <div className="empty-block" ref={nodeRef}>
-        Test Block
+        Empty Block
       </div>
     </Draggable>
   );

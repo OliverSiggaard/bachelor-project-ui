@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
           component="div"
           sx={{ fontWeight: "bold" }}
         >
-          Bachelor Project
+          DMFB-Programmer
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
         <IconButton
