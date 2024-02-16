@@ -1,68 +1,54 @@
-import React, { useRef } from 'react';
-import PanZoom from "react-easy-panzoom";
-import ZoomControls from "./controls/ZoomControls";
-import DPadControls from "./controls/DPadControls";
-import EmptyBlock from "../blocks/EmptyBlock";
+import React from 'react';
+import BaseBlock from "../blocks/BaseBlock";
+import {useSelector} from "react-redux";
+import {Block} from "../../types/blockTypes";
+import {ArrowForward} from "@mui/icons-material";
+import InputBlock from "../blocks/InputBlock";
 
 const CodeCanvas: React.FC = () => {
-  // Reference to access the methods of the PanZoom component
-  const panZoomRef = useRef<any>(null);
+  const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
 
-  const handleMove = (direction: string) => {
-    const { moveBy, autoCenter } = panZoomRef.current;
-    switch (direction) {
-      case 'up':
-        moveBy(0, 50);
-        break;
-      case 'down':
-        moveBy(0, -50);
-        break;
-      case 'left':
-        moveBy(50, 0);
-        break;
-      case 'right':
-        moveBy(-50, 0);
-        break;
-      case 'center':
-        autoCenter(0.7);
-        break;
+  const renderBlock = (block: Block, index: number) => {
+    switch (block.type) {
+      case 'base':
+        return renderBaseBlock(block, index);
+      case 'input':
+        return renderInputBlock(block, index);
       default:
-        break;
+        return null;
     }
   };
 
-  const handleZoom = (type: string) => {
-    const { zoomIn, zoomOut } = panZoomRef.current;
-    switch (type) {
-      case 'in':
-        zoomIn();
-        break;
-      case 'out':
-        zoomOut();
-        break;
-      default:
-        break;
-    }
-  };
+  const renderBaseBlock = (block: Block, index: number) => (
+    <div className="flex flex-row items-center" key={index}>
+      <BaseBlock index={block.index} color={block.color} />
+      {/* Arrows between blocks */}
+      {index !== blocks.length - 1 && (
+        <div className="flex items-center">
+          <ArrowForward />
+        </div>
+      )}
+    </div>
+  );
+
+  const renderInputBlock = (block: Block, index: number) => (
+    <div className="flex flex-row items-center" key={index}>
+      <InputBlock block={block} />
+      {/* Arrows between blocks */}
+      {index !== blocks.length - 1 && (
+        <div className="flex items-center">
+          <ArrowForward/>
+        </div>
+      )}
+    </div>
+  );
 
   return (
-    <div className="h-full w-full relative">
-      <PanZoom
-        ref={panZoomRef}
-        disabled // Disables default pan and zoom (we use custom buttons)
-        disableDoubleClickZoom
-        className="w-full h-full"
-        style={{ overflow: 'auto' }} // Show scrollbars when needed
-      >
-        <EmptyBlock />
-      </PanZoom>
-      <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
-        <ZoomControls handleZoom={handleZoom} />
+    <div className="h-full w-full relative overflow-y-auto" style={{margin: 10}}>
+      <div className="flex flex-row flex-wrap">
+        {blocks.map((block, i) => renderBlock(block, i))}
       </div>
-      <div style={{ position: 'absolute', bottom: '10px', right: '10px' }}>
-        <DPadControls handleMove={handleMove} />
-      </div>
-    </div >
+    </div>
   );
 };
 
