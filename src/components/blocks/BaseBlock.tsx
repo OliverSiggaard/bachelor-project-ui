@@ -1,13 +1,14 @@
 import React, {useRef} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
-import {draggableItemTypes} from "../../types/draggableItemTypes";
+import {dndItemTypes} from "../../types/dndItemTypes";
 import type {Identifier} from 'dnd-core'
 import {moveBlock} from "../../redux/reducers/blockReducer";
 import {useDispatch} from "react-redux";
 
-interface BlockProps {
-  color: string;
+interface BaseBlockProps {
   index: number;
+  color: string;
+  children?: React.ReactNode;
 }
 
 interface DragItem {
@@ -15,14 +16,14 @@ interface DragItem {
   type: string
 }
 
-const TestBlock: React.FC<BlockProps> = ({index, color}) => {
+const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, children }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
 
   // Drop target - each block acts as a drop target that allows blocks to switch place
   const [, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
-    accept: draggableItemTypes.BLOCK,
+    accept: dndItemTypes.BLOCK,
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -43,14 +44,23 @@ const TestBlock: React.FC<BlockProps> = ({index, color}) => {
 
   // Makes the block draggable
   const [, drag] = useDrag({
-    type: draggableItemTypes.BLOCK,
+    type: dndItemTypes.BLOCK,
     item: {index},
   });
 
   drag(drop(ref));
+
   return (
-    <div ref={ref} style={{width: 150, height: 150, backgroundColor: color, borderRadius: 10, margin: 15}}/>
+    <div ref={ref} style={{
+      backgroundColor: color,
+      width: 150,
+      height: 150,
+      borderRadius: 10,
+      margin: 15,
+    }}>
+      {children}
+    </div>
   );
 };
 
-export default TestBlock;
+export default BaseBlock;

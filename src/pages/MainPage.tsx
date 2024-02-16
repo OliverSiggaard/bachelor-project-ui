@@ -6,7 +6,7 @@ import CodeCanvas from "../components/code-canvas/CodeCanvas";
 
 const MainPage: React.FC = () => {
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col overflow-hidden">
       <div style={{ zIndex: 2 }}>
         <Navbar />
       </div>
