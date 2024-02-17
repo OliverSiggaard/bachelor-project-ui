@@ -26,18 +26,18 @@ const InputBlock: React.FC<InputBlockProps> = ({ block }) => {
 
   return (
     <BaseBlock index={block.index} color={inputBlockColor}>
-      <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: "10px 10px 0 10px" }}>
+      <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <Input/>
         <span>Input</span>
       </Typography>
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: "0 10px 10px 10px" }}>
-        <Typography sx={{display: 'flex', flexDirection: 'column'}}>
+      <div style={{ height: "90px", display: "flex", justifyContent: "space-between", margin: "10px 10px 10px 10px" }}>
+        <Typography className="flex flex-col justify-between">
           <span>ID:</span>
-          <span>(x,y):</span>
+          <span>Pos:</span>
           <span>Vol:</span>
         </Typography>
-        <Typography sx={{display: 'flex', flexDirection: 'column', textAlign: 'right'}}>
+        <Typography className="flex flex-col justify-between text-right">
           <span>{dropletID}</span>
           <span>({posX},{posY})</span>
           <span>{volume}</span>

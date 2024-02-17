@@ -34,6 +34,9 @@ const blockSlice = createSlice({
       // Update indices of all blocks based on their position in the array
       state.blocks = state.blocks.map((block, index) => ({ ...block, index }));
     },
+    deleteAll(state) {
+      state.blocks = [];
+    },
   },
 });
 
@@ -41,6 +44,7 @@ export const {
   addTestBlock,
   removeTestBlock,
   moveBlock ,
+  deleteAll,
 } = blockSlice.actions;
 
 export default blockSlice.reducer;
