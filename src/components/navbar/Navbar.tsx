@@ -1,11 +1,7 @@
 import React, {useState} from 'react';
 import {
   AppBar,
-  Box, Button,
-  Dialog, DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
+  Box,
   IconButton,
   Toolbar,
   Tooltip,
@@ -13,14 +9,20 @@ import {
 } from "@mui/material";
 import {DeleteForever, PlayArrow} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {deleteAll} from "../redux/reducers/blockReducer";
+import {deleteAll, runProgram} from "../../redux/reducers/blockReducer";
+import DeleteDialog from "./dialogs/DeleteDialog";
+import RunDialog from "./dialogs/RunDialog";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const openDeleteConfirmation = () => { setDeleteDialogOpen(true) };
-  const closeDeleteConfirmation = () => { setDeleteDialogOpen(false) };
+  const openDeleteDialog = () => { setDeleteDialogOpen(true) };
+  const closeDeleteDialog = () => { setDeleteDialogOpen(false) };
+
+  const [runDialogOpen, setRunDialogOpen] = useState(false);
+  const openRunDialog = () => { setRunDialogOpen(true) };
+  const closeRunDialog = () => { setRunDialogOpen(false) };
 
   return (
     <AppBar position="static" sx={{ height: '64px' }}>
@@ -38,7 +40,7 @@ const Navbar: React.FC = () => {
           <IconButton
             size="large"
             color="inherit"
-            onClick={openDeleteConfirmation}
+            onClick={openDeleteDialog}
           >
             <DeleteForever sx={{fontSize: "28px"}}/>
           </IconButton>
@@ -48,39 +50,22 @@ const Navbar: React.FC = () => {
           <IconButton
             size="large"
             color="inherit"
+            onClick={openRunDialog}
           >
             <PlayArrow sx={{fontSize: "28px"}}/>
           </IconButton>
         </Tooltip>
       </Toolbar>
-
-      <Dialog
+      <DeleteDialog
         open={deleteDialogOpen}
-        onClose={closeDeleteConfirmation}
-      >
-        <DialogTitle>
-          {"Delete all blocks?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Deleting all blocks will clear the code canvas.
-            Once all blocks have been deleted there is no going back.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" onClick={closeDeleteConfirmation}>
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => { closeDeleteConfirmation(); dispatch(deleteAll()); }}
-            color="error"
-          >
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
-
+        onClose={closeDeleteDialog}
+        onDelete={() => dispatch(deleteAll())}
+      />
+      <RunDialog
+        open={runDialogOpen}
+        onClose={closeRunDialog}
+        onRun={() => dispatch(runProgram())}
+      />
     </AppBar>
   );
 };

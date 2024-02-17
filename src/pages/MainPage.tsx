@@ -1,6 +1,6 @@
 import React from 'react';
 import {Divider} from "@mui/material";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar/Navbar";
 import BlockSidebar from "../components/BlockSidebar";
 import CodeCanvas from "../components/code-canvas/CodeCanvas";
 

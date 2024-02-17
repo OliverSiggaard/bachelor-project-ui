@@ -37,6 +37,9 @@ const blockSlice = createSlice({
     deleteAll(state) {
       state.blocks = [];
     },
+    runProgram() {
+      console.log("This will send the program to the backend");
+    },
   },
 });
 
@@ -45,6 +48,7 @@ export const {
   removeTestBlock,
   moveBlock ,
   deleteAll,
+  runProgram,
 } = blockSlice.actions;
 
 export default blockSlice.reducer;
