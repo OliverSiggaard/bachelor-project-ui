@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Block} from "../../types/blockTypes";
+import {Block, CodeBlockInfo} from "../../types/blockTypes";
 import update from 'immutability-helper'
 
 interface BlocksState {
@@ -40,6 +40,10 @@ const blockSlice = createSlice({
     runProgram() {
       console.log("This will send the program to the backend");
     },
+    editBlock(state, action: PayloadAction<{ index: number; info: CodeBlockInfo }>) {
+      const { index, info } = action.payload;
+      state.blocks[index].info = info;
+    },
   },
 });
 
@@ -49,6 +53,7 @@ export const {
   moveBlock ,
   deleteAll,
   runProgram,
+  editBlock,
 } = blockSlice.actions;
 
 export default blockSlice.reducer;

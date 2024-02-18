@@ -4,6 +4,7 @@ import {Button} from "@mui/material";
 import {addTestBlock, removeTestBlock} from "../redux/reducers/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {Block} from "../types/blockTypes";
+import InputBlockEditor from "./blocks/block-editors/InputBlockEditor";
 
 const BlockSidebar: React.FC = () => {
 
@@ -19,7 +20,7 @@ const BlockSidebar: React.FC = () => {
 
   const addInputBlock = () => {
     const newBlockId = blocks.length;
-    dispatch(addTestBlock({index: newBlockId, color: "", type: "input", info: {dropletID: "1", posX: "5", posY: "10", volume: "50"}}));
+    dispatch(addTestBlock({index: newBlockId, color: "", type: "input"}));
   }
 
   const removeBlock = () => {
@@ -42,7 +43,7 @@ const BlockSidebar: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-6" style={{width: "300px"}}>
+    <div className="flex flex-col items-center justify-center space-y-6" style={{minWidth: "250px", maxWidth: "250px"}}>
       <Button variant="contained" onClick={addBlock}>Add Base Block</Button>
       <Button variant="contained" onClick={addInputBlock}>Add Input Block</Button>
       <Button variant="contained" onClick={removeBlock}>Remove Block</Button>
@@ -51,6 +52,7 @@ const BlockSidebar: React.FC = () => {
       <div style={{textAlign: 'center'}}>
         {helloString}
       </div>
+      <InputBlockEditor />
     </div>
   );
 };

@@ -5,7 +5,7 @@ export interface Block {
   info?: CodeBlockInfo;
 }
 
-type CodeBlockInfo = InputBlockInfo | MoveBlockInfo // Add more blocks here
+export type CodeBlockInfo = InputBlockInfo | MoveBlockInfo // Add more blocks here
 
 export interface InputBlockInfo {
   dropletID: string;
