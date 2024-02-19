@@ -10,7 +10,7 @@ const BlockSidebar: React.FC = () => {
 
   const [helloString, setHelloString] = useState<string>('');
 
-  const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
+  const blocks = useSelector((state: { block: { blocks: Block[] } }) => state.block.blocks);
   const dispatch = useDispatch();
 
   const addBlock = () => {
