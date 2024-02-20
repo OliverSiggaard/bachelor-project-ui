@@ -2,8 +2,8 @@ import React, {useRef} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {dndItemTypes} from "../../types/dndItemTypes";
 import type {Identifier} from 'dnd-core'
-import {moveBlock} from "../../redux/reducers/blockReducer";
-import {useDispatch} from "react-redux";
+import {moveBlock, selectBlock} from "../../redux/reducers/blockReducer";
+import {useDispatch, useSelector} from "react-redux";
 
 interface BaseBlockProps {
   index: number;
@@ -19,6 +19,7 @@ interface DragItem {
 const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, children }) => {
   const ref = useRef<HTMLDivElement>(null);
 
+  const selectedBlock = useSelector((state: { selectedIndex: number | null }) => state.selectedIndex);
   const dispatch = useDispatch();
 
   // Drop target - each block acts as a drop target that allows blocks to switch place
@@ -50,13 +51,19 @@ const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, children }) => {
 
   drag(drop(ref));
 
+  const handleBlockClick = () => {
+    dispatch(selectBlock(index));
+  }
+
   return (
-    <div ref={ref} style={{
+    <div ref={ref} onClick={handleBlockClick} style={{
       backgroundColor: color,
       width: 150,
       height: 150,
       borderRadius: 10,
       margin: 15,
+      cursor: 'pointer',
+      boxShadow: selectedBlock === index ? '0px 3px 10px 3px rgba(0,0,0,0.3)' : 'none',
     }}>
       {children}
     </div>
