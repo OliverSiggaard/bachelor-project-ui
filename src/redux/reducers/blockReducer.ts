@@ -4,20 +4,23 @@ import update from 'immutability-helper'
 
 interface BlocksState {
   blocks: Block[];
+  selectedIndex: number | null;
 }
 
 const initialState: BlocksState = {
   blocks: [],
+  selectedIndex: null,
 };
 
 const blockSlice = createSlice({
   name: 'block',
   initialState,
   reducers: {
-    addTestBlock(state, action: PayloadAction<Block>) {
+    addBlock(state, action: PayloadAction<Block>) {
       state.blocks.push(action.payload);
+      state.selectedIndex = state.blocks.length - 1; // Set selected block to the new block
     },
-    removeTestBlock(state) {
+    removeBlock(state) {
       state.blocks.pop();
     },
     moveBlock(state, action: PayloadAction<{ dragIndex: number; hoverIndex: number }>) {
@@ -33,9 +36,13 @@ const blockSlice = createSlice({
 
       // Update indices of all blocks based on their position in the array
       state.blocks = state.blocks.map((block, index) => ({ ...block, index }));
+      // Update index of selected block
+      state.selectedIndex = hoverIndex;
+
     },
     deleteAll(state) {
       state.blocks = [];
+      state.selectedIndex = null;
     },
     runProgram() {
       console.log("This will send the program to the backend");
@@ -44,16 +51,20 @@ const blockSlice = createSlice({
       const { index, info } = action.payload;
       state.blocks[index].info = info;
     },
+    selectBlock(state, action: PayloadAction<number | null>) {
+      state.selectedIndex = action.payload
+    },
   },
 });
 
 export const {
-  addTestBlock,
-  removeTestBlock,
+  addBlock,
+  removeBlock,
   moveBlock ,
   deleteAll,
   runProgram,
   editBlock,
+  selectBlock,
 } = blockSlice.actions;
 
 export default blockSlice.reducer;

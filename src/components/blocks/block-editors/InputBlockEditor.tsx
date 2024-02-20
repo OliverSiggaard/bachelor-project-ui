@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {Button, TextField} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {editBlock} from "../../../redux/reducers/blockReducer";
-import {selectBlock} from "../../../redux/reducers/selectBlockReducer";
+import {editBlock, selectBlock} from "../../../redux/reducers/blockReducer";
 
 const InputBlockEditor: React.FC = () => {
   const [dropletID, setDropletID] = useState('');
@@ -10,7 +9,7 @@ const InputBlockEditor: React.FC = () => {
   const [yPos, setYPos] = useState('');
   const [volume, setVolume] = useState('');
 
-  const selectedBlock = useSelector((state: { selectBlock: {selectedIndex: number | null} }) => state.selectBlock.selectedIndex);
+  const selectedBlock = useSelector((state: {selectedIndex: number | null}) => state.selectedIndex);
 
   const dispatch = useDispatch();
 

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import api from "../api/axiosConfig";
 import {Button} from "@mui/material";
-import {addTestBlock, removeTestBlock} from "../redux/reducers/blockReducer";
+import {addBlock, removeBlock} from "../redux/reducers/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {Block} from "../types/blockTypes";
 import InputBlockEditor from "./blocks/block-editors/InputBlockEditor";
@@ -10,21 +10,21 @@ const BlockSidebar: React.FC = () => {
 
   const [helloString, setHelloString] = useState<string>('');
 
-  const blocks = useSelector((state: { block: { blocks: Block[] } }) => state.block.blocks);
+  const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
   const dispatch = useDispatch();
 
-  const addBlock = () => {
+  const handleAddBlock = () => {
     const newBlockId = blocks.length;
-    dispatch(addTestBlock({index: newBlockId, color: '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'), type: "base"}));
+    dispatch(addBlock({index: newBlockId, color: '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'), type: "base"}));
   }
 
   const addInputBlock = () => {
     const newBlockId = blocks.length;
-    dispatch(addTestBlock({index: newBlockId, color: "", type: "input"}));
+    dispatch(addBlock({index: newBlockId, color: "", type: "input"}));
   }
 
-  const removeBlock = () => {
-    dispatch(removeTestBlock());
+  const handleRemoveBlock = () => {
+    dispatch(removeBlock());
   }
 
   const logBlocks = () => {
@@ -44,9 +44,9 @@ const BlockSidebar: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center space-y-6" style={{minWidth: "250px", maxWidth: "250px"}}>
-      <Button variant="contained" onClick={addBlock}>Add Base Block</Button>
+      <Button variant="contained" onClick={handleAddBlock}>Add Base Block</Button>
       <Button variant="contained" onClick={addInputBlock}>Add Input Block</Button>
-      <Button variant="contained" onClick={removeBlock}>Remove Block</Button>
+      <Button variant="contained" onClick={handleRemoveBlock}>Remove Block</Button>
       <Button variant="contained" onClick={logBlocks}>Log Blocks</Button>
       <Button variant="contained" onClick={getHelloString}>Call Spring Boot</Button>
       <div style={{textAlign: 'center'}}>

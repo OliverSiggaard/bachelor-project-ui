@@ -6,7 +6,7 @@ import {ArrowForward} from "@mui/icons-material";
 import InputBlock from "../blocks/InputBlock";
 
 const CodeCanvas: React.FC = () => {
-  const blocks = useSelector((state: { block: { blocks: Block[] } }) => state.block.blocks);
+  const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
 
   const renderBlock = (block: Block, index: number) => {
     switch (block.type) {
