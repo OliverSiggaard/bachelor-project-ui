@@ -22,6 +22,8 @@ const blockSlice = createSlice({
     },
     removeBlock(state) {
       state.blocks.pop();
+      // Remove selection of block if the selected block is the one popped from the block array
+      if (state.blocks.length === state.selectedIndex) state.selectedIndex = null;
     },
     moveBlock(state, action: PayloadAction<{ dragIndex: number; hoverIndex: number }>) {
       const { dragIndex, hoverIndex } = action.payload;
