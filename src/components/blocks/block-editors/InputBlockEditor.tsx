@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, TextField} from "@mui/material";
+import {Button, Divider, TextField} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {editBlock, selectBlock} from "../../../redux/reducers/blockReducer";
 
@@ -35,34 +35,37 @@ const InputBlockEditor: React.FC = () => {
   return (
     <div>
       {selectedBlock !== null &&
-        <div className="flex flex-col space-y-3" style={{margin: 20}}>
-          <div style={{fontSize: 24, textAlign: "center"}}>{"Edit Input Block"}</div>
-          <div style={{fontSize: 16, textAlign: "center"}}>Currently edits index {selectedBlock}</div>
-          <TextField
-            variant="outlined"
-            label="Droplet ID"
-            onChange={(e) => setDropletID(e.target.value)}
-          />
-          <div className="flex flex-row space-x-3">
+        <div>
+          <Divider orientation="horizontal" sx={{borderTopWidth: 3}}/>
+          <div className="flex flex-col space-y-3" style={{margin: 20}}>
+            <div style={{fontSize: 24, textAlign: "center"}}>{"Edit Input Block"}</div>
+            <div style={{fontSize: 16, textAlign: "center"}}>Currently edits index {selectedBlock}</div>
             <TextField
               variant="outlined"
-              label="x-Pos"
-              onChange={(e) => setXPos(e.target.value)}
+              label="Droplet ID"
+              onChange={(e) => setDropletID(e.target.value)}
             />
+            <div className="flex flex-row space-x-3">
+              <TextField
+                variant="outlined"
+                label="x-Pos"
+                onChange={(e) => setXPos(e.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                label="y-Pos"
+                onChange={(e) => setYPos(e.target.value)}
+              />
+            </div>
             <TextField
               variant="outlined"
-              label="y-Pos"
-              onChange={(e) => setYPos(e.target.value)}
+              label="Volume"
+              onChange={(e) => setVolume(e.target.value)}
             />
-          </div>
-          <TextField
-            variant="outlined"
-            label="Volume"
-            onChange={(e) => setVolume(e.target.value)}
-          />
-          <div className="flex flex-row space-x-3">
-            <Button variant="contained" color="error" fullWidth={true} onClick={handleCancel}>Cancel</Button>
-            <Button variant="contained" color="success" fullWidth={true} onClick={handleSave}>Save</Button>
+            <div className="flex flex-row space-x-3">
+              <Button variant="contained" color="error" fullWidth={true} onClick={handleCancel}>Cancel</Button>
+              <Button variant="contained" color="success" fullWidth={true} onClick={handleSave}>Save</Button>
+            </div>
           </div>
         </div>
       }

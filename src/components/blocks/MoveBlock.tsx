@@ -2,7 +2,7 @@ import React from 'react';
 import BaseBlock from "./BaseBlock";
 import Move from '@mui/icons-material/OpenWith';
 import {Divider, Typography} from "@mui/material";
-import {Block, MoveBlockInfo, OutputBlockInfo} from "../../types/blockTypes";
+import {Block, MoveBlockInfo} from "../../types/blockTypes";
 
 interface MoveBlockProps {
     block: Block;
@@ -30,19 +30,13 @@ const MoveBlock: React.FC<MoveBlockProps> = ({ block }) => {
       </Typography>
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
       <div style={{ height: "90px", display: "flex", justifyContent: "space-between", margin: "10px 10px 10px 10px" }}>
-        <Typography className="flex flex-col justify-between">
+        <Typography className="flex flex-col space-y-2.5">
           <span>ID:</span>
           <span>Pos:</span>
-          <span></span>
-          <span></span>
-          <span></span>
         </Typography>
-        <Typography className="flex flex-col justify-between text-right">
+        <Typography className="flex flex-col space-y-2.5 text-right">
           <span>{dropletID}</span>
           <span>({posX},{posY})</span>
-          <span></span>
-          <span></span>
-          <span></span>
         </Typography>
       </div>
     </BaseBlock>

@@ -2,7 +2,7 @@ import React from 'react';
 import BaseBlock from "./BaseBlock";
 import Merge from '@mui/icons-material/Merge';
 import {Divider, Typography} from "@mui/material";
-import {Block, MergeBlockInfo, OutputBlockInfo} from "../../types/blockTypes";
+import {Block, MergeBlockInfo} from "../../types/blockTypes";
 
 interface MergeBlockProps {
   block: Block;
@@ -35,11 +35,11 @@ const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
         <span>Merge</span>
       </Typography>
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
-      <div style={{ height: "90px", display: "flex", justifyContent: "space-between", margin: "10px 10px 10px 10px" }}>
+      <div style={{ height: "90px", display: "flex", justifyContent: "space-between", margin: "7px 10px 10px 10px" }}>
         <Typography className="flex flex-col justify-between">
           <span>Result ID:</span>
-          <span>Droplet 1:</span>
-          <span>Droplet 2:</span>
+          <span>Drop 1:</span>
+          <span>Drop 2:</span>
           <span>Pos:</span>
 
         </Typography>

@@ -2,7 +2,7 @@ import React from 'react';
 import BaseBlock from "./BaseBlock";
 import Split from '@mui/icons-material/CallSplit';
 import {Divider, Typography} from "@mui/material";
-import {Block, SplitBlockInfo, OutputBlockInfo} from "../../types/blockTypes";
+import {Block, SplitBlockInfo} from "../../types/blockTypes";
 
 interface SplitBlockProps {
   block: Block;
@@ -42,20 +42,18 @@ const SplitBlock: React.FC<SplitBlockProps> = ({ block }) => {
         <span>Split</span>
       </Typography>
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
-      <div style={{ height: "90px", display: "flex", justifyContent: "space-between", margin: "10px 10px 10px 10px" }}>
+      <div style={{ height: "90px", display: "flex", justifyContent: "space-between", margin: "7px 10px 10px 10px" }}>
         <Typography className="flex flex-col justify-between">
           <span>Origin ID:</span>
-          <span>Droplet 1:</span>
-          <span>Droplet 2:</span>
-          <span>Pos 1:</span>
-          <span>Pos 2:</span>
+          <span>Drop 1</span>
+          <span>{resultDropletID1}</span>
+          <span>({posX1},{posY1}) {ratio}</span>
 
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
           <span>{originDropletId}</span>
-          <span>{resultDropletID1}</span>
+          <span>Drop 2</span>
           <span>{resultDropletID2}</span>
-          <span>({posX1},{posY1}) {ratio}</span>
           <span>({posX2},{posY2}) {ratio}</span>
         </Typography>
       </div>

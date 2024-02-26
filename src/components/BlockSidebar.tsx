@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import api from "../api/axiosConfig";
-import {Box, Button} from "@mui/material";
+import {Button} from "@mui/material";
 import {addBlock, removeBlock} from "../redux/reducers/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {Block} from "../types/blockTypes";
@@ -12,16 +12,19 @@ const BlockSidebar: React.FC = () => {
 
   const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
   const dispatch = useDispatch();
-  type UnknownAction = any;
 
   const handleAddBlock = () => {
     const newBlockId = blocks.length;
-    dispatch(addBlock({index: newBlockId, color: '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'), type: "base"}));
+    dispatch(addBlock({
+      index: newBlockId,
+      color: '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'),
+      type: "base"
+    }));
   }
 
   const addBlockOfType = (type: string) => {
     const newBlockId = blocks.length;
-    dispatch(addBlock({ index: newBlockId, color: "", type }));
+    dispatch(addBlock({index: newBlockId, color: "", type}));
   }
 
   const handleRemoveBlock = () => {
@@ -29,7 +32,7 @@ const BlockSidebar: React.FC = () => {
   }
 
   const logBlocks = () => {
-    for(let i = 0; i < blocks.length; i++) {
+    for (let i = 0; i < blocks.length; i++) {
       console.log(blocks.at(i));
     }
   }
@@ -44,20 +47,8 @@ const BlockSidebar: React.FC = () => {
   }
 
   return (
-    // Remove this box, to remove scrollbar. Added for now, to see items below buttons..
-    <Box
-      mb={2}
-      display="flex"
-      flexDirection="column"
-      // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
-      height="700px" // fixed the height
-      style={{
-        border: "2px solid black",
-        overflow: "hidden",
-        overflowY: "scroll" // added scroll
-      }}
-    >
-      <div className="flex flex-col items-center justify-center space-y-6" style={{minWidth: "250px", maxWidth: "250px"}}>
+    <div className="flex flex-col" style={{minWidth: "250px", maxWidth: "250px"}}>
+      <div className="flex flex-col items-center space-y-6 overflow-auto" style={{padding: 10}}>
         <Button variant="contained" onClick={handleAddBlock}>Add Base Block</Button>
         <Button variant="contained" onClick={() => addBlockOfType("input")}>Add Input Block</Button>
         <Button variant="contained" onClick={() => addBlockOfType("output")}>Add Output Block</Button>
@@ -74,10 +65,9 @@ const BlockSidebar: React.FC = () => {
         <div style={{textAlign: 'center'}}>
           {helloString}
         </div>
-        <InputBlockEditor />
       </div>
-    </Box>
-
+      <InputBlockEditor/>
+    </div>
   );
 };
 

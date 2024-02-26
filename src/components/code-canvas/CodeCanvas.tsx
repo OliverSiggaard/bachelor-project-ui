@@ -123,8 +123,8 @@ const CodeCanvas: React.FC = () => {
     </div>
   );
   return (
-    <div className="h-full w-full relative overflow-y-auto" style={{margin: 10}}>
-      <div className="flex flex-row flex-wrap">
+    <div className="h-full w-full relative overflow-y-auto">
+      <div className="flex flex-row flex-wrap" style={{margin: 10}}>
         {blocks.map((block, i) => renderBlock(block, i))}
       </div>
     </div>

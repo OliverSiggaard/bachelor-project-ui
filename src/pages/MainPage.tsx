@@ -10,10 +10,10 @@ const MainPage: React.FC = () => {
       <div style={{ zIndex: 2 }}>
         <Navbar />
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-row" style={{height: "calc(100vh - 64px)"}}>
         <BlockSidebar />
         <Divider orientation="vertical" flexItem sx={{borderRightWidth: 3}}/>
-        <div className="flex flex-col w-full" style={{ height: 'calc(100vh - 64px)'}}>
+        <div className="flex flex-col w-full">
           <CodeCanvas />
         </div>
       </div>
