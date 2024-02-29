@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import api from "../api/axiosConfig";
 import {Button} from "@mui/material";
-import {addBlock, removeBlock} from "../redux/reducers/blockReducer";
+import {addBlock} from "../redux/reducers/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {Block} from "../types/blockTypes";
 import InputBlockEditor from "./blocks/block-editors/InputBlockEditor";
@@ -25,10 +25,6 @@ const BlockSidebar: React.FC = () => {
   const addBlockOfType = (type: string) => {
     const newBlockId = blocks.length;
     dispatch(addBlock({index: newBlockId, color: "", type}));
-  }
-
-  const handleRemoveBlock = () => {
-    dispatch(removeBlock());
   }
 
   const logBlocks = () => {
@@ -59,7 +55,6 @@ const BlockSidebar: React.FC = () => {
         <Button variant="contained" onClick={() => addBlockOfType("store")}>Add Store Block</Button>
         <Button variant="contained" onClick={() => addBlockOfType("if")}>Add If Block</Button>
         <Button variant="contained" onClick={() => addBlockOfType("repeat")}>Add Repeat Block</Button>
-        <Button variant="contained" onClick={handleRemoveBlock}>Remove Block</Button>
         <Button variant="contained" onClick={logBlocks}>Log Blocks</Button>
         <Button variant="contained" onClick={getHelloString}>Call Spring Boot</Button>
         <div style={{textAlign: 'center'}}>

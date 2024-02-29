@@ -20,10 +20,21 @@ const blockSlice = createSlice({
       state.blocks.push(action.payload);
       state.selectedIndex = state.blocks.length - 1; // Set selected block to the new block
     },
-    removeBlock(state) {
-      state.blocks.pop();
-      // Remove selection of block if the selected block is the one popped from the block array
-      if (state.blocks.length === state.selectedIndex) state.selectedIndex = null;
+    removeBlock(state, action: PayloadAction<number>) {
+      const indexToRemove = action.payload;
+
+      // Remove block at given index
+      state.blocks.splice(indexToRemove, 1)
+
+      // Update selected block if necessary
+      if (state.selectedIndex === indexToRemove) {
+        state.selectedIndex = null;
+      } else if (state.selectedIndex! > indexToRemove) {
+        state.selectedIndex!--;
+      }
+
+      // Update indices of all blocks based on their position in the array
+      state.blocks = state.blocks.map((block, index) => ({ ...block, index }));
     },
     moveBlock(state, action: PayloadAction<{ dragIndex: number; hoverIndex: number }>) {
       const { dragIndex, hoverIndex } = action.payload;

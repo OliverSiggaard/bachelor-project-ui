@@ -113,15 +113,12 @@ const CodeCanvas: React.FC = () => {
     </div>
   );
 
-
-
-
-
   const Arrow = () => (
     <div className="flex items-center">
       <ArrowForward />
     </div>
   );
+
   return (
     <div className="h-full w-full relative overflow-y-auto">
       <div className="flex flex-row flex-wrap" style={{margin: 10}}>
