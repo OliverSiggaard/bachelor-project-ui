@@ -2,27 +2,25 @@ import React, {useEffect, useState} from 'react';
 import {Button, TextField} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/reducers/blockReducer";
-import {Block, InputBlockInfo} from "../../../types/blockTypes";
+import {Block, MoveBlockInfo} from "../../../types/blockTypes";
 
-interface InputBlockEditorProps {
+interface MoveBlockEditorProps {
   block: Block;
 }
 
-const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
+const MoveBlockEditor: React.FC<MoveBlockEditorProps> = ({ block }) => {
   const dispatch = useDispatch();
-  
+
   const [dropletID, setDropletID] = useState('');
   const [xPos, setXPos] = useState('');
   const [yPos, setYPos] = useState('');
-  const [volume, setVolume] = useState('');
 
   useEffect(() => {
     if (block.info) {
-      const blockInfo = block.info as InputBlockInfo;
+      const blockInfo = block.info as MoveBlockInfo;
       setDropletID(blockInfo.dropletID);
       setXPos(blockInfo.xPos);
       setYPos(blockInfo.yPos);
-      setVolume(blockInfo.volume);
     }
   }, [block.info]);
 
@@ -31,7 +29,6 @@ const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
       dropletID: dropletID,
       xPos: xPos,
       yPos: yPos,
-      volume: volume,
     }
 
     // Dispatch new info and de-select block
@@ -42,12 +39,11 @@ const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
     setDropletID('');
     setXPos('');
     setYPos('');
-    setVolume('');
   }
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
-      <div style={{fontSize: 24, textAlign: "center"}}>Input Block</div>
+      <div style={{fontSize: 24, textAlign: "center"}}>Move Block</div>
       <TextField
         variant="outlined"
         label="Droplet ID"
@@ -68,12 +64,6 @@ const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
           onChange={(e) => setYPos(e.target.value)}
         />
       </div>
-      <TextField
-        variant="outlined"
-        label="Volume"
-        value={volume}
-        onChange={(e) => setVolume(e.target.value)}
-      />
       <div className="flex flex-row space-x-3">
         <Button variant="contained" fullWidth={true} color="error" onClick={() => dispatch(removeBlock(block.index))}>
           Delete
@@ -86,4 +76,4 @@ const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
   );
 };
 
-export default InputBlockEditor;
+export default MoveBlockEditor;

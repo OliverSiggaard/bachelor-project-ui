@@ -17,14 +17,13 @@ const BlockSidebar: React.FC = () => {
     const newBlockId = blocks.length;
     dispatch(addBlock({
       index: newBlockId,
-      color: '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'),
       type: "base"
     }));
   }
 
   const addBlockOfType = (type: string) => {
     const newBlockId = blocks.length;
-    dispatch(addBlock({index: newBlockId, color: "", type}));
+    dispatch(addBlock({index: newBlockId, type}));
   }
 
   const logBlocks = () => {

@@ -22,14 +22,14 @@ const SplitBlock: React.FC<SplitBlockProps> = ({ block }) => {
 
   if (block.info !== undefined) {
     const info = block.info as SplitBlockInfo;
-    originDropletId = info.originDropletId;
-    resultDropletID1 = info.resultDropletId1;
-    resultDropletID2 = info.resultDropletId2;
+    originDropletId = info.originDropletID;
+    resultDropletID1 = info.resultDropletID1;
+    resultDropletID2 = info.resultDropletID2;
     ratio = info.ratio;
-    posX1 = info.posX1;
-    posY1 = info.posY1;
-    posX2 = info.posX2;
-    posY2 = info.posY2;
+    posX1 = info.xPos1;
+    posY1 = info.yPos1;
+    posX2 = info.xPos2;
+    posY2 = info.yPos2;
 
   }
 

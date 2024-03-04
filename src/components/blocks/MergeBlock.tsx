@@ -20,10 +20,10 @@ const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
   if (block.info !== undefined) {
     const info = block.info as MergeBlockInfo;
     resultDropletID = info.resultDropletID;
-    dropletID1 = info.dropletID1;
-    dropletID2 = info.dropletID2;
-    posX = info.posX;
-    posY = info.posY;
+    dropletID1 = info.originDropletID1;
+    dropletID2 = info.originDropletID2;
+    posX = info.xPos;
+    posY = info.yPos;
   }
 
 

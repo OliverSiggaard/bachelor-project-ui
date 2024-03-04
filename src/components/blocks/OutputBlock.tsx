@@ -18,8 +18,8 @@ const OutputBlock: React.FC<OutputBlockProps> = ({ block }) => {
   if (block.info !== undefined) {
     const info = block.info as OutputBlockInfo;
     dropletID = info.dropletID;
-    posX = info.posX;
-    posY = info.posY;
+    posX = info.xPos;
+    posY = info.yPos;
   }
 
   return (

@@ -19,8 +19,8 @@ const InputBlock: React.FC<InputBlockProps> = ({ block }) => {
   if (block.info && 'volume' in block.info) {
     const info = block.info as InputBlockInfo;
     dropletID = info.dropletID;
-    posX = info.posX;
-    posY = info.posY;
+    posX = info.xPos;
+    posY = info.yPos;
     volume = info.volume;
   }
 

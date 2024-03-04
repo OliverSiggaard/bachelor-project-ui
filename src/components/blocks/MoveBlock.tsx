@@ -18,8 +18,8 @@ const MoveBlock: React.FC<MoveBlockProps> = ({ block }) => {
   if (block.info !== undefined) {
     const info = block.info as MoveBlockInfo;
     dropletID = info.dropletID;
-    posX = info.posX;
-    posY = info.posY;
+    posX = info.xPos;
+    posY = info.yPos;
   }
 
   return (

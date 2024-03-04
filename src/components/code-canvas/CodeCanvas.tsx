@@ -45,7 +45,7 @@ const CodeCanvas: React.FC = () => {
 
   const renderBaseBlock = (block: Block, index: number) => (
     <div className="flex flex-row items-center" key={index}>
-      <BaseBlock index={block.index} color={block.color} />
+      <BaseBlock index={block.index} color={"lightgrey"} />
       {index !== blocks.length - 1 && <Arrow />}
     </div>
   );
