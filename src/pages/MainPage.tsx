@@ -1,7 +1,7 @@
 import React from 'react';
 import {Divider} from "@mui/material";
 import Navbar from "../components/navbar/Navbar";
-import BlockSidebar from "../components/BlockSidebar";
+import BlockSidebar from "../components/sidebar/BlockSidebar";
 import CodeCanvas from "../components/code-canvas/CodeCanvas";
 
 const MainPage: React.FC = () => {
