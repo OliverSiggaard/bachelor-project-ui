@@ -12,14 +12,14 @@ const MoveBlock: React.FC<MoveBlockProps> = ({ block }) => {
   const blockColor = "#AED8F2";
 
   let dropletID: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
+  let xPos: string = '-';
+  let yPos: string = '-';
 
   if (block.info !== undefined) {
     const info = block.info as MoveBlockInfo;
     dropletID = info.dropletID;
-    posX = info.posX;
-    posY = info.posY;
+    xPos = info.xPos;
+    yPos = info.yPos;
   }
 
   return (
@@ -36,7 +36,7 @@ const MoveBlock: React.FC<MoveBlockProps> = ({ block }) => {
         </Typography>
         <Typography className="flex flex-col space-y-2.5 text-right">
           <span>{dropletID}</span>
-          <span>({posX},{posY})</span>
+          <span>({xPos},{yPos})</span>
         </Typography>
       </div>
     </BaseBlock>

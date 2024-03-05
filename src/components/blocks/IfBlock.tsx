@@ -2,7 +2,7 @@ import React from 'react';
 import BaseBlock from "./BaseBlock";
 import If from '@mui/icons-material/QuestionMark';
 import {Divider, Typography} from "@mui/material";
-import {Block, InputBlockInfo, IfBlockInfo} from "../../types/blockTypes";
+import {Block, IfBlockInfo} from "../../types/blockTypes";
 
 interface IfBlockProps {
   block: Block;

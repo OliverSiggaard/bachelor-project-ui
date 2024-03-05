@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import api from "../api/axiosConfig";
+import api from "../../api/axiosConfig";
 import {Button} from "@mui/material";
-import {addBlock} from "../redux/reducers/blockReducer";
+import {addBlock} from "../../redux/reducers/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
-import {Block} from "../types/blockTypes";
-import InputBlockEditor from "./blocks/block-editors/InputBlockEditor";
+import {Block} from "../../types/blockTypes";
+import BlockEditor from "./block-editors/BlockEditor";
 
 const BlockSidebar: React.FC = () => {
 
@@ -17,14 +17,13 @@ const BlockSidebar: React.FC = () => {
     const newBlockId = blocks.length;
     dispatch(addBlock({
       index: newBlockId,
-      color: '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'),
       type: "base"
     }));
   }
 
   const addBlockOfType = (type: string) => {
     const newBlockId = blocks.length;
-    dispatch(addBlock({index: newBlockId, color: "", type}));
+    dispatch(addBlock({index: newBlockId, type}));
   }
 
   const logBlocks = () => {
@@ -61,7 +60,7 @@ const BlockSidebar: React.FC = () => {
           {helloString}
         </div>
       </div>
-      <InputBlockEditor/>
+      <BlockEditor />
     </div>
   );
 };

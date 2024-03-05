@@ -2,7 +2,7 @@ import React from 'react';
 import BaseBlock from "./BaseBlock";
 import Repeat from '@mui/icons-material/Repeat';
 import {Divider, Typography} from "@mui/material";
-import {Block, InputBlockInfo, RepeatBlockInfo} from "../../types/blockTypes";
+import {Block, RepeatBlockInfo} from "../../types/blockTypes";
 
 interface RepeatBlockProps {
   block: Block;

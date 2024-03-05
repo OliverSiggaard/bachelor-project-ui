@@ -1,7 +1,6 @@
 export interface Block {
   index: number;
   type: string;
-  color: string;
   info?: CodeBlockInfo;
 }
 
@@ -9,50 +8,54 @@ export type CodeBlockInfo = InputBlockInfo | OutputBlockInfo | MoveBlockInfo | M
 
 export interface InputBlockInfo {
   dropletID: string;
-  posX: string;
-  posY: string;
+  xPos: string;
+  yPos: string;
   volume: string;
 }
 
 export interface OutputBlockInfo {
   dropletID: string;
-  posX: string;
-  posY: string;
+  xPos: string;
+  yPos: string;
 }
 
 export interface MoveBlockInfo {
   dropletID: string;
-  posX: string;
-  posY: string;
+  xPos: string;
+  yPos: string;
 }
 
 export interface MergeBlockInfo {
+  originDropletID1: string;
+  originDropletID2: string;
   resultDropletID: string;
-  dropletID1: string;
-  dropletID2: string;
-  posX: string;
-  posY: string;
+  xPos: string;
+  yPos: string;
 }
 
 export interface SplitBlockInfo {
-  originDropletId: string;
-  resultDropletId1: string;
-  resultDropletId2: string;
+  originDropletID: string;
+  resultDropletID1: string;
+  resultDropletID2: string;
   ratio: string;
-  posX1: string;
-  posY1: string;
-  posX2: string;
-  posY2: string;
+  xPos1: string;
+  yPos1: string;
+  xPos2: string;
+  yPos2: string;
 }
 
 export interface MixBlockInfo {
   dropletID: string;
+  xPos: string;
+  yPos: string;
+  xSize: string;
+  ySize: string;
 }
 
 export interface StoreBlockInfo {
   dropletID: string;
-  posX: string;
-  posY: string;
+  xPos: string;
+  yPos: string;
   time: string;
 }
 
