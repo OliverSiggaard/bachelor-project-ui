@@ -6,9 +6,10 @@ import {Block, StoreBlockInfo} from "../../types/blockTypes";
 
 interface StoreBlockProps {
   block: Block;
+  draggable?: boolean;
 }
 
-const StoreBlock: React.FC<StoreBlockProps> = ({ block }) => {
+const StoreBlock: React.FC<StoreBlockProps> = ({ block, draggable = true }) => {
   const blockColor = "#F2DEA2";
 
   let dropletID: string = '-';
@@ -25,7 +26,7 @@ const StoreBlock: React.FC<StoreBlockProps> = ({ block }) => {
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor}>
+    <BaseBlock index={block.index} color={blockColor} draggable={draggable}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <Store/>
         <span>Store</span>

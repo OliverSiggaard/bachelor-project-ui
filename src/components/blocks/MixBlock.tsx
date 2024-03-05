@@ -6,9 +6,10 @@ import {Block, MixBlockInfo} from "../../types/blockTypes";
 
 interface MixBlockProps {
   block: Block;
+  draggable?: boolean;
 }
 
-const MixBlock: React.FC<MixBlockProps> = ({ block }) => {
+const MixBlock: React.FC<MixBlockProps> = ({ block, draggable = true }) => {
   const blockColor = "#F2DDD0";
 
   let dropletID: string = '-';
@@ -28,7 +29,7 @@ const MixBlock: React.FC<MixBlockProps> = ({ block }) => {
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor}>
+    <BaseBlock index={block.index} color={blockColor} draggable={draggable}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <Mix/>
         <span>Mix</span>

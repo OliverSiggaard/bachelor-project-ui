@@ -6,9 +6,10 @@ import {Block, MergeBlockInfo} from "../../types/blockTypes";
 
 interface MergeBlockProps {
   block: Block;
+  draggable?: boolean;
 }
 
-const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
+const MergeBlock: React.FC<MergeBlockProps> = ({ block, draggable = true }) => {
   const blockColor = "#F2A477";
 
   let resultDropletID: string = '-';
@@ -29,7 +30,7 @@ const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
 
 
   return (
-    <BaseBlock index={block.index} color={blockColor}>
+    <BaseBlock index={block.index} color={blockColor} draggable={draggable}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <Merge/>
         <span>Merge</span>

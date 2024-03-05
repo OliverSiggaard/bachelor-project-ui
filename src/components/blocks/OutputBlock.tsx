@@ -5,10 +5,11 @@ import {Divider, Typography} from "@mui/material";
 import {Block, OutputBlockInfo} from "../../types/blockTypes";
 
 interface OutputBlockProps {
-    block: Block;
+  block: Block;
+  draggable?: boolean;
 }
 
-const OutputBlock: React.FC<OutputBlockProps> = ({ block }) => {
+const OutputBlock: React.FC<OutputBlockProps> = ({ block, draggable = true }) => {
   const blockColor = "#F2CDC4";
 
   let dropletID: string = '-';
@@ -23,7 +24,7 @@ const OutputBlock: React.FC<OutputBlockProps> = ({ block }) => {
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor}>
+    <BaseBlock index={block.index} color={blockColor} draggable={draggable}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <Output/>
         <span>Output</span>

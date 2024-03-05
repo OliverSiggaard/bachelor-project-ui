@@ -6,9 +6,10 @@ import {Block, RepeatBlockInfo} from "../../types/blockTypes";
 
 interface RepeatBlockProps {
   block: Block;
+  draggable?: boolean;
 }
 
-const RepeatBlock: React.FC<RepeatBlockProps> = ({ block }) => {
+const RepeatBlock: React.FC<RepeatBlockProps> = ({ block, draggable = true }) => {
   const blockColor = "#8596A6";
 
   let times: string = '-';
@@ -19,7 +20,7 @@ const RepeatBlock: React.FC<RepeatBlockProps> = ({ block }) => {
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor}>
+    <BaseBlock index={block.index} color={blockColor} draggable={draggable}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <Repeat/>
         <span>Repeat</span>

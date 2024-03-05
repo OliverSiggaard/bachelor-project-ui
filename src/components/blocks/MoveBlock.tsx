@@ -5,10 +5,11 @@ import {Divider, Typography} from "@mui/material";
 import {Block, MoveBlockInfo} from "../../types/blockTypes";
 
 interface MoveBlockProps {
-    block: Block;
+  block: Block;
+  draggable?: boolean;
 }
 
-const MoveBlock: React.FC<MoveBlockProps> = ({ block }) => {
+const MoveBlock: React.FC<MoveBlockProps> = ({ block, draggable = true  }) => {
   const blockColor = "#AED8F2";
 
   let dropletID: string = '-';
@@ -23,7 +24,7 @@ const MoveBlock: React.FC<MoveBlockProps> = ({ block }) => {
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor}>
+    <BaseBlock index={block.index} color={blockColor} draggable={draggable}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <Move/>
         <span>Move</span>

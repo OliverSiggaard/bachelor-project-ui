@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 interface BaseBlockProps {
   index: number;
   color: string;
+  draggable?: boolean;
   children?: React.ReactNode;
 }
 
@@ -16,7 +17,7 @@ interface DragItem {
   type: string
 }
 
-const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, children }) => {
+const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, draggable = true, children }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const selectedBlock = useSelector((state: { selectedIndex: number | null }) => state.selectedIndex);
@@ -49,10 +50,10 @@ const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, children }) => {
     item: {index},
   });
 
-  drag(drop(ref));
+  if (draggable) drag(drop(ref));
 
   const handleBlockClick = () => {
-    dispatch(selectBlock(index));
+    if (draggable) dispatch(selectBlock(index));
   }
 
   return (

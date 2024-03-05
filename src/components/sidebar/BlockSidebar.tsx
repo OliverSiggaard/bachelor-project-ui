@@ -5,6 +5,8 @@ import {addBlock} from "../../redux/reducers/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {Block} from "../../types/blockTypes";
 import BlockEditor from "./block-editors/BlockEditor";
+import InputBlock from "../blocks/InputBlock";
+import OutputBlock from "../blocks/OutputBlock";
 
 const BlockSidebar: React.FC = () => {
 
@@ -23,7 +25,7 @@ const BlockSidebar: React.FC = () => {
 
   const addBlockOfType = (type: string) => {
     const newBlockId = blocks.length;
-    dispatch(addBlock({index: newBlockId, type}));
+    dispatch(addBlock({index: newBlockId, type: type}));
   }
 
   const logBlocks = () => {
@@ -41,9 +43,13 @@ const BlockSidebar: React.FC = () => {
     }
   }
 
+  const buttonBlock: Block = {index: -1, type: "button"}
+
   return (
     <div className="flex flex-col" style={{minWidth: "250px", maxWidth: "250px"}}>
       <div className="flex flex-col items-center space-y-6 overflow-auto" style={{padding: 10}}>
+        <InputBlock block={buttonBlock} draggable={false} />
+        <OutputBlock block={buttonBlock} draggable={false} />
         <Button variant="contained" onClick={handleAddBlock}>Add Base Block</Button>
         <Button variant="contained" onClick={() => addBlockOfType("input")}>Add Input Block</Button>
         <Button variant="contained" onClick={() => addBlockOfType("output")}>Add Output Block</Button>
