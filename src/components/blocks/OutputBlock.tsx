@@ -12,14 +12,14 @@ const OutputBlock: React.FC<OutputBlockProps> = ({ block }) => {
   const blockColor = "#F2CDC4";
 
   let dropletID: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
+  let xPos: string = '-';
+  let yPos: string = '-';
 
   if (block.info !== undefined) {
     const info = block.info as OutputBlockInfo;
     dropletID = info.dropletID;
-    posX = info.xPos;
-    posY = info.yPos;
+    xPos = info.xPos;
+    yPos = info.yPos;
   }
 
   return (
@@ -36,7 +36,7 @@ const OutputBlock: React.FC<OutputBlockProps> = ({ block }) => {
         </Typography>
         <Typography className="flex flex-col space-y-2.5 text-right">
           <span>{dropletID}</span>
-          <span>({posX},{posY})</span>
+          <span>({xPos},{yPos})</span>
         </Typography>
       </div>
     </BaseBlock>

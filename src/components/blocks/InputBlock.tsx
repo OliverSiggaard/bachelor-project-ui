@@ -12,15 +12,15 @@ const InputBlock: React.FC<InputBlockProps> = ({ block }) => {
   const blockColor = "#D1EBD8";
 
   let dropletID: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
+  let xPos: string = '-';
+  let yPos: string = '-';
   let volume: string = '-';
 
   if (block.info && 'volume' in block.info) {
     const info = block.info as InputBlockInfo;
     dropletID = info.dropletID;
-    posX = info.xPos;
-    posY = info.yPos;
+    xPos = info.xPos;
+    yPos = info.yPos;
     volume = info.volume;
   }
 
@@ -39,7 +39,7 @@ const InputBlock: React.FC<InputBlockProps> = ({ block }) => {
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
           <span>{dropletID}</span>
-          <span>({posX},{posY})</span>
+          <span>({xPos},{yPos})</span>
           <span>{volume}</span>
         </Typography>
       </div>

@@ -12,15 +12,15 @@ const StoreBlock: React.FC<StoreBlockProps> = ({ block }) => {
   const blockColor = "#F2DEA2";
 
   let dropletID: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
+  let xPos: string = '-';
+  let yPos: string = '-';
   let time: string = '-';
 
   if (block.info !== undefined) {
     const info = block.info as StoreBlockInfo;
     dropletID = info.dropletID;
-    posX = info.posX;
-    posY = info.posY;
+    xPos = info.xPos;
+    yPos = info.yPos;
     time = info.time + "ms";
   }
 
@@ -39,7 +39,7 @@ const StoreBlock: React.FC<StoreBlockProps> = ({ block }) => {
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
           <span>{dropletID}</span>
-          <span>({posX},{posY})</span>
+          <span>({xPos},{yPos})</span>
           <span>{time}</span>
         </Typography>
       </div>

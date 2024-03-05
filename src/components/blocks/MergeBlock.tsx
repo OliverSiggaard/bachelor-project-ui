@@ -14,16 +14,16 @@ const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
   let resultDropletID: string = '-';
   let dropletID1: string = '-';
   let dropletID2: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
+  let xPos: string = '-';
+  let yPos: string = '-';
 
   if (block.info !== undefined) {
     const info = block.info as MergeBlockInfo;
     resultDropletID = info.resultDropletID;
     dropletID1 = info.originDropletID1;
     dropletID2 = info.originDropletID2;
-    posX = info.xPos;
-    posY = info.yPos;
+    xPos = info.xPos;
+    yPos = info.yPos;
   }
 
 
@@ -37,17 +37,17 @@ const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
       <div style={{ height: "90px", display: "flex", justifyContent: "space-between", margin: "7px 10px 10px 10px" }}>
         <Typography className="flex flex-col justify-between">
-          <span>Result ID:</span>
           <span>Drop 1:</span>
           <span>Drop 2:</span>
+          <span>Result ID:</span>
           <span>Pos:</span>
 
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
-          <span>{resultDropletID}</span>
           <span>{dropletID1}</span>
           <span>{dropletID2}</span>
-          <span>({posX},{posY})</span>
+          <span>{resultDropletID}</span>
+          <span>({xPos},{yPos})</span>
         </Typography>
       </div>
     </BaseBlock>

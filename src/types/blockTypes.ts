@@ -46,12 +46,16 @@ export interface SplitBlockInfo {
 
 export interface MixBlockInfo {
   dropletID: string;
+  xPos: string;
+  yPos: string;
+  xSize: string;
+  ySize: string;
 }
 
 export interface StoreBlockInfo {
   dropletID: string;
-  posX: string;
-  posY: string;
+  xPos: string;
+  yPos: string;
   time: string;
 }
 

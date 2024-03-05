@@ -9,6 +9,8 @@ import {selectBlock} from "../../../redux/reducers/blockReducer";
 import MoveBlockEditor from "./MoveBlockEditor";
 import MergeBlockEditor from "./MergeBlockEditor";
 import SplitBlockEditor from "./SplitBlockEditor";
+import MixBlockEditor from "./MixBlockEditor";
+import StoreBlockEditor from "./StoreBlockEditor";
 
 const BlockEditor: React.FC = () => {
   const dispatch = useDispatch();
@@ -32,6 +34,10 @@ const BlockEditor: React.FC = () => {
         return <MergeBlockEditor block={selectedBlock} />
       case "split":
         return <SplitBlockEditor block={selectedBlock} />
+      case "mix":
+        return <MixBlockEditor block={selectedBlock} />
+      case "store":
+        return <StoreBlockEditor block={selectedBlock} />
       default:
         return null;
     }

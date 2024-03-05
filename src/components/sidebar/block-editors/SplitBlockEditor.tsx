@@ -72,13 +72,13 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
       />
       <TextField
         variant="outlined"
-        label="Droplet 1 ID"
+        label="Result Droplet 1 ID"
         value={resultDropletID1}
         onChange={(e) => setResultDropletID1(e.target.value)}
       />
       <TextField
         variant="outlined"
-        label="Droplet 2 ID"
+        label="Result Droplet 2 ID"
         value={resultDropletID2}
         onChange={(e) => setResultDropletID2(e.target.value)}
       />

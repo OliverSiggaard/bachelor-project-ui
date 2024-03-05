@@ -15,10 +15,10 @@ const SplitBlock: React.FC<SplitBlockProps> = ({ block }) => {
   let resultDropletID1: string = '-';
   let resultDropletID2: string = '-';
   let ratio: string = '-';
-  let posX1: string = '-';
-  let posY1: string = '-';
-  let posX2: string = '-';
-  let posY2: string = '-';
+  let xPos1: string = '-';
+  let yPos1: string = '-';
+  let xPos2: string = '-';
+  let yPos2: string = '-';
 
   if (block.info !== undefined) {
     const info = block.info as SplitBlockInfo;
@@ -26,10 +26,10 @@ const SplitBlock: React.FC<SplitBlockProps> = ({ block }) => {
     resultDropletID1 = info.resultDropletID1;
     resultDropletID2 = info.resultDropletID2;
     ratio = info.ratio;
-    posX1 = info.xPos1;
-    posY1 = info.yPos1;
-    posX2 = info.xPos2;
-    posY2 = info.yPos2;
+    xPos1 = info.xPos1;
+    yPos1 = info.yPos1;
+    xPos2 = info.xPos2;
+    yPos2 = info.yPos2;
 
   }
 
@@ -47,14 +47,14 @@ const SplitBlock: React.FC<SplitBlockProps> = ({ block }) => {
           <span>Origin ID:</span>
           <span>Drop 1</span>
           <span>{resultDropletID1}</span>
-          <span>({posX1},{posY1}) {ratio}</span>
+          <span>({xPos1},{yPos1}) {ratio}</span>
 
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
           <span>{originDropletId}</span>
           <span>Drop 2</span>
           <span>{resultDropletID2}</span>
-          <span>({posX2},{posY2}) {ratio}</span>
+          <span>({xPos2},{yPos2}) {ratio}</span>
         </Typography>
       </div>
     </BaseBlock>
