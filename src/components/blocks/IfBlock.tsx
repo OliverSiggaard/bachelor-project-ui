@@ -7,9 +7,10 @@ import {Block, IfBlockInfo} from "../../types/blockTypes";
 interface IfBlockProps {
   block: Block;
   draggable?: boolean;
+  onClick?: () => void;
 }
 
-const IfBlock: React.FC<IfBlockProps> = ({ block, draggable = true }) => {
+const IfBlock: React.FC<IfBlockProps> = ({ block, draggable = true, onClick }) => {
   const blockColor = "#F2F2F2";
 
   let condition: string = '-';
@@ -20,7 +21,7 @@ const IfBlock: React.FC<IfBlockProps> = ({ block, draggable = true }) => {
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor} draggable={draggable}>
+    <BaseBlock index={block.index} color={blockColor} draggable={draggable} onClick={onClick}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <If/>
         <span>If</span>

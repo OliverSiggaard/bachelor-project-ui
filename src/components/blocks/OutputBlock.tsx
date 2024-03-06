@@ -7,9 +7,10 @@ import {Block, OutputBlockInfo} from "../../types/blockTypes";
 interface OutputBlockProps {
   block: Block;
   draggable?: boolean;
+  onClick?: () => void;
 }
 
-const OutputBlock: React.FC<OutputBlockProps> = ({ block, draggable = true }) => {
+const OutputBlock: React.FC<OutputBlockProps> = ({ block, draggable = true, onClick }) => {
   const blockColor = "#F2CDC4";
 
   let dropletID: string = '-';
@@ -24,7 +25,7 @@ const OutputBlock: React.FC<OutputBlockProps> = ({ block, draggable = true }) =>
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor} draggable={draggable}>
+    <BaseBlock index={block.index} color={blockColor} draggable={draggable} onClick={onClick}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <Output/>
         <span>Output</span>

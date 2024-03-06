@@ -12,7 +12,7 @@ const MainPage: React.FC = () => {
       </div>
       <div className="flex flex-row" style={{height: "calc(100vh - 64px)"}}>
         <BlockSidebar />
-        <Divider orientation="vertical" flexItem sx={{borderRightWidth: 3}}/>
+        <Divider orientation="vertical" flexItem sx={{borderRightWidth: 4}}/>
         <div className="flex flex-col w-full">
           <CodeCanvas />
         </div>

@@ -7,9 +7,10 @@ import {Block, MoveBlockInfo} from "../../types/blockTypes";
 interface MoveBlockProps {
   block: Block;
   draggable?: boolean;
+  onClick?: () => void;
 }
 
-const MoveBlock: React.FC<MoveBlockProps> = ({ block, draggable = true  }) => {
+const MoveBlock: React.FC<MoveBlockProps> = ({ block, draggable = true, onClick }) => {
   const blockColor = "#AED8F2";
 
   let dropletID: string = '-';
@@ -24,7 +25,7 @@ const MoveBlock: React.FC<MoveBlockProps> = ({ block, draggable = true  }) => {
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor} draggable={draggable}>
+    <BaseBlock index={block.index} color={blockColor} draggable={draggable} onClick={onClick}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <Move/>
         <span>Move</span>

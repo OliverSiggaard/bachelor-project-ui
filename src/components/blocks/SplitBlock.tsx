@@ -7,9 +7,10 @@ import {Block, SplitBlockInfo} from "../../types/blockTypes";
 interface SplitBlockProps {
   block: Block;
   draggable?: boolean;
+  onClick?: () => void;
 }
 
-const SplitBlock: React.FC<SplitBlockProps> = ({ block, draggable = true }) => {
+const SplitBlock: React.FC<SplitBlockProps> = ({ block, draggable = true, onClick }) => {
   const blockColor = "#F0BC68";
 
   let originDropletId: string = '-';
@@ -34,7 +35,7 @@ const SplitBlock: React.FC<SplitBlockProps> = ({ block, draggable = true }) => {
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor} draggable={draggable}>
+    <BaseBlock index={block.index} color={blockColor} draggable={draggable} onClick={onClick}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <Split/>
         <span>Split</span>

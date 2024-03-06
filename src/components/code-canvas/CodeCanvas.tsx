@@ -120,7 +120,7 @@ const CodeCanvas: React.FC = () => {
   );
 
   return (
-    <div className="h-full w-full relative overflow-y-auto">
+    <div className="h-full w-full relative overflow-y-auto select-none">
       <div className="flex flex-row flex-wrap" style={{margin: 10}}>
         {blocks.map((block, i) => renderBlock(block, i))}
       </div>

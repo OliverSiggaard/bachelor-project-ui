@@ -7,9 +7,10 @@ import {Block, InputBlockInfo} from "../../types/blockTypes";
 interface InputBlockProps {
   block: Block;
   draggable?: boolean;
+  onClick?: () => void;
 }
 
-const InputBlock: React.FC<InputBlockProps> = ({ block, draggable = true }) => {
+const InputBlock: React.FC<InputBlockProps> = ({ block, draggable = true, onClick }) => {
   const blockColor = "#D1EBD8";
 
   let dropletID: string = '-';
@@ -26,7 +27,7 @@ const InputBlock: React.FC<InputBlockProps> = ({ block, draggable = true }) => {
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor} draggable={draggable}>
+    <BaseBlock index={block.index} color={blockColor} draggable={draggable} onClick={onClick}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
         <Input/>
         <span>Input</span>

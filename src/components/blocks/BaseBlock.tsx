@@ -9,6 +9,7 @@ interface BaseBlockProps {
   index: number;
   color: string;
   draggable?: boolean;
+  onClick?: () => void;
   children?: React.ReactNode;
 }
 
@@ -17,7 +18,7 @@ interface DragItem {
   type: string
 }
 
-const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, draggable = true, children }) => {
+const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, draggable = true, onClick, children }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const selectedBlock = useSelector((state: { selectedIndex: number | null }) => state.selectedIndex);
@@ -53,7 +54,11 @@ const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, draggable = true, c
   if (draggable) drag(drop(ref));
 
   const handleBlockClick = () => {
-    if (draggable) dispatch(selectBlock(index));
+    if (!draggable && onClick) {
+      onClick();
+    } else if (draggable) {
+      dispatch(selectBlock(index))
+    }
   }
 
   return (
