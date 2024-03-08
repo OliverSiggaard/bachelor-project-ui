@@ -11,18 +11,18 @@ interface MixBlockEditorProps {
 const MixBlockEditor: React.FC<MixBlockEditorProps> = ({ block }) => {
   const dispatch = useDispatch();
 
-  const [dropletID, setDropletID] = useState('');
-  const [xPos, setXPos] = useState('');
-  const [yPos, setYPos] = useState('');
+  const [dropletId, setDropletId] = useState('');
+  const [posX, setPosX] = useState('');
+  const [posY, setPosY] = useState('');
   const [xSize, setXSize] = useState('');
   const [ySize, setYSize] = useState('');
 
   useEffect(() => {
     if (block.info) {
       const blockInfo = block.info as MixBlockInfo;
-      setDropletID(blockInfo.dropletID);
-      setXPos(blockInfo.xPos);
-      setYPos(blockInfo.yPos);
+      setDropletId(blockInfo.dropletId);
+      setPosX(blockInfo.posX);
+      setPosY(blockInfo.posY);
       setXSize(blockInfo.xSize);
       setYSize(blockInfo.ySize);
     }
@@ -30,9 +30,9 @@ const MixBlockEditor: React.FC<MixBlockEditorProps> = ({ block }) => {
 
   const handleSave = () => {
     const info = {
-      dropletID: dropletID,
-      xPos: xPos,
-      yPos: yPos,
+      dropletId: dropletId,
+      posX: posX,
+      posY: posY,
       xSize: xSize,
       ySize: ySize,
     }
@@ -42,9 +42,9 @@ const MixBlockEditor: React.FC<MixBlockEditorProps> = ({ block }) => {
     dispatch(selectBlock(null));
 
     // Reset state
-    setDropletID('');
-    setXPos('');
-    setYPos('');
+    setDropletId('');
+    setPosX('');
+    setPosY('');
     setXSize('');
     setYSize('');
   }
@@ -55,21 +55,21 @@ const MixBlockEditor: React.FC<MixBlockEditorProps> = ({ block }) => {
       <TextField
         variant="outlined"
         label="Droplet ID"
-        value={dropletID}
-        onChange={(e) => setDropletID(e.target.value)}
+        value={dropletId}
+        onChange={(e) => setDropletId(e.target.value)}
       />
       <div className="flex flex-row space-x-3">
         <TextField
           variant="outlined"
           label="x-Pos"
-          value={xPos}
-          onChange={(e) => setXPos(e.target.value)}
+          value={posX}
+          onChange={(e) => setPosX(e.target.value)}
         />
         <TextField
           variant="outlined"
           label="y-Pos"
-          value={yPos}
-          onChange={(e) => setYPos(e.target.value)}
+          value={posY}
+          onChange={(e) => setPosY(e.target.value)}
         />
       </div>
       <div className="flex flex-row space-x-3">

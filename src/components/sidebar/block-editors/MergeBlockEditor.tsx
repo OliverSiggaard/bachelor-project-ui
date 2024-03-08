@@ -11,30 +11,30 @@ interface MergeBlockEditorProps {
 const MergeBlockEditor: React.FC<MergeBlockEditorProps> = ({ block }) => {
   const dispatch = useDispatch();
 
-  const [originDropletID1, setOriginDropletID1] = useState('');
-  const [originDropletID2, setOriginDropletID2] = useState('');
-  const [resultDropletID, setResultDropletID] = useState('');
-  const [xPos, setXPos] = useState('');
-  const [yPos, setYPos] = useState('');
+  const [originDropletId1, setOriginDropletId1] = useState('');
+  const [originDropletId2, setOriginDropletId2] = useState('');
+  const [resultDropletId, setResultDropletId] = useState('');
+  const [posX, setPosX] = useState('');
+  const [posY, setPosY] = useState('');
 
   useEffect(() => {
     if (block.info) {
       const blockInfo = block.info as MergeBlockInfo;
-      setOriginDropletID1(blockInfo.originDropletID1);
-      setOriginDropletID2(blockInfo.originDropletID2);
-      setResultDropletID(blockInfo.resultDropletID);
-      setXPos(blockInfo.xPos);
-      setYPos(blockInfo.yPos);
+      setOriginDropletId1(blockInfo.originDropletId1);
+      setOriginDropletId2(blockInfo.originDropletId2);
+      setResultDropletId(blockInfo.resultDropletId);
+      setPosX(blockInfo.posX);
+      setPosY(blockInfo.posY);
     }
   }, [block.info]);
 
   const handleSave = () => {
     const info = {
-      originDropletID1: originDropletID1,
-      originDropletID2: originDropletID2,
-      resultDropletID: resultDropletID,
-      xPos: xPos,
-      yPos: yPos,
+      originDropletId1: originDropletId1,
+      originDropletId2: originDropletId2,
+      resultDropletId: resultDropletId,
+      posX: posX,
+      posY: posY,
     }
 
     // Dispatch new info and de-select block
@@ -42,11 +42,11 @@ const MergeBlockEditor: React.FC<MergeBlockEditorProps> = ({ block }) => {
     dispatch(selectBlock(null));
 
     // Reset state
-    setOriginDropletID1('');
-    setOriginDropletID2('');
-    setResultDropletID('');
-    setXPos('');
-    setYPos('');
+    setOriginDropletId1('');
+    setOriginDropletId2('');
+    setResultDropletId('');
+    setPosX('');
+    setPosY('');
   }
 
   return (
@@ -55,33 +55,33 @@ const MergeBlockEditor: React.FC<MergeBlockEditorProps> = ({ block }) => {
       <TextField
         variant="outlined"
         label="Origin Droplet 1 ID"
-        value={originDropletID1}
-        onChange={(e) => setOriginDropletID1(e.target.value)}
+        value={originDropletId1}
+        onChange={(e) => setOriginDropletId1(e.target.value)}
       />
       <TextField
         variant="outlined"
         label="Origin Droplet 2 ID"
-        value={originDropletID2}
-        onChange={(e) => setOriginDropletID2(e.target.value)}
+        value={originDropletId2}
+        onChange={(e) => setOriginDropletId2(e.target.value)}
       />
       <TextField
         variant="outlined"
         label="Result Droplet ID"
-        value={resultDropletID}
-        onChange={(e) => setResultDropletID(e.target.value)}
+        value={resultDropletId}
+        onChange={(e) => setResultDropletId(e.target.value)}
       />
       <div className="flex flex-row space-x-3">
         <TextField
           variant="outlined"
           label="x-Pos"
-          value={xPos}
-          onChange={(e) => setXPos(e.target.value)}
+          value={posX}
+          onChange={(e) => setPosX(e.target.value)}
         />
         <TextField
           variant="outlined"
           label="y-Pos"
-          value={yPos}
-          onChange={(e) => setYPos(e.target.value)}
+          value={posY}
+          onChange={(e) => setPosY(e.target.value)}
         />
       </div>
       <div className="flex flex-row space-x-3">

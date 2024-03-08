@@ -1,31 +1,31 @@
 import React from 'react';
 import BaseBlock from "./BaseBlock";
-import Move from '@mui/icons-material/OpenWith';
 import {Divider, Typography} from "@mui/material";
 import {Block, MoveBlockInfo} from "../../types/blockTypes";
+import {BlockColors} from "../../enums/blockColors";
+import {BlockIcons} from "../../enums/BlockIcons";
 
 interface MoveBlockProps {
     block: Block;
 }
 
 const MoveBlock: React.FC<MoveBlockProps> = ({ block }) => {
-  const blockColor = "#AED8F2";
 
-  let dropletID: string = '-';
-  let xPos: string = '-';
-  let yPos: string = '-';
+  let dropletId: string = '-';
+  let posX: string = '-';
+  let posY: string = '-';
 
   if (block.info !== undefined) {
     const info = block.info as MoveBlockInfo;
-    dropletID = info.dropletID;
-    xPos = info.xPos;
-    yPos = info.yPos;
+    dropletId = info.dropletId;
+    posX = info.posX;
+    posY = info.posY;
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor}>
+    <BaseBlock index={block.index} color={BlockColors.MoveBlockColor}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
-        <Move/>
+        {BlockIcons.MoveBlockIcon}
         <span>Move</span>
       </Typography>
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
@@ -35,8 +35,8 @@ const MoveBlock: React.FC<MoveBlockProps> = ({ block }) => {
           <span>Pos:</span>
         </Typography>
         <Typography className="flex flex-col space-y-2.5 text-right">
-          <span>{dropletID}</span>
-          <span>({xPos},{yPos})</span>
+          <span>{dropletId}</span>
+          <span>({posX},{posY})</span>
         </Typography>
       </div>
     </BaseBlock>
