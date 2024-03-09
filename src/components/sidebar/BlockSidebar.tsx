@@ -60,8 +60,14 @@ const BlockSidebar: React.FC = () => {
     <div className="flex flex-col" style={{ minWidth: 260, maxWidth: 260 }}>
       <div className="flex flex-col items-center space-y-6 overflow-auto" style={{ padding: "25px 20px" }}>
         {AddBlockButtons}
-        <Button variant="contained" onClick={logBlocks}>Log Blocks</Button>
-        <Button variant="contained" onClick={getHelloString}>Call Spring Boot</Button>
+        <div style={{height: 40}} />
+        <span>Temporary Dev Buttons:</span>
+        <Button variant="contained" color="secondary" onClick={logBlocks} sx={{width: 200, minHeight: 40}}>
+          Log Blocks
+        </Button>
+        <Button variant="contained" color="secondary" onClick={getHelloString} sx={{width: 200, minHeight: 40}}>
+          Call Spring Boot
+        </Button>
         <div style={{textAlign: 'center'}}>
           {helloString}
         </div>

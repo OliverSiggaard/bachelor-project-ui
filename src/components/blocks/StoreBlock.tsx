@@ -21,7 +21,7 @@ const StoreBlock: React.FC<StoreBlockProps> = ({ block }) => {
     dropletId = info.dropletId;
     posX = info.posX;
     posY = info.posY;
-    time = info.time + "ms";
+    time = info.time + " ms";
   }
 
   return (
