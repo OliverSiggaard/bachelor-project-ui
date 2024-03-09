@@ -1,13 +1,33 @@
 import React from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import api from "../../../api/axiosConfig";
 
-interface DeleteDialogProps {
+interface RunDialogProps {
   open: boolean;
   onClose: () => void;
-  onRun: () => void;
 }
 
-const RunDialog: React.FC<DeleteDialogProps> = ({ open, onClose, onRun }) => {
+const RunDialog: React.FC<RunDialogProps> = ({ open, onClose }) => {
+
+
+  const sendDataToBackend = async () => {
+    try {
+      const response = await api.post(
+        "/api/program",
+        { message: "Hello from React!" },
+        {
+          headers: {
+            "Content-Type": "application/json", // Assuming you're sending JSON data
+            // Add any other headers if required
+          }
+        }
+      );
+      console.log("Data sent successfully:", response.data);
+    } catch (error) {
+      console.error("Error sending data:", error);
+    }
+  };
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
@@ -24,7 +44,7 @@ const RunDialog: React.FC<DeleteDialogProps> = ({ open, onClose, onRun }) => {
         </Button>
         <Button
           variant="contained"
-          onClick={() => { onClose(); onRun(); }}
+          onClick={() => {onClose(); sendDataToBackend()}}
           color="success"
         >
           Run

@@ -29,7 +29,7 @@ const BlockSidebar: React.FC = () => {
 
   const getHelloString = async () => {
     try {
-      const response = await api.get("/root");
+      const response = await api.get("/api/test");
       setHelloString(response.data);
     } catch (err) {
       setHelloString("Error connecting to Spring Boot - check if it is running")

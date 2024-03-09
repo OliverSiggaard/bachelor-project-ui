@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import {DeleteForever, PlayArrow} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {deleteAll, runProgram} from "../../redux/reducers/blockReducer";
+import {deleteAll} from "../../redux/reducers/blockReducer";
 import DeleteDialog from "./dialogs/DeleteDialog";
 import RunDialog from "./dialogs/RunDialog";
 
@@ -64,7 +64,6 @@ const Navbar: React.FC = () => {
       <RunDialog
         open={runDialogOpen}
         onClose={closeRunDialog}
-        onRun={() => dispatch(runProgram())}
       />
     </AppBar>
   );
