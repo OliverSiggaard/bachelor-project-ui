@@ -11,24 +11,24 @@ interface OutputBlockEditorProps {
 const OutputBlockEditor: React.FC<OutputBlockEditorProps> = ({ block }) => {
   const dispatch = useDispatch();
 
-  const [dropletID, setDropletID] = useState('');
-  const [xPos, setXPos] = useState('');
-  const [yPos, setYPos] = useState('');
+  const [dropletId, setDropletId] = useState('');
+  const [posX, setPosX] = useState('');
+  const [posY, setPosY] = useState('');
 
   useEffect(() => {
     if (block.info) {
       const blockInfo = block.info as OutputBlockInfo;
-      setDropletID(blockInfo.dropletID);
-      setXPos(blockInfo.xPos);
-      setYPos(blockInfo.yPos);
+      setDropletId(blockInfo.dropletId);
+      setPosX(blockInfo.posX);
+      setPosY(blockInfo.posY);
     }
   }, [block.info]);
 
   const handleSave = () => {
     const info = {
-      dropletID: dropletID,
-      xPos: xPos,
-      yPos: yPos,
+      dropletId: dropletId,
+      posX: posX,
+      posY: posY,
     }
 
     // Dispatch new info and de-select block
@@ -36,9 +36,9 @@ const OutputBlockEditor: React.FC<OutputBlockEditorProps> = ({ block }) => {
     dispatch(selectBlock(null));
 
     // Reset state
-    setDropletID('');
-    setXPos('');
-    setYPos('');
+    setDropletId('');
+    setPosX('');
+    setPosY('');
   }
 
   return (
@@ -47,21 +47,21 @@ const OutputBlockEditor: React.FC<OutputBlockEditorProps> = ({ block }) => {
       <TextField
         variant="outlined"
         label="Droplet ID"
-        value={dropletID}
-        onChange={(e) => setDropletID(e.target.value)}
+        value={dropletId}
+        onChange={(e) => setDropletId(e.target.value)}
       />
       <div className="flex flex-row space-x-3">
         <TextField
           variant="outlined"
           label="x-Pos"
-          value={xPos}
-          onChange={(e) => setXPos(e.target.value)}
+          value={posX}
+          onChange={(e) => setPosX(e.target.value)}
         />
         <TextField
           variant="outlined"
           label="y-Pos"
-          value={yPos}
-          onChange={(e) => setYPos(e.target.value)}
+          value={posY}
+          onChange={(e) => setPosY(e.target.value)}
         />
       </div>
       <div className="flex flex-row space-x-3">

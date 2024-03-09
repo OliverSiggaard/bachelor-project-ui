@@ -1,33 +1,33 @@
 import React from 'react';
 import BaseBlock from "./BaseBlock";
-import Input from '@mui/icons-material/Input';
 import {Divider, Typography} from "@mui/material";
 import {Block, InputBlockInfo} from "../../types/blockTypes";
+import {BlockColors} from "../../enums/blockColors";
+import {BlockIcons} from "../../enums/BlockIcons";
 
 interface InputBlockProps {
   block: Block;
 }
 
 const InputBlock: React.FC<InputBlockProps> = ({ block }) => {
-  const blockColor = "#D1EBD8";
 
-  let dropletID: string = '-';
-  let xPos: string = '-';
-  let yPos: string = '-';
+  let dropletId: string = '-';
+  let posX: string = '-';
+  let posY: string = '-';
   let volume: string = '-';
 
   if (block.info && 'volume' in block.info) {
     const info = block.info as InputBlockInfo;
-    dropletID = info.dropletID;
-    xPos = info.xPos;
-    yPos = info.yPos;
+    dropletId = info.dropletId;
+    posX = info.posX;
+    posY = info.posY;
     volume = info.volume;
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor}>
+    <BaseBlock index={block.index} color={BlockColors.InputBlockColor}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
-        <Input/>
+        {BlockIcons.InputBlockIcon}
         <span>Input</span>
       </Typography>
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
@@ -38,8 +38,8 @@ const InputBlock: React.FC<InputBlockProps> = ({ block }) => {
           <span>Vol:</span>
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
-          <span>{dropletID}</span>
-          <span>({xPos},{yPos})</span>
+          <span>{dropletId}</span>
+          <span>({posX},{posY})</span>
           <span>{volume}</span>
         </Typography>
       </div>

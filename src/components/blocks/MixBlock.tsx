@@ -1,36 +1,36 @@
 import React from 'react';
 import BaseBlock from "./BaseBlock";
-import Mix from '@mui/icons-material/Cached';
 import {Divider, Typography} from "@mui/material";
 import {Block, MixBlockInfo} from "../../types/blockTypes";
+import {BlockColors} from "../../enums/blockColors";
+import {BlockIcons} from "../../enums/BlockIcons";
 
 interface MixBlockProps {
   block: Block;
 }
 
 const MixBlock: React.FC<MixBlockProps> = ({ block }) => {
-  const blockColor = "#F2DDD0";
 
-  let dropletID: string = '-';
-  let xPos: string = '-';
-  let yPos: string = '-';
+  let dropletId: string = '-';
+  let posX: string = '-';
+  let posY: string = '-';
   let xSize: string = '-';
   let ySize: string = '-';
 
 
   if (block.info !== undefined) {
     const info = block.info as MixBlockInfo;
-    dropletID = info.dropletID;
-    xPos = info.xPos;
-    yPos = info.yPos;
+    dropletId = info.dropletId;
+    posX = info.posX;
+    posY = info.posY;
     xSize = info.xSize;
     ySize = info.ySize;
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor}>
+    <BaseBlock index={block.index} color={BlockColors.MixBlockColor}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
-        <Mix/>
+        {BlockIcons.MixBlockIcon}
         <span>Mix</span>
       </Typography>
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
@@ -41,8 +41,8 @@ const MixBlock: React.FC<MixBlockProps> = ({ block }) => {
           <span>Size:</span>
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
-          <span>{dropletID}</span>
-          <span>({xPos},{yPos})</span>
+          <span>{dropletId}</span>
+          <span>({posX},{posY})</span>
           <span>({xSize},{ySize})</span>
         </Typography>
       </div>

@@ -1,15 +1,15 @@
 import React from 'react';
 import BaseBlock from "./BaseBlock";
-import Repeat from '@mui/icons-material/Repeat';
 import {Divider, Typography} from "@mui/material";
 import {Block, RepeatBlockInfo} from "../../types/blockTypes";
+import {BlockColors} from "../../enums/blockColors";
+import {BlockIcons} from "../../enums/BlockIcons";
 
 interface RepeatBlockProps {
   block: Block;
 }
 
 const RepeatBlock: React.FC<RepeatBlockProps> = ({ block }) => {
-  const blockColor = "#8596A6";
 
   let times: string = '-';
 
@@ -19,9 +19,9 @@ const RepeatBlock: React.FC<RepeatBlockProps> = ({ block }) => {
   }
 
   return (
-    <BaseBlock index={block.index} color={blockColor}>
+    <BaseBlock index={block.index} color={BlockColors.RepeatBlockColor}>
       <Typography sx={{ display: "flex", justifyContent: "space-between", margin: "10px 10px 0 10px" }}>
-        <Repeat/>
+        {BlockIcons.RepeatBlockIcon}
         <span>Repeat</span>
       </Typography>
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>

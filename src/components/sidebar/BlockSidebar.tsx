@@ -5,6 +5,9 @@ import {addBlock} from "../../redux/reducers/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {Block} from "../../types/blockTypes";
 import BlockEditor from "./block-editors/BlockEditor";
+import AddBlockButton from "./AddBlockButton";
+import {BlockColors} from "../../enums/blockColors";
+import {BlockIcons} from "../../enums/BlockIcons";
 
 const BlockSidebar: React.FC = () => {
 
@@ -13,17 +16,9 @@ const BlockSidebar: React.FC = () => {
   const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
   const dispatch = useDispatch();
 
-  const handleAddBlock = () => {
-    const newBlockId = blocks.length;
-    dispatch(addBlock({
-      index: newBlockId,
-      type: "base"
-    }));
-  }
-
   const addBlockOfType = (type: string) => {
     const newBlockId = blocks.length;
-    dispatch(addBlock({index: newBlockId, type}));
+    dispatch(addBlock({index: newBlockId, type: type}));
   }
 
   const logBlocks = () => {
@@ -41,21 +36,38 @@ const BlockSidebar: React.FC = () => {
     }
   }
 
+  const blockButtons = [
+    { color: BlockColors.InputBlockColor, icon: BlockIcons.InputBlockIcon, text: "Input Block", type: "input" },
+    { color: BlockColors.OutputBlockColor, icon: BlockIcons.OutputBlockIcon, text: "Output Block", type: "output" },
+    { color: BlockColors.MoveBlockColor, icon: BlockIcons.MoveBlockIcon, text: "Move Block", type: "move" },
+    { color: BlockColors.MergeBlockColor, icon: BlockIcons.MergeBlockIcon, text: "Merge Block", type: "merge" },
+    { color: BlockColors.SplitBlockColor, icon: BlockIcons.SplitBlockIcon, text: "Split Block", type: "split" },
+    { color: BlockColors.MixBlockColor, icon: BlockIcons.MixBlockIcon, text: "Mix Block", type: "mix" },
+    { color: BlockColors.StoreBlockColor, icon: BlockIcons.StoreBlockIcon, text: "Store Block", type: "store" },
+  ];
+
+  const AddBlockButtons = blockButtons.map(blockButton => (
+    <AddBlockButton
+      key={blockButton.type}
+      color={blockButton.color}
+      icon={blockButton.icon}
+      text={blockButton.text}
+      onClick={() => addBlockOfType(blockButton.type)}
+    />
+  ));
+
   return (
-    <div className="flex flex-col" style={{minWidth: "250px", maxWidth: "250px"}}>
-      <div className="flex flex-col items-center space-y-6 overflow-auto" style={{padding: 10}}>
-        <Button variant="contained" onClick={handleAddBlock}>Add Base Block</Button>
-        <Button variant="contained" onClick={() => addBlockOfType("input")}>Add Input Block</Button>
-        <Button variant="contained" onClick={() => addBlockOfType("output")}>Add Output Block</Button>
-        <Button variant="contained" onClick={() => addBlockOfType("move")}>Add Move Block</Button>
-        <Button variant="contained" onClick={() => addBlockOfType("merge")}>Add Merge Block</Button>
-        <Button variant="contained" onClick={() => addBlockOfType("split")}>Add Split Block</Button>
-        <Button variant="contained" onClick={() => addBlockOfType("mix")}>Add Mix Block</Button>
-        <Button variant="contained" onClick={() => addBlockOfType("store")}>Add Store Block</Button>
-        <Button variant="contained" onClick={() => addBlockOfType("if")}>Add If Block</Button>
-        <Button variant="contained" onClick={() => addBlockOfType("repeat")}>Add Repeat Block</Button>
-        <Button variant="contained" onClick={logBlocks}>Log Blocks</Button>
-        <Button variant="contained" onClick={getHelloString}>Call Spring Boot</Button>
+    <div className="flex flex-col" style={{ minWidth: 260, maxWidth: 260 }}>
+      <div className="flex flex-col items-center space-y-6 overflow-auto" style={{ padding: "25px 20px" }}>
+        {AddBlockButtons}
+        <div style={{height: 40}} />
+        <span>Temporary Dev Buttons:</span>
+        <Button variant="contained" color="secondary" onClick={logBlocks} sx={{width: 200, minHeight: 40}}>
+          Log Blocks
+        </Button>
+        <Button variant="contained" color="secondary" onClick={getHelloString} sx={{width: 200, minHeight: 40}}>
+          Call Spring Boot
+        </Button>
         <div style={{textAlign: 'center'}}>
           {helloString}
         </div>

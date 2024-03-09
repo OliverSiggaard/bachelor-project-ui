@@ -11,39 +11,39 @@ interface SplitBlockEditorProps {
 const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
   const dispatch = useDispatch();
 
-  const [originDropletID, setOriginDropletID] = useState('');
-  const [resultDropletID1, setResultDropletID1] = useState('');
-  const [resultDropletID2, setResultDropletID2] = useState('');
+  const [originDropletId, setOriginDropletId] = useState('');
+  const [resultDropletId1, setResultDropletId1] = useState('');
+  const [resultDropletId2, setResultDropletId2] = useState('');
   const [ratio, setRatio] = useState('');
-  const [xPos1, setXPos1] = useState('');
-  const [yPos1, setYPos1] = useState('');
-  const [xPos2, setXPos2] = useState('');
-  const [yPos2, setYPos2] = useState('');
+  const [posX1, setPosX1] = useState('');
+  const [posY1, setPosY1] = useState('');
+  const [posX2, setPosX2] = useState('');
+  const [posY2, setPosY2] = useState('');
 
   useEffect(() => {
     if (block.info) {
       const blockInfo = block.info as SplitBlockInfo;
-      setOriginDropletID(blockInfo.originDropletID);
-      setResultDropletID1(blockInfo.resultDropletID1);
-      setResultDropletID2(blockInfo.resultDropletID2);
+      setOriginDropletId(blockInfo.originDropletId);
+      setResultDropletId1(blockInfo.resultDropletId1);
+      setResultDropletId2(blockInfo.resultDropletId2);
       setRatio(blockInfo.ratio);
-      setXPos1(blockInfo.xPos1);
-      setYPos1(blockInfo.yPos1);
-      setXPos2(blockInfo.xPos2);
-      setYPos2(blockInfo.yPos2);
+      setPosX1(blockInfo.posX1);
+      setPosY1(blockInfo.posY1);
+      setPosX2(blockInfo.posX2);
+      setPosY2(blockInfo.posY2);
     }
   }, [block.info]);
 
   const handleSave = () => {
     const info = {
-      originDropletID: originDropletID,
-      resultDropletID1: resultDropletID1,
-      resultDropletID2: resultDropletID2,
+      originDropletId: originDropletId,
+      resultDropletId1: resultDropletId1,
+      resultDropletId2: resultDropletId2,
       ratio: ratio,
-      xPos1: xPos1,
-      yPos1: yPos1,
-      xPos2: xPos2,
-      yPos2: yPos2,
+      posX1: posX1,
+      posY1: posY1,
+      posX2: posX2,
+      posY2: posY2,
     }
 
     // Dispatch new info and de-select block
@@ -51,14 +51,14 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
     dispatch(selectBlock(null));
 
     // Reset state
-    setOriginDropletID('');
-    setResultDropletID1('');
-    setResultDropletID2('');
+    setOriginDropletId('');
+    setResultDropletId1('');
+    setResultDropletId2('');
     setRatio('');
-    setXPos1('');
-    setYPos1('');
-    setXPos2('');
-    setYPos2('');
+    setPosX1('');
+    setPosY1('');
+    setPosX2('');
+    setPosY2('');
   }
 
   return (
@@ -67,20 +67,20 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
       <TextField
         variant="outlined"
         label="Origin Droplet ID"
-        value={originDropletID}
-        onChange={(e) => setOriginDropletID(e.target.value)}
+        value={originDropletId}
+        onChange={(e) => setOriginDropletId(e.target.value)}
       />
       <TextField
         variant="outlined"
         label="Result Droplet 1 ID"
-        value={resultDropletID1}
-        onChange={(e) => setResultDropletID1(e.target.value)}
+        value={resultDropletId1}
+        onChange={(e) => setResultDropletId1(e.target.value)}
       />
       <TextField
         variant="outlined"
         label="Result Droplet 2 ID"
-        value={resultDropletID2}
-        onChange={(e) => setResultDropletID2(e.target.value)}
+        value={resultDropletId2}
+        onChange={(e) => setResultDropletId2(e.target.value)}
       />
       <TextField
         variant="outlined"
@@ -92,28 +92,28 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
         <TextField
           variant="outlined"
           label="x-Pos 1"
-          value={xPos1}
-          onChange={(e) => setXPos1(e.target.value)}
+          value={posX1}
+          onChange={(e) => setPosX1(e.target.value)}
         />
         <TextField
           variant="outlined"
           label="y-Pos 1"
-          value={yPos1}
-          onChange={(e) => setYPos1(e.target.value)}
+          value={posY1}
+          onChange={(e) => setPosY1(e.target.value)}
         />
       </div>
       <div className="flex flex-row space-x-3">
         <TextField
           variant="outlined"
           label="x-Pos 2"
-          value={xPos2}
-          onChange={(e) => setXPos2(e.target.value)}
+          value={posX2}
+          onChange={(e) => setPosX2(e.target.value)}
         />
         <TextField
           variant="outlined"
           label="y-Pos 2"
-          value={yPos2}
-          onChange={(e) => setYPos2(e.target.value)}
+          value={posY2}
+          onChange={(e) => setPosY2(e.target.value)}
         />
       </div>
       <div className="flex flex-row space-x-3">

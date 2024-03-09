@@ -7,55 +7,55 @@ export interface Block {
 export type CodeBlockInfo = InputBlockInfo | OutputBlockInfo | MoveBlockInfo | MergeBlockInfo | SplitBlockInfo | MixBlockInfo | StoreBlockInfo | IfBlockInfo | RepeatBlockInfo // Add more blocks here
 
 export interface InputBlockInfo {
-  dropletID: string;
-  xPos: string;
-  yPos: string;
+  dropletId: string;
+  posX: string;
+  posY: string;
   volume: string;
 }
 
 export interface OutputBlockInfo {
-  dropletID: string;
-  xPos: string;
-  yPos: string;
+  dropletId: string;
+  posX: string;
+  posY: string;
 }
 
 export interface MoveBlockInfo {
-  dropletID: string;
-  xPos: string;
-  yPos: string;
+  dropletId: string;
+  posX: string;
+  posY: string;
 }
 
 export interface MergeBlockInfo {
-  originDropletID1: string;
-  originDropletID2: string;
-  resultDropletID: string;
-  xPos: string;
-  yPos: string;
+  originDropletId1: string;
+  originDropletId2: string;
+  resultDropletId: string;
+  posX: string;
+  posY: string;
 }
 
 export interface SplitBlockInfo {
-  originDropletID: string;
-  resultDropletID1: string;
-  resultDropletID2: string;
+  originDropletId: string;
+  resultDropletId1: string;
+  resultDropletId2: string;
   ratio: string;
-  xPos1: string;
-  yPos1: string;
-  xPos2: string;
-  yPos2: string;
+  posX1: string;
+  posY1: string;
+  posX2: string;
+  posY2: string;
 }
 
 export interface MixBlockInfo {
-  dropletID: string;
-  xPos: string;
-  yPos: string;
+  dropletId: string;
+  posX: string;
+  posY: string;
   xSize: string;
   ySize: string;
 }
 
 export interface StoreBlockInfo {
-  dropletID: string;
-  xPos: string;
-  yPos: string;
+  dropletId: string;
+  posX: string;
+  posY: string;
   time: string;
 }
 
