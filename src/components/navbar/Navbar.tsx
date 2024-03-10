@@ -14,6 +14,7 @@ import DeleteDialog from "./dialogs/DeleteDialog";
 import RunDialog from "./dialogs/RunDialog";
 import api from "../../api/axiosConfig";
 import {Block} from "../../types/blockTypes";
+import {convertBlocksToActions} from "../../conversion/blocksToActionsConverter";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -31,10 +32,11 @@ const Navbar: React.FC = () => {
 
   const sendProgramToBackend = async () => {
     setLoading(true);
+    const programActions = convertBlocksToActions(blocks);
     try {
       const response = await api.post(
         "/api/program",
-        { blocks: blocks },
+        programActions,
         {
           headers: {
             "Content-Type": "application/json",
