@@ -2,19 +2,22 @@ import React, {useState} from 'react';
 import {
   AppBar,
   Box,
-  IconButton,
+  IconButton, LinearProgress,
   Toolbar,
   Tooltip,
   Typography
 } from "@mui/material";
-import {DeleteForever, PlayArrow} from "@mui/icons-material";
-import {useDispatch} from "react-redux";
+import {DeleteForever, SendRounded} from "@mui/icons-material";
+import {useDispatch, useSelector} from "react-redux";
 import {deleteAll} from "../../redux/reducers/blockReducer";
 import DeleteDialog from "./dialogs/DeleteDialog";
 import RunDialog from "./dialogs/RunDialog";
+import api from "../../api/axiosConfig";
+import {Block} from "../../types/blockTypes";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
+  const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const openDeleteDialog = () => { setDeleteDialogOpen(true) };
@@ -23,6 +26,28 @@ const Navbar: React.FC = () => {
   const [runDialogOpen, setRunDialogOpen] = useState(false);
   const openRunDialog = () => { setRunDialogOpen(true) };
   const closeRunDialog = () => { setRunDialogOpen(false) };
+
+  const [loading, setLoading] = useState(false);
+
+  const sendProgramToBackend = async () => {
+    setLoading(true);
+    try {
+      const response = await api.post(
+        "/api/program",
+        { blocks: blocks },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
+      );
+      console.log("Data sent successfully:", response.data);
+    } catch (error) {
+      console.error("Error sending data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <AppBar position="static" sx={{ height: '64px' }}>
@@ -42,17 +67,18 @@ const Navbar: React.FC = () => {
             color="inherit"
             onClick={openDeleteDialog}
           >
-            <DeleteForever sx={{fontSize: "28px"}}/>
+            <DeleteForever sx={{fontSize: "26px"}}/>
           </IconButton>
         </Tooltip>
         <div style={{width: 5}}/>
-        <Tooltip title={"Run Program"}>
+        <Tooltip title={"Compile Program"}>
           <IconButton
             size="large"
             color="inherit"
+            disabled={loading}
             onClick={openRunDialog}
           >
-            <PlayArrow sx={{fontSize: "28px"}}/>
+            <SendRounded sx={{fontSize: "26px"}} />
           </IconButton>
         </Tooltip>
       </Toolbar>
@@ -64,7 +90,17 @@ const Navbar: React.FC = () => {
       <RunDialog
         open={runDialogOpen}
         onClose={closeRunDialog}
+        onRun={() => sendProgramToBackend()}
+        loading={loading}
       />
+      {loading && (
+        <div style={{ position: 'absolute', bottom: 20, right: 20, width: 260 }}>
+          <Typography className="flex flex-col space-y-1 text-center" color="textSecondary">
+            <span>Compiling Program in Backend...</span>
+            <LinearProgress />
+          </Typography>
+        </div>
+      )}
     </AppBar>
   );
 };

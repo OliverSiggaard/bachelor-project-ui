@@ -1,41 +1,29 @@
 import React from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
-import api from "../../../api/axiosConfig";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from "@mui/material";
 
 interface RunDialogProps {
   open: boolean;
   onClose: () => void;
+  onRun: () => void;
+  loading: boolean;
 }
 
-const RunDialog: React.FC<RunDialogProps> = ({ open, onClose }) => {
-
-
-  const sendDataToBackend = async () => {
-    try {
-      const response = await api.post(
-        "/api/program",
-        { message: "Hello from React!" },
-        {
-          headers: {
-            "Content-Type": "application/json", // Assuming you're sending JSON data
-            // Add any other headers if required
-          }
-        }
-      );
-      console.log("Data sent successfully:", response.data);
-    } catch (error) {
-      console.error("Error sending data:", error);
-    }
-  };
-
+const RunDialog: React.FC<RunDialogProps> = ({ open, onClose, onRun }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
-        {"Run program on DMF Biochip?"}
+        {"Compile Program to BioAssembly?"}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Your program will be compiled with the help of advanced algorithms and then run on the DMF Biochip.
+          Your program will be send to the backend, where it will be compiled with the help of algorithms, to then be converted to BioAssembly.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -44,10 +32,10 @@ const RunDialog: React.FC<RunDialogProps> = ({ open, onClose }) => {
         </Button>
         <Button
           variant="contained"
-          onClick={() => {onClose(); sendDataToBackend()}}
+          onClick={() => {onClose(); onRun()}}
           color="success"
         >
-          Run
+          Send
         </Button>
       </DialogActions>
     </Dialog>
