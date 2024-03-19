@@ -21,7 +21,7 @@ const InputBlock: React.FC<InputBlockProps> = ({ block }) => {
     dropletId = info.dropletId;
     posX = info.posX;
     posY = info.posY;
-    volume = info.volume;
+    volume = info.volume + " µl";
   }
 
   return (

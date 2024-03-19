@@ -70,7 +70,7 @@ const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
       </div>
       <TextField
         variant="outlined"
-        label="Volume"
+        label="Volume (µl)"
         value={volume}
         onChange={(e) => setVolume(e.target.value)}
       />
