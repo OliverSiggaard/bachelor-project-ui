@@ -25,19 +25,19 @@ const BlockEditor: React.FC = () => {
 
     switch (selectedBlock.type) {
       case "input":
-        return <InputBlockEditor block={selectedBlock} />
+        return <InputBlockEditor key={selectedBlock.index} block={selectedBlock} />
       case "output":
-        return <OutputBlockEditor block={selectedBlock} />
+        return <OutputBlockEditor key={selectedBlock.index} block={selectedBlock} />
       case "move":
-        return <MoveBlockEditor block={selectedBlock} />
+        return <MoveBlockEditor key={selectedBlock.index} block={selectedBlock} />
       case "merge":
-        return <MergeBlockEditor block={selectedBlock} />
+        return <MergeBlockEditor key={selectedBlock.index} block={selectedBlock} />
       case "split":
-        return <SplitBlockEditor block={selectedBlock} />
+        return <SplitBlockEditor key={selectedBlock.index} block={selectedBlock} />
       case "mix":
-        return <MixBlockEditor block={selectedBlock} />
+        return <MixBlockEditor key={selectedBlock.index} block={selectedBlock} />
       case "store":
-        return <StoreBlockEditor block={selectedBlock} />
+        return <StoreBlockEditor key={selectedBlock.index} block={selectedBlock} />
       default:
         return null;
     }
