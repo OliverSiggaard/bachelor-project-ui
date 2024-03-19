@@ -51,20 +51,22 @@ const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, children }) => {
 
   drag(drop(ref));
 
-  const handleBlockClick = () => {
+  const handleSelectBlock = () => {
     dispatch(selectBlock(index));
   }
 
   return (
-    <div ref={ref} onClick={handleBlockClick} style={{
-      backgroundColor: color,
-      width: 150,
-      height: 150,
-      borderRadius: 10,
-      margin: 15,
-      cursor: 'pointer',
-      boxShadow: selectedBlock === index ? '0px 3px 10px 3px rgba(0,0,0,0.3)' : 'none',
-    }}>
+    <div ref={ref} onDragStart={handleSelectBlock} onClick={handleSelectBlock}
+      style={{
+        backgroundColor: color,
+        width: 150,
+        height: 150,
+        borderRadius: 10,
+        margin: 15,
+        cursor: 'pointer',
+        boxShadow: selectedBlock === index ? '0px 3px 10px 3px rgba(0,0,0,0.3)' : 'none',
+      }}
+    >
       {children}
     </div>
   );

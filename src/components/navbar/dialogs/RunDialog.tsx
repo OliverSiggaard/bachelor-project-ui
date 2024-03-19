@@ -1,21 +1,29 @@
 import React from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from "@mui/material";
 
-interface DeleteDialogProps {
+interface RunDialogProps {
   open: boolean;
   onClose: () => void;
   onRun: () => void;
+  loading: boolean;
 }
 
-const RunDialog: React.FC<DeleteDialogProps> = ({ open, onClose, onRun }) => {
+const RunDialog: React.FC<RunDialogProps> = ({ open, onClose, onRun }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
-        {"Run program on DMF Biochip?"}
+        {"Compile Program to BioAssembly?"}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Your program will be compiled with the help of advanced algorithms and then run on the DMF Biochip.
+          Your program will be send to the backend, where it will be compiled with the help of algorithms, to then be converted to BioAssembly.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -24,10 +32,10 @@ const RunDialog: React.FC<DeleteDialogProps> = ({ open, onClose, onRun }) => {
         </Button>
         <Button
           variant="contained"
-          onClick={() => { onClose(); onRun(); }}
+          onClick={() => {onClose(); onRun()}}
           color="success"
         >
-          Run
+          Send
         </Button>
       </DialogActions>
     </Dialog>

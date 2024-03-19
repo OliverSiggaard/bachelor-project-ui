@@ -57,9 +57,6 @@ const blockSlice = createSlice({
       state.blocks = [];
       state.selectedIndex = null;
     },
-    runProgram() {
-      console.log("This will send the program to the backend");
-    },
     editBlock(state, action: PayloadAction<{ index: number; info: CodeBlockInfo }>) {
       const { index, info } = action.payload;
       state.blocks[index].info = info;
@@ -75,7 +72,6 @@ export const {
   removeBlock,
   moveBlock ,
   deleteAll,
-  runProgram,
   editBlock,
   selectBlock,
 } = blockSlice.actions;
