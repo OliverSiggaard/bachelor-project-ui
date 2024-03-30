@@ -148,7 +148,7 @@ describe("Block Reducer", () => {
   });
 
   test("selectBlock number", () => {
-    const selectedIndex: number = 1;
+    const selectedIndex: number = 0;
 
     const action = selectBlock(selectedIndex);
     const nextState = blockReducer(initialState, action);

@@ -69,7 +69,7 @@ const blockSlice = createSlice({
     },
     selectBlock(state, action: PayloadAction<number | null>) {
       const index = action.payload;
-      state.selectedIndex = (index && index >= 0 && index < state.blocks.length) ? index : null;
+      state.selectedIndex = (index !== null && index >= 0 && index < state.blocks.length) ? index : null;
     },
   },
 });
