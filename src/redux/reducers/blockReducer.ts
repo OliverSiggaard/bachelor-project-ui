@@ -33,11 +33,16 @@ const blockSlice = createSlice({
         state.selectedIndex!--;
       }
 
-      // Update indices of all blocks based on their position in the array
+      // Update indexes of all blocks based on their position in the array
       state.blocks = state.blocks.map((block, index) => ({ ...block, index }));
     },
     moveBlock(state, action: PayloadAction<{ dragIndex: number; hoverIndex: number }>) {
       const { dragIndex, hoverIndex } = action.payload;
+
+      // Check that indexes are within bounds:
+      if (dragIndex < 0 || dragIndex > state.blocks.length ||hoverIndex < 0 ||hoverIndex > state.blocks.length) {
+        return state;
+      }
 
       // Update blocks array immutably using immutability-helper
       state.blocks = update(state.blocks, {
@@ -51,7 +56,6 @@ const blockSlice = createSlice({
       state.blocks = state.blocks.map((block, index) => ({ ...block, index }));
       // Update index of selected block
       state.selectedIndex = hoverIndex;
-
     },
     deleteAll(state) {
       state.blocks = [];
@@ -59,10 +63,13 @@ const blockSlice = createSlice({
     },
     editBlock(state, action: PayloadAction<{ index: number; info: CodeBlockInfo }>) {
       const { index, info } = action.payload;
-      state.blocks[index].info = info;
+      if (index >= 0 && index < state.blocks.length) {
+        state.blocks[index].info = info;
+      }
     },
     selectBlock(state, action: PayloadAction<number | null>) {
-      state.selectedIndex = action.payload
+      const index = action.payload;
+      state.selectedIndex = (index && index >= 0 && index < state.blocks.length) ? index : null;
     },
   },
 });
