@@ -19,11 +19,12 @@ const RunDialog: React.FC<RunDialogProps> = ({ open, onClose, onRun }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
-        {"Compile Program to BioAssembly?"}
+        {"Download compiled program?"}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Your program will be send to the backend, where it will be compiled with the help of algorithms, to then be converted to BioAssembly.
+          Your program will be sent to the backend, where it will be compiled into BioAssembly.
+          Upon successful compilation, an automatic download of the compiled program will start.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -35,7 +36,7 @@ const RunDialog: React.FC<RunDialogProps> = ({ open, onClose, onRun }) => {
           onClick={() => {onClose(); onRun()}}
           color="success"
         >
-          Send
+          Download
         </Button>
       </DialogActions>
     </Dialog>

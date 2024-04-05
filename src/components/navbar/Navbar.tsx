@@ -1,13 +1,6 @@
 import React, {useState} from 'react';
-import {
-  AppBar,
-  Box,
-  IconButton, LinearProgress,
-  Toolbar,
-  Tooltip,
-  Typography
-} from "@mui/material";
-import {DeleteForever, SendRounded} from "@mui/icons-material";
+import {Alert, AppBar, Box, IconButton, LinearProgress, Snackbar, Toolbar, Tooltip, Typography} from "@mui/material";
+import {DeleteForever, Download} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteAll} from "../../redux/reducers/blockReducer";
 import DeleteDialog from "./dialogs/DeleteDialog";
@@ -28,14 +21,15 @@ const Navbar: React.FC = () => {
   const openRunDialog = () => { setRunDialogOpen(true) };
   const closeRunDialog = () => { setRunDialogOpen(false) };
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean | undefined>(undefined);
 
   const sendProgramToBackend = async () => {
     setLoading(true);
     const programActions = convertBlocksToActions(blocks);
     try {
       const response = await api.post(
-        "/api/program",
+        "/api/compile",
         programActions,
         {
           headers: {
@@ -43,13 +37,43 @@ const Navbar: React.FC = () => {
           }
         }
       );
-      console.log("Data sent successfully:", response.data);
+      console.log("Data sent successfully:", response.status);
+      downloadCompiledProgram(response.data);
+      if (response.status === 200) {
+        setSuccess(true);
+      } else if (response.status === 400) {
+        setSuccess(false);
+      }
+
     } catch (error) {
+      setSuccess(false);
       console.error("Error sending data:", error);
     } finally {
       setLoading(false);
     }
   };
+
+  const downloadCompiledProgram = (data: BlobPart) => {
+    const blob = new Blob([data], { type: 'text-plain' });
+    const url = window.URL.createObjectURL(blob);
+    const fileName = getFileName();
+    downloadFile(url, fileName);
+  }
+
+  const getFileName = () => {
+    const currentTime = new Date().toLocaleTimeString('da-DK').replaceAll(".", "");
+    return `compiled_program_${currentTime}.basm`;
+  }
+
+  // Create a hidden anchor element and trigger download
+  const downloadFile = (url: string, fileName: string) => {
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    window.URL.revokeObjectURL(url); // Clean up
+  }
 
   return (
     <AppBar position="static" sx={{ height: '64px' }}>
@@ -73,14 +97,14 @@ const Navbar: React.FC = () => {
           </IconButton>
         </Tooltip>
         <div style={{width: 5}}/>
-        <Tooltip title={"Compile Program"}>
+        <Tooltip title={"Download Compiled Program"}>
           <IconButton
             size="large"
             color="inherit"
             disabled={loading}
             onClick={openRunDialog}
           >
-            <SendRounded sx={{fontSize: "26px"}} />
+            <Download sx={{fontSize: "26px"}} />
           </IconButton>
         </Tooltip>
       </Toolbar>
@@ -103,6 +127,17 @@ const Navbar: React.FC = () => {
           </Typography>
         </div>
       )}
+      {success !== undefined && (
+        <Snackbar open={true} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+          <Alert
+            onClose={() => setSuccess(undefined)}
+            sx={{width: "100%"}}
+            severity={success ? "success" : "error"}
+          >
+            {success ? "Program compiled successfully!" : "Program compilation failed!"}
+          </Alert>
+        </Snackbar>
+      )};
     </AppBar>
   );
 };
