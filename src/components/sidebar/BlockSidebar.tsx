@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import api from "../../api/axiosConfig";
+import React from 'react';
 import {Button} from "@mui/material";
 import {addBlock} from "../../redux/reducers/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -10,9 +9,6 @@ import {BlockColors} from "../../enums/blockColors";
 import {BlockIcons} from "../../enums/BlockIcons";
 
 const BlockSidebar: React.FC = () => {
-
-  const [helloString, setHelloString] = useState<string>('');
-
   const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
   const dispatch = useDispatch();
 
@@ -24,15 +20,6 @@ const BlockSidebar: React.FC = () => {
   const logBlocks = () => {
     for (let i = 0; i < blocks.length; i++) {
       console.log(blocks.at(i));
-    }
-  }
-
-  const getHelloString = async () => {
-    try {
-      const response = await api.get("/api/test");
-      setHelloString(response.data);
-    } catch (err) {
-      setHelloString("Error connecting to Spring Boot - check if it is running")
     }
   }
 
@@ -66,12 +53,6 @@ const BlockSidebar: React.FC = () => {
           <Button variant="contained" color="secondary" onClick={logBlocks} sx={{width: 200, minHeight: 40}}>
             Log Blocks
           </Button>
-          <Button variant="contained" color="secondary" onClick={getHelloString} sx={{width: 200, minHeight: 40}}>
-            Call Spring Boot
-          </Button>
-          <div style={{textAlign: 'center'}}>
-            {helloString}
-          </div>
         </div>
       </div>
       <BlockEditor />

@@ -5,74 +5,43 @@ import {useDispatch, useSelector} from "react-redux";
 import {deleteAll} from "../../redux/reducers/blockReducer";
 import DeleteDialog from "./dialogs/DeleteDialog";
 import RunDialog from "./dialogs/RunDialog";
-import api from "../../api/axiosConfig";
 import {Block} from "../../types/blockTypes";
 import {convertBlocksToActions} from "../../conversion/blocksToActionsConverter";
+import {useApiCall} from "../../api/hooks/useApiCall";
+import {downloadFile, getCompiledProgramFileName} from "../../utils/fileUtils";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
   const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
 
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
   const openDeleteDialog = () => { setDeleteDialogOpen(true) };
   const closeDeleteDialog = () => { setDeleteDialogOpen(false) };
 
-  const [runDialogOpen, setRunDialogOpen] = useState(false);
+  const [runDialogOpen, setRunDialogOpen] = useState<boolean>(false);
   const openRunDialog = () => { setRunDialogOpen(true) };
   const closeRunDialog = () => { setRunDialogOpen(false) };
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<boolean | undefined>(undefined);
+  const [CompilationStatusSnackbarOpen, setCompilationStatusSnackbarOpen] = useState<boolean>(false);
 
-  const sendProgramToBackend = async () => {
-    setLoading(true);
-    const programActions = convertBlocksToActions(blocks);
+  const { loading, success, sendRequest } = useApiCall();
+
+  const handleSendProgramToBackend = async () => {
     try {
-      const response = await api.post(
+      const programActions = convertBlocksToActions(blocks);
+      const compiledProgram = await sendRequest(
         "/api/compile",
+        "POST",
         programActions,
         {
-          headers: {
-            "Content-Type": "application/json",
-          }
-        }
-      );
-      console.log("Data sent successfully:", response.status);
-      downloadCompiledProgram(response.data);
-      if (response.status === 200) {
-        setSuccess(true);
-      } else if (response.status === 400) {
-        setSuccess(false);
-      }
-
+          "Content-Type": "application/json",
+        });
+      downloadFile(compiledProgram, getCompiledProgramFileName())
     } catch (error) {
-      setSuccess(false);
-      console.error("Error sending data:", error);
+      console.error("An error occurred while sending the program to the backend:", error);
     } finally {
-      setLoading(false);
+      setCompilationStatusSnackbarOpen(true);
     }
-  };
-
-  const downloadCompiledProgram = (data: BlobPart) => {
-    const blob = new Blob([data], { type: 'text-plain' });
-    const url = window.URL.createObjectURL(blob);
-    const fileName = getFileName();
-    downloadFile(url, fileName);
-  }
-
-  const getFileName = () => {
-    const currentTime = new Date().toLocaleTimeString('da-DK').replaceAll(".", "");
-    return `compiled_program_${currentTime}.basm`;
-  }
-
-  // Create a hidden anchor element and trigger download
-  const downloadFile = (url: string, fileName: string) => {
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.href = url;
-    a.download = fileName;
-    a.click();
-    window.URL.revokeObjectURL(url); // Clean up
   }
 
   return (
@@ -84,7 +53,7 @@ const Navbar: React.FC = () => {
           component="div"
           sx={{ fontWeight: "bold" }}
         >
-          DMFB-Programmer
+          DMF-Programmer
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
         <Tooltip title={"Delete All"}>
@@ -116,7 +85,7 @@ const Navbar: React.FC = () => {
       <RunDialog
         open={runDialogOpen}
         onClose={closeRunDialog}
-        onRun={() => sendProgramToBackend()}
+        onRun={() => handleSendProgramToBackend()}
         loading={loading}
       />
       {loading && (
@@ -127,17 +96,15 @@ const Navbar: React.FC = () => {
           </Typography>
         </div>
       )}
-      {success !== undefined && (
-        <Snackbar open={true} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
-          <Alert
-            onClose={() => setSuccess(undefined)}
-            sx={{width: "100%"}}
-            severity={success ? "success" : "error"}
-          >
-            {success ? "Program compiled successfully!" : "Program compilation failed!"}
-          </Alert>
-        </Snackbar>
-      )};
+      <Snackbar open={CompilationStatusSnackbarOpen} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+        <Alert
+          onClose={() => setCompilationStatusSnackbarOpen(false)}
+          sx={{width: "100%"}}
+          severity={success ? "success" : "error"}
+        >
+          {success ? "Program compiled successfully!" : "Program compilation failed!"}
+        </Alert>
+      </Snackbar>
     </AppBar>
   );
 };
