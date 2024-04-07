@@ -1,5 +1,5 @@
 import {useState} from "react";
-import api from "../axiosConfig";
+import api from "./axiosConfig";
 
 // Custom hook for handling API calls
 

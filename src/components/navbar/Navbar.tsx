@@ -7,7 +7,7 @@ import DeleteDialog from "./dialogs/DeleteDialog";
 import RunDialog from "./dialogs/RunDialog";
 import {Block} from "../../types/blockTypes";
 import {convertBlocksToActions} from "../../conversion/blocksToActionsConverter";
-import {useApiCall} from "../../api/hooks/useApiCall";
+import {useApiCall} from "../../api/useApiCall";
 import {downloadFile, getCompiledProgramFileName} from "../../utils/fileUtils";
 
 const Navbar: React.FC = () => {

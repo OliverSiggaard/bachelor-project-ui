@@ -1,9 +1,9 @@
 import React from 'react';
-import BaseBlock from "./BaseBlock";
+import BaseBlock from "../BaseBlock";
 import {Divider, Typography} from "@mui/material";
-import {Block, InputBlockInfo} from "../../types/blockTypes";
-import {BlockColors} from "../../enums/blockColors";
-import {BlockIcons} from "../../enums/BlockIcons";
+import {Block, InputBlockInfo} from "../../../types/blockTypes";
+import {BlockColors} from "../../../enums/blockColors";
+import {BlockIcons} from "../../../enums/BlockIcons";
 
 interface InputBlockProps {
   block: Block;
@@ -16,7 +16,7 @@ const InputBlock: React.FC<InputBlockProps> = ({ block }) => {
   let posY: string = '-';
   let volume: string = '-';
 
-  if (block.info && 'volume' in block.info) {
+  if (block.info !== undefined) {
     const info = block.info as InputBlockInfo;
     dropletId = info.dropletId;
     posX = info.posX;
