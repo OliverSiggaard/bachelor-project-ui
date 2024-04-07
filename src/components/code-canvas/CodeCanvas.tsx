@@ -3,7 +3,7 @@ import BaseBlock from "../blocks/BaseBlock";
 import {useSelector} from "react-redux";
 import {Block} from "../../types/blockTypes";
 import {ArrowForward} from "@mui/icons-material";
-import InputBlock from "../blocks/InputBlock";
+import InputBlock from "../blocks/input-block/InputBlock";
 import OutputBlock from "../blocks/OutputBlock";
 import MoveBlock from "../blocks/MoveBlock";
 import MergeBlock from "../blocks/MergeBlock";
