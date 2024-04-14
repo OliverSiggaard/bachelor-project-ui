@@ -1,9 +1,9 @@
 import React from 'react';
-import BaseBlock from "../BaseBlock";
+import BaseBlock from "./BaseBlock";
 import {Divider, Typography} from "@mui/material";
-import {Block, InputBlockInfo} from "../../../types/blockTypes";
-import {BlockColors} from "../../../enums/blockColors";
-import {BlockIcons} from "../../../enums/BlockIcons";
+import {Block, InputBlockInfo} from "../../types/blockTypes";
+import {BlockColors} from "../../enums/blockColors";
+import {BlockIcons} from "../../enums/BlockIcons";
 
 interface InputBlockProps {
   block: Block;

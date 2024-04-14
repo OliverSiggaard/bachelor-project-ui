@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Button, TextField} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {editBlock, removeBlock, selectBlock} from "../../../redux/reducers/blockReducer";
+import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, MergeBlockInfo} from "../../../types/blockTypes";
+import AutocompleteDropletId from "./AutocompleteDropletId";
 
 interface MergeBlockEditorProps {
   block: Block;
@@ -52,24 +53,9 @@ const MergeBlockEditor: React.FC<MergeBlockEditorProps> = ({ block }) => {
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
       <div style={{fontSize: 24, textAlign: "center"}}>Merge Block</div>
-      <TextField
-        variant="outlined"
-        label="Origin Droplet 1 ID"
-        value={originDropletId1}
-        onChange={(e) => setOriginDropletId1(e.target.value)}
-      />
-      <TextField
-        variant="outlined"
-        label="Origin Droplet 2 ID"
-        value={originDropletId2}
-        onChange={(e) => setOriginDropletId2(e.target.value)}
-      />
-      <TextField
-        variant="outlined"
-        label="Result Droplet ID"
-        value={resultDropletId}
-        onChange={(e) => setResultDropletId(e.target.value)}
-      />
+      <AutocompleteDropletId dropletId={originDropletId1} setDropletId={setOriginDropletId1} text="Origin Droplet 1 ID" />
+      <AutocompleteDropletId dropletId={originDropletId2} setDropletId={setOriginDropletId2} text="Origin Droplet 2 ID" />
+      <AutocompleteDropletId dropletId={resultDropletId} setDropletId={setResultDropletId} text="Result Droplet ID" />
       <div className="flex flex-row space-x-3">
         <TextField
           variant="outlined"

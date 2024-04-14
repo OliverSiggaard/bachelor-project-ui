@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {dndItemTypes} from "../../types/dndItemTypes";
 import type {Identifier} from 'dnd-core'
-import {moveBlock, selectBlock} from "../../redux/reducers/blockReducer";
+import {moveBlock, selectBlock} from "../../redux/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
 
 interface BaseBlockProps {

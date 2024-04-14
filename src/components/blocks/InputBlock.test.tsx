@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import InputBlock from './InputBlock';
 import {Provider} from "react-redux";
-import {store} from "../../../redux/store";
+import {store} from "../../redux/store";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 

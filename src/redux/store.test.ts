@@ -1,5 +1,5 @@
 import { store } from './store';
-import {addBlock, selectBlock} from "./reducers/blockReducer";
+import {addBlock, selectBlock} from "./blockReducer";
 
 describe('Redux Store', () => {
   test('should dispatch actions and update the state correctly', () => {
