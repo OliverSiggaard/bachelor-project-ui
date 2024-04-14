@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Button, TextField} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {editBlock, removeBlock, selectBlock} from "../../../redux/reducers/blockReducer";
+import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, OutputBlockInfo} from "../../../types/blockTypes";
+import AutocompleteDropletId from "./block-editor-utils/AutocompleteDropletId";
 
 interface OutputBlockEditorProps {
   block: Block;
@@ -44,12 +45,7 @@ const OutputBlockEditor: React.FC<OutputBlockEditorProps> = ({ block }) => {
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
       <div style={{fontSize: 24, textAlign: "center"}}>Output Block</div>
-      <TextField
-        variant="outlined"
-        label="Droplet ID"
-        value={dropletId}
-        onChange={(e) => setDropletId(e.target.value)}
-      />
+      <AutocompleteDropletId dropletId={dropletId} setDropletId={setDropletId} />
       <div className="flex flex-row space-x-3">
         <TextField
           variant="outlined"

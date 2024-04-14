@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Alert, AppBar, Box, IconButton, LinearProgress, Snackbar, Toolbar, Tooltip, Typography} from "@mui/material";
 import {DeleteForever, Download} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteAll} from "../../redux/reducers/blockReducer";
+import {deleteAll} from "../../redux/blockReducer";
 import DeleteDialog from "./dialogs/DeleteDialog";
 import RunDialog from "./dialogs/RunDialog";
 import {Block} from "../../types/blockTypes";

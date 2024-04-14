@@ -1,5 +1,5 @@
 import blockReducer, { addBlock, removeBlock, moveBlock, deleteAll, editBlock, selectBlock } from './blockReducer';
-import {Block, CodeBlockInfo} from "../../types/blockTypes";
+import {Block, CodeBlockInfo} from "../types/blockTypes";
 
 describe("Block Reducer", () => {
   let initialState: { blocks: Block[]; selectedIndex: number | null };

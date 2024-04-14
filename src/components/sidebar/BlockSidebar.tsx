@@ -1,16 +1,18 @@
 import React from 'react';
 import {Button} from "@mui/material";
-import {addBlock} from "../../redux/reducers/blockReducer";
+import {addBlock} from "../../redux/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {Block} from "../../types/blockTypes";
 import BlockEditor from "./block-editors/BlockEditor";
 import AddBlockButton from "./AddBlockButton";
 import {BlockColors} from "../../enums/blockColors";
 import {BlockIcons} from "../../enums/BlockIcons";
+import {getAvailableDropletIdsForIndex} from "../../utils/dropletIdUtils";
 
 const BlockSidebar: React.FC = () => {
   const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
   const dispatch = useDispatch();
+  const index = useSelector((state: {selectedIndex: number | null}) => state.selectedIndex);
 
   const addBlockOfType = (type: string) => {
     const newBlockId = blocks.length;
@@ -20,6 +22,12 @@ const BlockSidebar: React.FC = () => {
   const logBlocks = () => {
     for (let i = 0; i < blocks.length; i++) {
       console.log(blocks.at(i));
+    }
+  }
+
+  const logDropletIds = () => {
+    if (index !== null) {
+      console.log(getAvailableDropletIdsForIndex(blocks, index).toString());
     }
   }
 
@@ -52,6 +60,9 @@ const BlockSidebar: React.FC = () => {
           <span>Temporary Dev Buttons :</span>
           <Button variant="contained" color="secondary" onClick={logBlocks} sx={{width: 200, minHeight: 40}}>
             Log Blocks
+          </Button>
+          <Button variant="contained" color="secondary" onClick={logDropletIds} sx={{width: 200, minHeight: 40}}>
+            Log available Droplet IDs for selected block
           </Button>
         </div>
       </div>

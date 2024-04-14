@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Button, TextField} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {editBlock, removeBlock, selectBlock} from "../../../redux/reducers/blockReducer";
+import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, SplitBlockInfo} from "../../../types/blockTypes";
+import AutocompleteDropletId from "./block-editor-utils/AutocompleteDropletId";
 
 interface SplitBlockEditorProps {
   block: Block;
@@ -64,24 +65,9 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
       <div style={{fontSize: 24, textAlign: "center"}}>Split Block</div>
-      <TextField
-        variant="outlined"
-        label="Origin Droplet ID"
-        value={originDropletId}
-        onChange={(e) => setOriginDropletId(e.target.value)}
-      />
-      <TextField
-        variant="outlined"
-        label="Result Droplet 1 ID"
-        value={resultDropletId1}
-        onChange={(e) => setResultDropletId1(e.target.value)}
-      />
-      <TextField
-        variant="outlined"
-        label="Result Droplet 2 ID"
-        value={resultDropletId2}
-        onChange={(e) => setResultDropletId2(e.target.value)}
-      />
+      <AutocompleteDropletId dropletId={originDropletId} setDropletId={setOriginDropletId} text="Origin Droplet ID" />
+      <AutocompleteDropletId dropletId={resultDropletId1} setDropletId={setResultDropletId1} text="Result Droplet 1 ID" />
+      <AutocompleteDropletId dropletId={resultDropletId2} setDropletId={setResultDropletId2} text="Result Droplet 2 ID" />
       <TextField
         variant="outlined"
         label="Ratio"

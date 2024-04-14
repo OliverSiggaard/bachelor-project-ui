@@ -5,7 +5,7 @@ import InputBlockEditor from "./InputBlockEditor";
 import OutputBlockEditor from "./OutputBlockEditor";
 import {Button, Divider} from "@mui/material";
 import {KeyboardArrowDown} from "@mui/icons-material";
-import {selectBlock} from "../../../redux/reducers/blockReducer";
+import {selectBlock} from "../../../redux/blockReducer";
 import MoveBlockEditor from "./MoveBlockEditor";
 import MergeBlockEditor from "./MergeBlockEditor";
 import SplitBlockEditor from "./SplitBlockEditor";
