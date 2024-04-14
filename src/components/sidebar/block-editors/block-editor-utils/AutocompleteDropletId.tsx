@@ -1,8 +1,8 @@
 import React from 'react';
 import {Autocomplete, TextField} from "@mui/material";
 import {useSelector} from "react-redux";
-import {Block} from "../../../types/blockTypes";
-import {getAvailableDropletIdsForIndex} from "../../../utils/dropletIdUtils";
+import {Block} from "../../../../types/blockTypes";
+import {getAvailableDropletIdsForIndex} from "../../../../utils/dropletIdUtils";
 
 interface AutocompleteDropletIdProps {
   dropletId: string;

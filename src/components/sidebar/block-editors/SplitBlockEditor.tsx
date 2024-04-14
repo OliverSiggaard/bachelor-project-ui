@@ -3,7 +3,7 @@ import {Button, TextField} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, SplitBlockInfo} from "../../../types/blockTypes";
-import AutocompleteDropletId from "./AutocompleteDropletId";
+import AutocompleteDropletId from "./block-editor-utils/AutocompleteDropletId";
 
 interface SplitBlockEditorProps {
   block: Block;
