@@ -55,7 +55,12 @@ const MergeBlockEditor: React.FC<MergeBlockEditorProps> = ({ block }) => {
       <div style={{fontSize: 24, textAlign: "center"}}>Merge Block</div>
       <AutocompleteDropletId dropletId={originDropletId1} setDropletId={setOriginDropletId1} text="Origin Droplet 1 ID" />
       <AutocompleteDropletId dropletId={originDropletId2} setDropletId={setOriginDropletId2} text="Origin Droplet 2 ID" />
-      <AutocompleteDropletId dropletId={resultDropletId} setDropletId={setResultDropletId} text="Result Droplet ID" />
+      <TextField
+        variant="outlined"
+        label="Result Droplet ID"
+        value={resultDropletId}
+        onChange={(e) => setResultDropletId(e.target.value)}
+      />
       <div className="flex flex-row space-x-3">
         <TextField
           variant="outlined"

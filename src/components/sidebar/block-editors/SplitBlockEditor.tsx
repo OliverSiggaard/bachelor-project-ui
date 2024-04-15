@@ -66,8 +66,18 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
       <div style={{fontSize: 24, textAlign: "center"}}>Split Block</div>
       <AutocompleteDropletId dropletId={originDropletId} setDropletId={setOriginDropletId} text="Origin Droplet ID" />
-      <AutocompleteDropletId dropletId={resultDropletId1} setDropletId={setResultDropletId1} text="Result Droplet 1 ID" />
-      <AutocompleteDropletId dropletId={resultDropletId2} setDropletId={setResultDropletId2} text="Result Droplet 2 ID" />
+      <TextField
+        variant="outlined"
+        label="Result Droplet 1 ID"
+        value={resultDropletId1}
+        onChange={(e) => setResultDropletId1(e.target.value)}
+      />
+      <TextField
+        variant="outlined"
+        label="Result Droplet 2 ID"
+        value={resultDropletId2}
+        onChange={(e) => setResultDropletId2(e.target.value)}
+      />
       <TextField
         variant="outlined"
         label="Ratio"
