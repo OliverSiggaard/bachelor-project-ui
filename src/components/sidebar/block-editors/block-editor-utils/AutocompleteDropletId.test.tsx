@@ -36,9 +36,19 @@ describe("AutocompleteDropletId Component", () => {
           posX: "10",
           posY: "5",
         }
+      },
+      {
+        index: 3,
+        type: "input",
+        info: {
+          dropletId: "testId3",
+          posX: "20",
+          posY: "20",
+          volume: "6"
+        }
       }
     ],
-    selectedIndex: 0,
+    selectedIndex: 1,
   };
   const store = mockStore(initialState);
 
@@ -62,7 +72,7 @@ describe("AutocompleteDropletId Component", () => {
 
     const store = mockStore({
       ...initialState,
-      selectedIndex: 2
+      selectedIndex: 3
     });
 
     render(

@@ -2,7 +2,7 @@ import { getAvailableDropletIdsForIndex } from "./dropletIdUtils";
 import {Block} from "../types/blockTypes";
 
 describe("dropletIdUtils", () => {
-  test("Should return dropletId for input block", () => {
+  test("Should return dropletId for input block at the next index", () => {
     const mockBlocks: Block[] = [
       {
         index: 0,
@@ -13,13 +13,23 @@ describe("dropletIdUtils", () => {
           posY: "5",
           volume: "5"
         }
+      },
+      {
+        index: 1,
+        type: "input",
+        info: {
+          dropletId: "testId2",
+          posX: "20",
+          posY: "20",
+          volume: "6"
+        }
       }
     ];
-    const mockIndex = 0;
+    const mockIndex = 1;
 
     expect(getAvailableDropletIdsForIndex(mockBlocks, mockIndex)).toEqual(["testId1"]);
   });
-  test("Should remove dropletId for output block", () => {
+  test("Should remove dropletId for output block at the next index", () => {
     const mockBlocks: Block[] = [
       {
         index: 0,
@@ -39,13 +49,23 @@ describe("dropletIdUtils", () => {
           posX: "10",
           posY: "5",
         }
+      },
+      {
+        index: 2,
+        type: "input",
+        info: {
+          dropletId: "testId2",
+          posX: "20",
+          posY: "20",
+          volume: "6"
+        }
       }
     ];
-    const mockIndex = 1;
+    const mockIndex = 2;
 
     expect(getAvailableDropletIdsForIndex(mockBlocks, mockIndex)).toEqual([]);
   });
-  test ("Should remove origin droplets and add result droplet for merge block", () => {
+  test ("Should remove origin droplets and add result droplet for merge block at the next index", () => {
     const mockBlocks: Block[] = [
       {
         index: 0,
@@ -77,13 +97,22 @@ describe("dropletIdUtils", () => {
           posX: "10",
           posY: "10"
         }
+      },
+      {
+        index: 3,
+        type: "move",
+        info: {
+          dropletId: "testId3",
+          posX: "10",
+          posY: "10",
+        }
       }
     ];
-    const mockIndex = 2;
+    const mockIndex = 3;
 
     expect(getAvailableDropletIdsForIndex(mockBlocks, mockIndex)).toEqual(["testId3"]);
   });
-  test("Should remove origin droplet and add result droplets for split block", () => {
+  test("Should remove origin droplet and add result droplets for split block at the next index", () => {
     const mockBlocks: Block[] = [
       {
         index: 0,
@@ -108,9 +137,18 @@ describe("dropletIdUtils", () => {
           posX2: "20",
           posY2: "20"
         }
+      },
+      {
+        index: 2,
+        type: "move",
+        info: {
+          dropletId: "testId2",
+          posX: "10",
+          posY: "10",
+        }
       }
     ];
-    const mockIndex = 1;
+    const mockIndex = 2;
 
     expect(getAvailableDropletIdsForIndex(mockBlocks, mockIndex)).toEqual(["testId2", "testId3"]);
   });
@@ -133,9 +171,18 @@ describe("dropletIdUtils", () => {
       {
         index: 2,
         type: "output"
+      },
+      {
+        index: 3,
+        type: "move",
+        info: {
+          dropletId: "testId1",
+          posX: "20",
+          posY: "20"
+        }
       }
     ];
-    const mockIndex = 2;
+    const mockIndex = 3;
 
     expect(getAvailableDropletIdsForIndex(mockBlocks, mockIndex)).toEqual(["testId1"]);
   });
@@ -175,7 +222,7 @@ describe("dropletIdUtils", () => {
         }
       }
     ];
-    const mockIndex = 1;
+    const mockIndex = 10;
 
     expect(getAvailableDropletIdsForIndex(mockBlocks, mockIndex)).toEqual([]);
   });
@@ -245,11 +292,11 @@ describe("dropletIdUtils", () => {
         }
       },
     ];
-    expect(getAvailableDropletIdsForIndex(mockBlocks, 0)).toEqual(["testId1"]);
-    expect(getAvailableDropletIdsForIndex(mockBlocks, 1)).toEqual(["testId1", "testId2"]);
-    expect(getAvailableDropletIdsForIndex(mockBlocks, 2)).toEqual(["testId3"]);
-    expect(getAvailableDropletIdsForIndex(mockBlocks, 3)).toEqual(["testId4", "testId5"]);
-    expect(getAvailableDropletIdsForIndex(mockBlocks, 4)).toEqual(["testId5"]);
-    expect(getAvailableDropletIdsForIndex(mockBlocks, 5)).toEqual([]);
+    expect(getAvailableDropletIdsForIndex(mockBlocks, 0)).toEqual([]);
+    expect(getAvailableDropletIdsForIndex(mockBlocks, 1)).toEqual(["testId1"]);
+    expect(getAvailableDropletIdsForIndex(mockBlocks, 2)).toEqual(["testId1", "testId2"]);
+    expect(getAvailableDropletIdsForIndex(mockBlocks, 3)).toEqual(["testId3"]);
+    expect(getAvailableDropletIdsForIndex(mockBlocks, 4)).toEqual(["testId4", "testId5"]);
+    expect(getAvailableDropletIdsForIndex(mockBlocks, 5)).toEqual(["testId5"]);
   });
 });

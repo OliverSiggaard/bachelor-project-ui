@@ -11,7 +11,7 @@ export function getAvailableDropletIdsForIndex (blocks: Block[], index: number):
 
   if (index < 0 || index >= blocks.length || blocks.length === 0) return dropletIds; // Return empty array if index is invalid or blocks array is empty
 
-  for (let i = 0; i <= index; i++) {
+  for (let i = 0; i < index; i++) {
     if (blocks[i].info === undefined) continue; // Skip blocks without info
     const block = blocks[i];
 
