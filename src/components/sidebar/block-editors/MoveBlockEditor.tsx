@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Button, TextField} from "@mui/material";
+import {Button} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, MoveBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./block-editor-utils/AutocompleteDropletId";
+import PositionInput from "./block-editor-utils/PositionInput";
 
 interface MoveBlockEditorProps {
   block: Block;
@@ -46,20 +47,12 @@ const MoveBlockEditor: React.FC<MoveBlockEditorProps> = ({ block }) => {
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
       <div style={{fontSize: 24, textAlign: "center"}}>Move Block</div>
       <AutocompleteDropletId dropletId={dropletId} setDropletId={setDropletId} />
-      <div className="flex flex-row space-x-3">
-        <TextField
-          variant="outlined"
-          label="x-Pos"
-          value={posX}
-          onChange={(e) => setPosX(e.target.value)}
-        />
-        <TextField
-          variant="outlined"
-          label="y-Pos"
-          value={posY}
-          onChange={(e) => setPosY(e.target.value)}
-        />
-      </div>
+      <PositionInput
+        posX={posX}
+        posY={posY}
+        setPosX={setPosX}
+        setPosY={setPosY}
+      />
       <div className="flex flex-row space-x-3">
         <Button variant="contained" fullWidth={true} color="error" onClick={() => dispatch(removeBlock(block.index))}>
           Delete

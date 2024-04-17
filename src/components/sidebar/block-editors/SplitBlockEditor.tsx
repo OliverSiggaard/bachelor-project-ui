@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, SplitBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./block-editor-utils/AutocompleteDropletId";
+import PositionInput from "./block-editor-utils/PositionInput";
 
 interface SplitBlockEditorProps {
   block: Block;
@@ -84,34 +85,22 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
         value={ratio}
         onChange={(e) => setRatio(e.target.value)}
       />
-      <div className="flex flex-row space-x-3">
-        <TextField
-          variant="outlined"
-          label="x-Pos 1"
-          value={posX1}
-          onChange={(e) => setPosX1(e.target.value)}
-        />
-        <TextField
-          variant="outlined"
-          label="y-Pos 1"
-          value={posY1}
-          onChange={(e) => setPosY1(e.target.value)}
-        />
-      </div>
-      <div className="flex flex-row space-x-3">
-        <TextField
-          variant="outlined"
-          label="x-Pos 2"
-          value={posX2}
-          onChange={(e) => setPosX2(e.target.value)}
-        />
-        <TextField
-          variant="outlined"
-          label="y-Pos 2"
-          value={posY2}
-          onChange={(e) => setPosY2(e.target.value)}
-        />
-      </div>
+      <PositionInput
+        posX={posX1}
+        posY={posY1}
+        setPosX={setPosX1}
+        setPosY={setPosY1}
+        textPosX={"x-Pos 1"}
+        textPosY={"y-Pos 1"}
+      />
+      <PositionInput
+        posX={posX2}
+        posY={posY2}
+        setPosX={setPosX2}
+        setPosY={setPosY2}
+        textPosX={"x-Pos 2"}
+        textPosY={"y-Pos 2"}
+      />
       <div className="flex flex-row space-x-3">
         <Button variant="contained" fullWidth={true} color="error" onClick={() => dispatch(removeBlock(block.index))}>
           Delete

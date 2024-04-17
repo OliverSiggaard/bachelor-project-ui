@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, StoreBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./block-editor-utils/AutocompleteDropletId";
+import PositionInput from "./block-editor-utils/PositionInput";
 
 interface StoreBlockEditorProps {
   block: Block;
@@ -50,20 +51,12 @@ const StoreBlockEditor: React.FC<StoreBlockEditorProps> = ({ block }) => {
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
       <div style={{fontSize: 24, textAlign: "center"}}>Store Block</div>
       <AutocompleteDropletId dropletId={dropletId} setDropletId={setDropletId} />
-      <div className="flex flex-row space-x-3">
-        <TextField
-          variant="outlined"
-          label="x-Pos"
-          value={posX}
-          onChange={(e) => setPosX(e.target.value)}
-        />
-        <TextField
-          variant="outlined"
-          label="y-Pos"
-          value={posY}
-          onChange={(e) => setPosY(e.target.value)}
-        />
-      </div>
+      <PositionInput
+        posX={posX}
+        posY={posY}
+        setPosX={setPosX}
+        setPosY={setPosY}
+      />
       <TextField
         variant="outlined"
         label="Time (ms)"

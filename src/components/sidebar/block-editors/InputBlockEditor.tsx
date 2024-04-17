@@ -3,6 +3,7 @@ import {Button, TextField} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, InputBlockInfo} from "../../../types/blockTypes";
+import PositionInput from "./block-editor-utils/PositionInput";
 
 interface InputBlockEditorProps {
   block: Block;
@@ -54,20 +55,12 @@ const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
         value={dropletId}
         onChange={(e) => setDropletId(e.target.value)}
       />
-      <div className="flex flex-row space-x-3">
-        <TextField
-          variant="outlined"
-          label="x-Pos"
-          value={posX}
-          onChange={(e) => setPosX(e.target.value)}
-        />
-        <TextField
-          variant="outlined"
-          label="y-Pos"
-          value={posY}
-          onChange={(e) => setPosY(e.target.value)}
-        />
-      </div>
+      <PositionInput
+        posX={posX}
+        posY={posY}
+        setPosX={setPosX}
+        setPosY={setPosY}
+      />
       <TextField
         variant="outlined"
         label="Volume (µl)"

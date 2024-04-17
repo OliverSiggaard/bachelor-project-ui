@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, MergeBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./block-editor-utils/AutocompleteDropletId";
+import PositionInput from "./block-editor-utils/PositionInput";
 
 interface MergeBlockEditorProps {
   block: Block;
@@ -61,20 +62,12 @@ const MergeBlockEditor: React.FC<MergeBlockEditorProps> = ({ block }) => {
         value={resultDropletId}
         onChange={(e) => setResultDropletId(e.target.value)}
       />
-      <div className="flex flex-row space-x-3">
-        <TextField
-          variant="outlined"
-          label="x-Pos"
-          value={posX}
-          onChange={(e) => setPosX(e.target.value)}
-        />
-        <TextField
-          variant="outlined"
-          label="y-Pos"
-          value={posY}
-          onChange={(e) => setPosY(e.target.value)}
-        />
-      </div>
+      <PositionInput
+        posX={posX}
+        posY={posY}
+        setPosX={setPosX}
+        setPosY={setPosY}
+      />
       <div className="flex flex-row space-x-3">
         <Button variant="contained" fullWidth={true} color="error" onClick={() => dispatch(removeBlock(block.index))}>
           Delete
