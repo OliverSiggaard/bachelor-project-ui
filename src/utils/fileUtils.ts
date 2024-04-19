@@ -1,6 +1,6 @@
 // Utility function used for initiating browser download of file with given filename
-export const downloadFile = (data: any, fileName: string) => {
-  const blob = new Blob([data], { type: 'text-plain' });
+export const downloadFile = (data: any, fileName: string, mimeType: string) => {
+  const blob = new Blob([data], { type: mimeType });
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
   document.body.appendChild(a);
@@ -14,4 +14,10 @@ export const downloadFile = (data: any, fileName: string) => {
 export const getCompiledProgramFileName = () => {
   const currentTime = new Date().toLocaleTimeString('da-DK').replaceAll(".", "");
   return `compiled_program_${currentTime}.basm`;
+}
+
+// Utility function to create a filename for the dmf configuration (.json file)
+export const getDmfConfigurationFileName = () => {
+  const currentTime = new Date().toLocaleTimeString('da-DK').replaceAll(".", "");
+  return `dmf_configuration_${currentTime}.json`;
 }

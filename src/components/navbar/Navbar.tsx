@@ -8,7 +8,7 @@ import RunDialog from "./dialogs/RunDialog";
 import {Block} from "../../types/blockTypes";
 import {convertBlocksToActions} from "../../conversion/blocksToActionsConverter";
 import {useApiCall} from "../../api/useApiCall";
-import {downloadFile, getCompiledProgramFileName} from "../../utils/fileUtils";
+import {downloadFile, getCompiledProgramFileName, getDmfConfigurationFileName} from "../../utils/fileUtils";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -29,14 +29,21 @@ const Navbar: React.FC = () => {
   const handleSendProgramToBackend = async () => {
     try {
       const programActions = convertBlocksToActions(blocks);
-      const compiledProgram = await sendRequest(
+      const executionResult = await sendRequest(
         "/api/compile",
         "POST",
         programActions,
         {
           "Content-Type": "application/json",
-        });
-      downloadFile(compiledProgram, getCompiledProgramFileName())
+        }
+      );
+      // Extract the compiled program and dmf configuration from the response (should match the backends execution result)
+      const compiledProgram = executionResult.compiledProgram;
+      const dmfConfiguration = JSON.stringify(executionResult.dmfConfiguration, null, 2);
+
+      // Initiate automatic download of the compiled program and dmf configuration
+      downloadFile(compiledProgram, getCompiledProgramFileName(), "text-plain");
+      downloadFile(dmfConfiguration, getDmfConfigurationFileName(), "application/json");
     } catch (error) {
       console.error("An error occurred while sending the program to the backend:", error);
     } finally {
