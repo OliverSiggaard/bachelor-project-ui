@@ -43,7 +43,7 @@ const MixBlock: React.FC<MixBlockProps> = ({ block }) => {
         <Typography className="flex flex-col justify-between text-right">
           <span>{dropletId}</span>
           <span>({posX},{posY})</span>
-          <span>({xSize},{ySize})</span>
+          <span>{xSize} x {ySize}</span>
         </Typography>
       </div>
     </BaseBlock>

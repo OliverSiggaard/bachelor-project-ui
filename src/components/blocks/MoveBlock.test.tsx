@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import InputBlock from './InputBlock';
+import MoveBlock from "./MoveBlock";
 import {Provider} from "react-redux";
 import {store} from "../../redux/store";
 import {DndProvider} from "react-dnd";
@@ -8,50 +8,48 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 
 import '@testing-library/jest-dom/extend-expect';
 
-describe("InputBlock Component", () => {
-  test("Renders input block with the provided info", () => {
-    const mockInputBlockData = {
+describe("MoveBlock Component", () => {
+  test("Renders move block with the provided info", () => {
+    const mockMoveBlockData = {
       index: 0,
-      type: "input",
+      type: "move",
       info: {
         dropletId: "testId1",
-        posX: "10",
-        posY: "5",
-        volume: "5"
+        posX: "15",
+        posY: "10",
       }
     };
 
     render(
       <DndProvider backend={HTML5Backend}>
         <Provider store={store}>
-          <InputBlock block={mockInputBlockData} />
+          <MoveBlock block={mockMoveBlockData} />
         </Provider>
       </DndProvider>
     );
 
-    expect(screen.getByText("Input")).toBeInTheDocument();
+    expect(screen.getByText("Move")).toBeInTheDocument();
     expect(screen.getByText("testId1")).toBeInTheDocument();
-    expect(screen.getByText("(10,5)")).toBeInTheDocument();
-    expect(screen.getByText("5 µl")).toBeInTheDocument();
+    expect(screen.getByText("(15,10)")).toBeInTheDocument();
   });
 
-  test("Renders input block with undefined info", () => {
-    const mockInputBlockData = {
+  test("Renders move block with undefined info", () => {
+    const mockMoveBlockData = {
       index: 0,
-      type: "input",
+      type: "move",
       info: undefined,
     };
 
     render(
       <DndProvider backend={HTML5Backend}>
         <Provider store={store}>
-          <InputBlock block={mockInputBlockData} />
+          <MoveBlock block={mockMoveBlockData} />
         </Provider>
       </DndProvider>
     );
 
-    expect(screen.getByText("Input")).toBeInTheDocument();
-    expect(screen.getAllByText("-").length).toBe(2);
+    expect(screen.getByText("Move")).toBeInTheDocument();
+    expect(screen.getAllByText("-").length).toBe(1);
     expect(screen.getByText("(-,-)")).toBeInTheDocument();
   });
 });

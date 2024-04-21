@@ -15,7 +15,7 @@ const RepeatBlock: React.FC<RepeatBlockProps> = ({ block }) => {
 
   if (block.info !== undefined) {
     const info = block.info as RepeatBlockInfo;
-    times = info.times + "times";
+    times = info.times + " times";
   }
 
   return (
