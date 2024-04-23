@@ -17,7 +17,6 @@ describe("SplitBlock Component", () => {
         originDropletId: "testId1",
         resultDropletId1: "testId2",
         resultDropletId2: "testId3",
-        ratio: "0.4",
         posX1: "5",
         posY1: "6",
         posX2: "15",

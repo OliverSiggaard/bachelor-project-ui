@@ -16,7 +16,6 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
   const [originDropletId, setOriginDropletId] = useState('');
   const [resultDropletId1, setResultDropletId1] = useState('');
   const [resultDropletId2, setResultDropletId2] = useState('');
-  const [ratio, setRatio] = useState('');
   const [posX1, setPosX1] = useState('');
   const [posY1, setPosY1] = useState('');
   const [posX2, setPosX2] = useState('');
@@ -28,7 +27,6 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
       setOriginDropletId(blockInfo.originDropletId);
       setResultDropletId1(blockInfo.resultDropletId1);
       setResultDropletId2(blockInfo.resultDropletId2);
-      setRatio(blockInfo.ratio);
       setPosX1(blockInfo.posX1);
       setPosY1(blockInfo.posY1);
       setPosX2(blockInfo.posX2);
@@ -41,7 +39,6 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
       originDropletId: originDropletId,
       resultDropletId1: resultDropletId1,
       resultDropletId2: resultDropletId2,
-      ratio: ratio,
       posX1: posX1,
       posY1: posY1,
       posX2: posX2,
@@ -56,7 +53,6 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
     setOriginDropletId('');
     setResultDropletId1('');
     setResultDropletId2('');
-    setRatio('');
     setPosX1('');
     setPosY1('');
     setPosX2('');
@@ -78,12 +74,6 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
         label="Result Droplet 2 ID"
         value={resultDropletId2}
         onChange={(e) => setResultDropletId2(e.target.value)}
-      />
-      <TextField
-        variant="outlined"
-        label="Ratio"
-        value={ratio}
-        onChange={(e) => setRatio(e.target.value)}
       />
       <PositionInput
         posX={posX1}

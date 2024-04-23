@@ -11,22 +11,13 @@ interface MergeBlockProps {
 
 const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
 
-  let resultDropletId: string = '-';
-  let dropletId1: string = '-';
-  let dropletId2: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
+  const info = block.info as MergeBlockInfo;
 
-  if (block.info !== undefined) {
-    const info = block.info as MergeBlockInfo;
-    resultDropletId = info.resultDropletId;
-    dropletId1 = info.originDropletId1;
-    dropletId2 = info.originDropletId2;
-    posX = info.posX;
-    posY = info.posY;
-  }
-
-
+  const resultDropletId: string = info?.resultDropletId || "-";
+  const dropletId1: string = info?.originDropletId1 || "-";
+  const dropletId2: string = info?.originDropletId2 || "-";
+  const posX: string = info?.posX || "-";
+  const posY: string = info?.posY || "-";
 
   return (
     <BaseBlock index={block.index} color={BlockColors.MergeBlockColor}>
@@ -39,7 +30,7 @@ const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
         <Typography className="flex flex-col justify-between">
           <span>Drop 1:</span>
           <span>Drop 2:</span>
-          <span>Result ID:</span>
+          <span>Res ID:</span>
           <span>Pos:</span>
 
         </Typography>

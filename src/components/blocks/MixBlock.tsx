@@ -11,21 +11,13 @@ interface MixBlockProps {
 
 const MixBlock: React.FC<MixBlockProps> = ({ block }) => {
 
-  let dropletId: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
-  let xSize: string = '-';
-  let ySize: string = '-';
+  const info = block.info as MixBlockInfo;
 
-
-  if (block.info !== undefined) {
-    const info = block.info as MixBlockInfo;
-    dropletId = info.dropletId;
-    posX = info.posX;
-    posY = info.posY;
-    xSize = info.xSize;
-    ySize = info.ySize;
-  }
+  const dropletId: string = info?.dropletId || "-";
+  const posX: string = info?.posX || "-";
+  const posY: string = info?.posY || "-";
+  const xSize: string = info?.xSize || "-";
+  const ySize: string = info?.ySize || "-";
 
   return (
     <BaseBlock index={block.index} color={BlockColors.MixBlockColor}>

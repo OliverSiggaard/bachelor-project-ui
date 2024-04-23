@@ -11,18 +11,12 @@ interface StoreBlockProps {
 
 const StoreBlock: React.FC<StoreBlockProps> = ({ block }) => {
 
-  let dropletId: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
-  let time: string = '-';
+  const info = block.info as StoreBlockInfo;
 
-  if (block.info !== undefined) {
-    const info = block.info as StoreBlockInfo;
-    dropletId = info.dropletId;
-    posX = info.posX;
-    posY = info.posY;
-    time = info.time + " ms";
-  }
+  const dropletId: string = info?.dropletId || "-";
+  const posX: string = info?.posX || "-";
+  const posY: string = info?.posY || "-";
+  const time: string = info?.time || "-";
 
   return (
     <BaseBlock index={block.index} color={BlockColors.StoreBlockColor}>
@@ -40,7 +34,7 @@ const StoreBlock: React.FC<StoreBlockProps> = ({ block }) => {
         <Typography className="flex flex-col justify-between text-right">
           <span>{dropletId}</span>
           <span>({posX},{posY})</span>
-          <span>{time}</span>
+          <span>{time} ms</span>
         </Typography>
       </div>
     </BaseBlock>

@@ -11,16 +11,11 @@ interface MoveBlockProps {
 
 const MoveBlock: React.FC<MoveBlockProps> = ({ block }) => {
 
-  let dropletId: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
+  const info = block.info as MoveBlockInfo;
 
-  if (block.info !== undefined) {
-    const info = block.info as MoveBlockInfo;
-    dropletId = info.dropletId;
-    posX = info.posX;
-    posY = info.posY;
-  }
+  const dropletId: string = info?.dropletId || "-";
+  const posX: string = info?.posX || "-";
+  const posY: string = info?.posY || "-";
 
   return (
     <BaseBlock index={block.index} color={BlockColors.MoveBlockColor}>

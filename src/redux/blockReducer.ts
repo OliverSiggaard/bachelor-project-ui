@@ -1,5 +1,12 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Block, CodeBlockInfo} from "../types/blockTypes";
+import {
+  Block,
+  CodeBlockInfo,
+  InputBlockInfo,
+  MergeBlockInfo, MixBlockInfo, MoveBlockInfo,
+  OutputBlockInfo,
+  SplitBlockInfo, StoreBlockInfo
+} from "../types/blockTypes";
 import update from 'immutability-helper'
 
 interface BlocksState {
@@ -22,6 +29,111 @@ const blockSlice = createSlice({
     },
     removeBlock(state, action: PayloadAction<number>) {
       const indexToRemove = action.payload;
+
+      // Remove dropletIds for blocks that depend on the removed block
+      switch (state.blocks[indexToRemove].type) {
+        case "input":
+          const inputBlockInfo = (state.blocks[indexToRemove].info as InputBlockInfo);
+          if (inputBlockInfo === undefined) break;
+          const inputDropletIdToRemove = inputBlockInfo.dropletId;
+          state.blocks = state.blocks.map(block => {
+            if (block.info === undefined) return block;
+
+            switch (block.type) {
+              case "output":
+              case "move":
+              case "mix":
+              case "store":
+                const blockInfo = block.info as OutputBlockInfo | MoveBlockInfo | MixBlockInfo | StoreBlockInfo;
+                if (blockInfo.dropletId === inputDropletIdToRemove) {
+                  blockInfo.dropletId = "";
+                }
+                break;
+              case "merge":
+                const mergeBlockInfo = block.info as MergeBlockInfo;
+                if (mergeBlockInfo.originDropletId1 === inputDropletIdToRemove) {
+                  mergeBlockInfo.originDropletId1 = "";
+                }
+                if (mergeBlockInfo.originDropletId2 === inputDropletIdToRemove) {
+                  mergeBlockInfo.originDropletId2 = "";
+                }
+                break;
+              case "split":
+                const splitBlockInfo = block.info as SplitBlockInfo;
+                if (splitBlockInfo.originDropletId === inputDropletIdToRemove) {
+                  splitBlockInfo.originDropletId = "";
+                }
+                break;
+              default:
+                break;
+            }
+            return block;
+          });
+          break;
+        case "merge":
+          const mergeBlockInfo = (state.blocks[indexToRemove].info as MergeBlockInfo)
+          if (mergeBlockInfo === undefined) break;
+          const mergeDropletIdToRemove = mergeBlockInfo.resultDropletId;
+          state.blocks = state.blocks.map(block => {
+            if (block.info === undefined) return block;
+
+            switch (block.type) {
+              case "output":
+              case "move":
+              case "mix":
+              case "store":
+                const blockInfo = block.info as OutputBlockInfo | MoveBlockInfo | MixBlockInfo | StoreBlockInfo;
+                if (blockInfo.dropletId === mergeDropletIdToRemove) {
+                  blockInfo.dropletId = "";
+                }
+                break;
+              case "split":
+                const splitBlockInfo = block.info as SplitBlockInfo;
+                if (splitBlockInfo.originDropletId === mergeDropletIdToRemove) {
+                  splitBlockInfo.originDropletId = "";
+                }
+                break;
+              default:
+                break;
+            }
+            return block;
+          });
+          break;
+        case "split":
+          const splitBlockInfo = (state.blocks[indexToRemove].info as SplitBlockInfo)
+          if (splitBlockInfo === undefined) break;
+          const splitDropletIdToRemove1 = splitBlockInfo.resultDropletId1;
+          const splitDropletIdToRemove2 = splitBlockInfo.resultDropletId2;
+          state.blocks = state.blocks.map(block => {
+            if (block.info === undefined) return block;
+
+            switch (block.type) {
+              case "output":
+              case "move":
+              case "mix":
+              case "store":
+                const blockInfo = block.info as OutputBlockInfo | MoveBlockInfo | MixBlockInfo | StoreBlockInfo;
+                if (blockInfo.dropletId === splitDropletIdToRemove1 || blockInfo.dropletId === splitDropletIdToRemove2) {
+                  blockInfo.dropletId = "";
+                }
+                break;
+              case "merge":
+                const mergeBlockInfo = block.info as MergeBlockInfo;
+                if (mergeBlockInfo.originDropletId1 === splitDropletIdToRemove1 || mergeBlockInfo.originDropletId1 === splitDropletIdToRemove2) {
+                  mergeBlockInfo.originDropletId1 = "";
+                }
+                if (mergeBlockInfo.originDropletId2 === splitDropletIdToRemove1 || mergeBlockInfo.originDropletId2 === splitDropletIdToRemove2) {
+                  mergeBlockInfo.originDropletId2 = "";
+                }
+                break;
+              default:
+                break;
+            }
+            return block;
+          });
+          break;
+      }
+
 
       // Remove block at given index
       state.blocks.splice(indexToRemove, 1)

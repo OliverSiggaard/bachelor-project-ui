@@ -37,7 +37,6 @@ export interface SplitBlockInfo {
   originDropletId: string;
   resultDropletId1: string;
   resultDropletId2: string;
-  ratio: string;
   posX1: string;
   posY1: string;
   posX2: string;
