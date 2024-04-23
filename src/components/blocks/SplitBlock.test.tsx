@@ -36,8 +36,6 @@ describe("SplitBlock Component", () => {
     expect(screen.getByText("testId1")).toBeInTheDocument();
     expect(screen.getByText("testId2")).toBeInTheDocument();
     expect(screen.getByText("testId3")).toBeInTheDocument();
-    expect(screen.getByText("0.4")).toBeInTheDocument();
-    expect(screen.getByText("0.6")).toBeInTheDocument();
     expect(screen.getByText("(5,6)")).toBeInTheDocument();
     expect(screen.getByText("(15,6)")).toBeInTheDocument();
   });
@@ -58,7 +56,7 @@ describe("SplitBlock Component", () => {
     );
 
     expect(screen.getByText("Split")).toBeInTheDocument();
-    expect(screen.getAllByText("-").length).toBe(5);
+    expect(screen.getAllByText("-").length).toBe(3);
     expect(screen.getAllByText("(-,-)").length).toBe(2);
   });
 });

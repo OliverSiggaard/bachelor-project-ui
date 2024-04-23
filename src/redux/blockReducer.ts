@@ -30,6 +30,11 @@ const blockSlice = createSlice({
     removeBlock(state, action: PayloadAction<number>) {
       const indexToRemove = action.payload;
 
+      // Check that index is within bounds:
+      if (indexToRemove < 0 || indexToRemove >= state.blocks.length) {
+        return state;
+      }
+
       // Remove dropletIds for blocks that depend on the removed block
       switch (state.blocks[indexToRemove].type) {
         case "input":
