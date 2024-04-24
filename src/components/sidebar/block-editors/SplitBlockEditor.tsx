@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Button, TextField} from "@mui/material";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, SplitBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
 import PositionInput from "./custom-block-editor-inputs/PositionInput";
+import {getAvailableDropletIdsForIndex} from "../../../utils/dropletIdUtils";
 
 interface SplitBlockEditorProps {
   block: Block;
@@ -20,6 +21,11 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
   const [posY1, setPosY1] = useState('');
   const [posX2, setPosX2] = useState('');
   const [posY2, setPosY2] = useState('');
+  const [resultDropletId1Invalid, setResultDropletId1Invalid] = useState(false);
+  const [resultDropletId2Invalid, setResultDropletId2Invalid] = useState(false);
+
+  const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
+  const dropletIds = getAvailableDropletIdsForIndex(blocks, block.index!);
 
   useEffect(() => {
     if (block.info) {
@@ -45,6 +51,19 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
       posY2: posY2,
     }
 
+    // Check if some combination of result droplet IDs are invalid
+    if ((dropletIds.includes(resultDropletId1) && dropletIds.includes(resultDropletId2)) || resultDropletId1 === resultDropletId2) {
+      setResultDropletId1Invalid(true);
+      setResultDropletId2Invalid(true);
+      return;
+    } else if (dropletIds.includes(resultDropletId1)) {
+      setResultDropletId1Invalid(true);
+      return;
+    } else if (dropletIds.includes(resultDropletId2)) {
+      setResultDropletId2Invalid(true);
+      return;
+    }
+
     // Dispatch new info and de-select block
     dispatch(editBlock({index: block.index, info: info}));
     dispatch(selectBlock(null));
@@ -59,6 +78,11 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
     setPosY2('');
   }
 
+  const resetInvalidStates = () => {
+    setResultDropletId1Invalid(false);
+    setResultDropletId2Invalid(false);
+  }
+
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
       <div style={{fontSize: 24, textAlign: "center"}}>Split Block</div>
@@ -67,13 +91,23 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
         variant="outlined"
         label="Result Droplet 1 ID"
         value={resultDropletId1}
-        onChange={(e) => setResultDropletId1(e.target.value)}
+        onChange={(e) => {
+          setResultDropletId1(e.target.value);
+          resetInvalidStates();
+        }}
+        error={resultDropletId1Invalid}
+        helperText={resultDropletId1Invalid ? "Droplet ID must be unique" : ""}
       />
       <TextField
         variant="outlined"
         label="Result Droplet 2 ID"
         value={resultDropletId2}
-        onChange={(e) => setResultDropletId2(e.target.value)}
+        onChange={(e) => {
+          setResultDropletId2(e.target.value);
+          resetInvalidStates()
+        }}
+        error={resultDropletId2Invalid}
+        helperText={resultDropletId2Invalid ? "Droplet ID must be unique" : ""}
       />
       <PositionInput
         posX={posX1}
