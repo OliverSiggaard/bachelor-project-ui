@@ -1,4 +1,11 @@
-import {Block, InputBlockInfo, MergeBlockInfo, SplitBlockInfo} from "../types/blockTypes";
+import {
+  Block,
+  InputBlockInfo,
+  MergeBlockInfo, MixBlockInfo,
+  MoveBlockInfo,
+  OutputBlockInfo,
+  SplitBlockInfo, StoreBlockInfo
+} from "../types/blockTypes";
 
 // Return all available dropletIds up until the given index
 // add index for input block
@@ -38,4 +45,39 @@ export function getAvailableDropletIdsForIndex (blocks: Block[], index: number):
     }
   }
   return dropletIds;
+}
+
+// Removes droppedId from blockInfo based on blockType
+// remove dropletId for output, move, mix, store
+// remove origin droplets for merge
+// remove origin droplet for split
+export function removeDropletIdFromBlockInfo(blockType: string, blockInfo: any, dropletIdToRemove: string) {
+  switch (blockType) {
+    case "output":
+    case "move":
+    case "mix":
+    case "store":
+      const info = blockInfo as OutputBlockInfo | MoveBlockInfo | MixBlockInfo | StoreBlockInfo;
+      if (info.dropletId === dropletIdToRemove) {
+        blockInfo.dropletId = "";
+      }
+      break;
+    case "merge":
+      const mergeBlockInfo = blockInfo as MergeBlockInfo;
+      if (mergeBlockInfo.originDropletId1 === dropletIdToRemove) {
+        mergeBlockInfo.originDropletId1 = "";
+      }
+      if (mergeBlockInfo.originDropletId2 === dropletIdToRemove) {
+        mergeBlockInfo.originDropletId2 = "";
+      }
+      break;
+    case "split":
+      const splitBlockInfo = blockInfo as SplitBlockInfo;
+      if (splitBlockInfo.originDropletId === dropletIdToRemove) {
+        splitBlockInfo.originDropletId = "";
+      }
+      break;
+    default:
+      break;
+  }
 }

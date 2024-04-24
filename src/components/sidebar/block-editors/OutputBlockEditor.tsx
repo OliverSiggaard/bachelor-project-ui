@@ -3,8 +3,8 @@ import {Button} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, OutputBlockInfo} from "../../../types/blockTypes";
-import AutocompleteDropletId from "./block-editor-utils/AutocompleteDropletId";
-import PositionInput from "./block-editor-utils/PositionInput";
+import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
+import PositionInput from "./custom-block-editor-inputs/PositionInput";
 
 interface OutputBlockEditorProps {
   block: Block;

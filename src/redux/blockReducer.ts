@@ -8,6 +8,7 @@ import {
   SplitBlockInfo, StoreBlockInfo
 } from "../types/blockTypes";
 import update from 'immutability-helper'
+import {removeDropletIdFromBlockInfo} from "../utils/dropletIdUtils";
 
 interface BlocksState {
   blocks: Block[];
@@ -33,6 +34,45 @@ const blockSlice = createSlice({
       // Check that index is within bounds:
       if (indexToRemove < 0 || indexToRemove >= state.blocks.length) {
         return state;
+      }
+
+      // Remove dropletIds for blocks that depend on the removed block
+      const blockToRemove = state.blocks[indexToRemove];
+      switch (blockToRemove.type) {
+        case "input":
+          const inputBlockInfo = (blockToRemove.info as InputBlockInfo);
+          if (inputBlockInfo !== undefined) {
+            state.blocks = state.blocks.map(block => {
+              if (block.info !== undefined) {
+                removeDropletIdFromBlockInfo(block.type, block.info, inputBlockInfo.dropletId);
+              }
+              return block;
+            });
+          }
+          break;
+        case "merge":
+          const mergeBlockInfo = (blockToRemove.info as MergeBlockInfo);
+          if (mergeBlockInfo !== undefined) {
+            state.blocks = state.blocks.map(block => {
+              if (block.info !== undefined) {
+                removeDropletIdFromBlockInfo(block.type, block.info, mergeBlockInfo.resultDropletId);
+              }
+              return block;
+            });
+          }
+          break;
+        case "split":
+          const splitBlockInfo = (blockToRemove.info as SplitBlockInfo);
+          if (splitBlockInfo !== undefined) {
+            state.blocks = state.blocks.map(block => {
+              if (block.info !== undefined) {
+                removeDropletIdFromBlockInfo(block.type, block.info, splitBlockInfo.resultDropletId1);
+                removeDropletIdFromBlockInfo(block.type, block.info, splitBlockInfo.resultDropletId2);
+              }
+              return block;
+            });
+          }
+          break;
       }
 
       // Remove dropletIds for blocks that depend on the removed block
