@@ -1,4 +1,4 @@
-import {getAvailableDropletIdsForIndex, removeDropletIdFromBlockInfo} from "./dropletIdUtils";
+import {getAvailableDropletIdsForIndex, removeDropletId, removeDropletIdFromBlockInfo} from "./dropletIdUtils";
 import {
   Block,
   MergeBlockInfo,
@@ -418,6 +418,140 @@ describe("dropletIdUtils", () => {
       expect(getAvailableDropletIdsForIndex(mockBlocks, 3)).toEqual(["testId3"]);
       expect(getAvailableDropletIdsForIndex(mockBlocks, 4)).toEqual(["testId4", "testId5"]);
       expect(getAvailableDropletIdsForIndex(mockBlocks, 5)).toEqual(["testId5"]);
+    });
+  });
+
+  describe("removeDropletId", () => {
+    test("Should remove dropletId for input block", () => {
+      const blockToRemove: Block = {
+        index: 0,
+        type: "input",
+        info: {
+          dropletId: "testId1",
+          posX: "10",
+          posY: "10",
+          volume: "5"
+        }
+      };
+      const mockBlock: Block = {
+        index: 1,
+        type: "move",
+        info: {
+          dropletId: "testId1",
+          posX: "10",
+          posY: "10",
+        }
+      };
+
+      const updatedBlock = removeDropletId(mockBlock, blockToRemove);
+
+      expect((updatedBlock.info as MoveBlockInfo).dropletId).toBe("");
+    });
+    test("Should remove resultDropletId for merge block", () => {
+      const blockToRemove: Block = {
+        index: 0,
+        type: "merge",
+        info: {
+          originDropletId1: "testId1",
+          originDropletId2: "testId2",
+          resultDropletId: "testId3",
+          posX: "10",
+          posY: "10"
+        }
+      };
+      const mockBlock: Block = {
+        index: 1,
+        type: "move",
+        info: {
+          dropletId: "testId3",
+          posX: "10",
+          posY: "10",
+        }
+      };
+
+      const updatedBlock = removeDropletId(mockBlock, blockToRemove);
+
+      expect((updatedBlock.info as MoveBlockInfo).dropletId).toBe("");
+    });
+
+    test("Should remove resultDropletIds for split block", () => {
+      const blockToRemove: Block = {
+        index: 0,
+        type: "split",
+        info: {
+          originDropletId: "testId1",
+          resultDropletId1: "testId2",
+          resultDropletId2: "testId3",
+          posX1: "10",
+          posY1: "10",
+          posX2: "20",
+          posY2: "20"
+        }
+      };
+      const mockBlock1: Block = {
+        index: 1,
+        type: "move",
+        info: {
+          dropletId: "testId2",
+          posX: "5",
+          posY: "5",
+        }
+      };
+      const mockBlock2: Block = {
+        index: 2,
+        type: "move",
+        info: {
+          dropletId: "testId3",
+          posX: "15",
+          posY: "15",
+        }
+      };
+
+      const updatedBlock1 = removeDropletId(mockBlock1, blockToRemove);
+      const updatedBlock2 = removeDropletId(mockBlock2, blockToRemove);
+
+      expect((updatedBlock1.info as MoveBlockInfo).dropletId).toBe("");
+      expect((updatedBlock2.info as MoveBlockInfo).dropletId).toBe("");
+    });
+    test("Should not modify block info if block type is not recognized", () => {
+      const blockToRemove: Block = {
+        index: 0,
+        type: "test",
+        info: {
+          dropletId: "testId1",
+          posX: "10",
+          posY: "10",
+        }
+      };
+      const mockBlock: Block = {
+        index: 1,
+        type: "move",
+        info: {
+          dropletId: "testId1",
+          posX: "10",
+          posY: "10",
+        }
+      };
+
+      const updatedBlock = removeDropletId(mockBlock, blockToRemove);
+
+      expect(updatedBlock).toEqual(mockBlock);
+    });
+    test("Should handle undefined block info", () => {
+      const blockToRemove: Block = {
+        index: 0,
+        type: "input",
+        info: undefined
+      };
+      const mockBlock: Block = {
+        index: 1,
+        type: "move",
+        info: undefined
+      };
+
+      const updatedBlock = removeDropletId(mockBlock, blockToRemove);
+
+      expect(updatedBlock).toEqual(mockBlock);
     });
   });
 

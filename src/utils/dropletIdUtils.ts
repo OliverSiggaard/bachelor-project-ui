@@ -47,7 +47,27 @@ export function getAvailableDropletIdsForIndex (blocks: Block[], index: number):
   return dropletIds;
 }
 
-// Removes droppedId from blockInfo based on blockType
+// Distribute removal of dropletId based on block type
+export function removeDropletId(block: Block, blockToRemove: Block) {
+  if (!block?.info || !blockToRemove?.info) return block;
+  switch (blockToRemove.type) {
+    case "input":
+      removeDropletIdFromBlockInfo(block.type, block.info, (blockToRemove.info as InputBlockInfo).dropletId);
+      break;
+    case "merge":
+      removeDropletIdFromBlockInfo(block.type, block.info, (blockToRemove.info as MergeBlockInfo).resultDropletId);
+      break;
+    case "split":
+      removeDropletIdFromBlockInfo(block.type, block.info, (blockToRemove.info as SplitBlockInfo).resultDropletId1);
+      removeDropletIdFromBlockInfo(block.type, block.info, (blockToRemove.info as SplitBlockInfo).resultDropletId2);
+      break;
+    default:
+      break;
+  }
+  return block;
+}
+
+// Removes droppedId from blockInfo based on blockType if it depends on the removed dropletId
 // remove dropletId for output, move, mix, store
 // remove origin droplets for merge
 // remove origin droplet for split
