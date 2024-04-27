@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button} from "@mui/material";
 import {addBlock} from "../../redux/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,8 +11,8 @@ import {getAvailableDropletIdsForIndex} from "../../utils/dropletIdUtils";
 
 const BlockSidebar: React.FC = () => {
   const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
-  const dispatch = useDispatch();
   const index = useSelector((state: {selectedIndex: number | null}) => state.selectedIndex);
+  const dispatch = useDispatch();
 
   const addBlockOfType = (type: string) => {
     const newBlockId = blocks.length;

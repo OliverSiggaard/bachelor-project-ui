@@ -1,10 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {
-  Block,
-  CodeBlockInfo,
-} from "../types/blockTypes";
+import {Block, CodeBlockInfo} from "../types/blockTypes";
 import update from 'immutability-helper'
-import {removeDropletId} from "../utils/dropletIdUtils";
+import {removeDropletId, removeDropletIdsIfNecessary} from "../utils/dropletIdUtils";
 
 interface BlocksState {
   blocks: Block[];
@@ -50,6 +47,7 @@ const blockSlice = createSlice({
 
       // Update indexes of all blocks based on their position in the array
       state.blocks = state.blocks.map((block, index) => ({ ...block, index }));
+      state.blocks = removeDropletIdsIfNecessary(state.blocks); // Remove dropletIds if necessary after removing block
     },
     moveBlock(state, action: PayloadAction<{ dragIndex: number; hoverIndex: number }>) {
       const { dragIndex, hoverIndex } = action.payload;
@@ -81,11 +79,15 @@ const blockSlice = createSlice({
       if (index >= 0 && index < state.blocks.length) {
         state.blocks[index].info = info;
       }
+      state.blocks = removeDropletIdsIfNecessary(state.blocks); // Remove dropletIds if necessary after editing block
     },
     selectBlock(state, action: PayloadAction<number | null>) {
       const index = action.payload;
       state.selectedIndex = (index !== null && index >= 0 && index < state.blocks.length) ? index : null;
     },
+    forceUpdateDropletIds(state) {
+      state.blocks = removeDropletIdsIfNecessary(state.blocks);
+    }
   },
 });
 
@@ -96,6 +98,7 @@ export const {
   deleteAll,
   editBlock,
   selectBlock,
+  forceUpdateDropletIds
 } = blockSlice.actions;
 
 export default blockSlice.reducer;

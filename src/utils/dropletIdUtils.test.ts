@@ -1,4 +1,9 @@
-import {getAvailableDropletIdsForIndex, removeDropletId, removeDropletIdFromBlockInfo} from "./dropletIdUtils";
+import {
+  getAvailableDropletIdsForIndex,
+  removeDropletId,
+  removeDropletIdFromBlockInfo,
+  removeDropletIdsIfNecessary
+} from "./dropletIdUtils";
 import {
   Block,
   MergeBlockInfo,
@@ -721,6 +726,75 @@ describe("dropletIdUtils", () => {
       removeDropletIdFromBlockInfo(outputBlock.type, outputBlock.info, "testId2");
 
       expect((outputBlock.info as OutputBlockInfo).dropletId).toBe("testId1");
+    });
+  });
+
+  describe("removeDropletIdsIfNecessary", () => {
+    test("Split followed by merge block", () => {
+      const mockBlocks: Block[] = [
+        {
+          index: 0,
+          type: "split",
+          info: {
+            originDropletId: "",
+            resultDropletId1: "testId1",
+            resultDropletId2: "testId2",
+            posX1: "10",
+            posY1: "10",
+            posX2: "20",
+            posY2: "20"
+          }
+        },
+        {
+          index: 1,
+          type: "merge",
+          info: {
+            originDropletId1: "testId1",
+            originDropletId2: "testId2",
+            resultDropletId: "",
+            posX: "10",
+            posY: "10"
+          }
+        },
+      ];
+
+      const updatedBlocks = removeDropletIdsIfNecessary(mockBlocks);
+
+      expect(updatedBlocks).toEqual(mockBlocks);
+    });
+
+    test("Merge followed by split block", () => {
+      const mockBlocks: Block[] = [
+        {
+          index: 0,
+          type: "merge",
+          info: {
+            originDropletId1: "testId1",
+            originDropletId2: "testId2",
+            resultDropletId: "",
+            posX: "10",
+            posY: "10"
+          }
+        },
+        {
+          index: 1,
+          type: "split",
+          info: {
+            originDropletId: "",
+            resultDropletId1: "testId1",
+            resultDropletId2: "testId2",
+            posX1: "10",
+            posY1: "10",
+            posX2: "20",
+            posY2: "20"
+          }
+        },
+      ];
+
+      const updatedBlocks = removeDropletIdsIfNecessary(mockBlocks);
+
+      expect((updatedBlocks[0].info as MergeBlockInfo).originDropletId2).toEqual("");
+      expect((updatedBlocks[0].info as MergeBlockInfo).originDropletId1).toEqual("");
     });
   });
 });

@@ -47,8 +47,93 @@ export function getAvailableDropletIdsForIndex (blocks: Block[], index: number):
   return dropletIds;
 }
 
+export function removeDropletIdsIfNecessary(blocks: Block[]) {
+  const blocksCopy = [...blocks];
+  for (let i = 0; i < blocksCopy.length; i++) {
+    const dropletIds = getAvailableDropletIdsForIndex(blocksCopy, i);
+    console.log(dropletIds);
+    if (blocksCopy[i].info === undefined) continue;
+    switch (blocksCopy[i].type) {
+      case "output":
+      case "move":
+      case "mix":
+      case "store":
+        const blockInfo = blocksCopy[i].info as OutputBlockInfo | MoveBlockInfo | MixBlockInfo | StoreBlockInfo;
+        if (blockInfo.dropletId && !dropletIds.includes(blockInfo.dropletId)) {
+          blocksCopy[i].info = {...blockInfo, dropletId: ""};
+        }
+        break;
+      case "merge":
+        const mergeBlockInfo = blocksCopy[i].info as MergeBlockInfo;
+        if (mergeBlockInfo.originDropletId1 && !dropletIds.includes(mergeBlockInfo.originDropletId1)
+          && mergeBlockInfo.originDropletId2 && !dropletIds.includes(mergeBlockInfo.originDropletId2)) {
+          blocksCopy[i].info = {...mergeBlockInfo, originDropletId1: "", originDropletId2: ""};
+        } else if (mergeBlockInfo.originDropletId1 && !dropletIds.includes(mergeBlockInfo.originDropletId1)) {
+          blocksCopy[i].info = {...mergeBlockInfo, originDropletId1: ""};
+        } else if (mergeBlockInfo.originDropletId2 && !dropletIds.includes(mergeBlockInfo.originDropletId2)) {
+          blocksCopy[i].info = {...mergeBlockInfo, originDropletId2: ""};
+        }
+        break;
+      case "split":
+        const splitBlockInfo = blocksCopy[i].info as SplitBlockInfo;
+        if (splitBlockInfo.originDropletId && !dropletIds.includes(splitBlockInfo.originDropletId)) {
+          blocksCopy[i].info = {...splitBlockInfo, originDropletId: ""};
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  console.log(blocksCopy);
+  return blocksCopy;
+}
+
+// Remove dropletId from blockInfo based on blockType if it depends on the removed dropletId
+// remove dropletId for output, move, mix, store
+// remove origin droplets for merge
+// remove origin droplet for split
+/*
+export function removeDropletIdsIfNecessary(blocks: Block[], index: number, dispatch: any) {
+  for (let i = 0; i < blocks.length; i++) {
+    const dropletIds = getAvailableDropletIdsForIndex(blocks, i);
+    if (i === index || blocks[i].info === undefined) continue;
+    switch (blocks[i].type) {
+      case "output":
+      case "move":
+      case "mix":
+      case "store":
+        const blockInfo = blocks[i].info as OutputBlockInfo | MoveBlockInfo | MixBlockInfo | StoreBlockInfo;
+        if (blockInfo.dropletId && !dropletIds.includes(blockInfo.dropletId)) {
+          dispatch(editBlock({index: i, info: {...blockInfo, dropletId: ""}}));
+        }
+        break;
+      case "merge":
+        const mergeBlockInfo = blocks[i].info as MergeBlockInfo;
+        if (mergeBlockInfo.originDropletId1 && !dropletIds.includes(mergeBlockInfo.originDropletId1)) {
+          dispatch(editBlock({index: i, info: {...mergeBlockInfo, originDropletId1: ""}}));
+        }
+        if (mergeBlockInfo.originDropletId2 && !dropletIds.includes(mergeBlockInfo.originDropletId2)) {
+          dispatch(editBlock({index: i, info: {...mergeBlockInfo, originDropletId2: ""}}));
+        }
+        break;
+      case "split":
+        const splitBlockInfo = blocks[i].info as SplitBlockInfo;
+        if (splitBlockInfo.originDropletId && !dropletIds.includes(splitBlockInfo.originDropletId)) {
+          dispatch(editBlock({index: i, info: {...splitBlockInfo, originDropletId: ""}}));
+        }
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+ */
+
 // Distribute removal of dropletId based on block type
 export function removeDropletId(block: Block, blockToRemove: Block) {
+  /*
   if (!block?.info || !blockToRemove?.info) return block;
   switch (blockToRemove.type) {
     case "input":
@@ -65,6 +150,9 @@ export function removeDropletId(block: Block, blockToRemove: Block) {
       break;
   }
   return block;
+
+   */
+  return block;
 }
 
 // Removes droppedId from blockInfo based on blockType if it depends on the removed dropletId
@@ -72,6 +160,7 @@ export function removeDropletId(block: Block, blockToRemove: Block) {
 // remove origin droplets for merge
 // remove origin droplet for split
 export function removeDropletIdFromBlockInfo(blockType: string, blockInfo: any, dropletIdToRemove: string) {
+  /*
   switch (blockType) {
     case "output":
     case "move":
@@ -100,4 +189,6 @@ export function removeDropletIdFromBlockInfo(blockType: string, blockInfo: any, 
     default:
       break;
   }
+
+   */
 }

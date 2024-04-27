@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {dndItemTypes} from "../../types/dndItemTypes";
 import type {Identifier} from 'dnd-core'
-import {moveBlock, selectBlock} from "../../redux/blockReducer";
+import {moveBlock, selectBlock, forceUpdateDropletIds} from "../../redux/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
 
 interface BaseBlockProps {
@@ -55,8 +55,14 @@ const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, children }) => {
     dispatch(selectBlock(index));
   }
 
+  // Update dropletIds at the end of drag event
+  const handleUpdateDropletIds = () => {
+    dispatch(forceUpdateDropletIds());
+  }
+
   return (
-    <div ref={ref} onDragStart={handleSelectBlock} onClick={handleSelectBlock}
+    <div ref={ref}
+      onDragStart={handleSelectBlock} onClick={handleSelectBlock} onMouseLeave={handleUpdateDropletIds} onDragEnd={handleUpdateDropletIds}
       style={{
         backgroundColor: color,
         width: 150,
