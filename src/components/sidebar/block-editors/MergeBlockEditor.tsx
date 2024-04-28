@@ -52,7 +52,7 @@ const MergeBlockEditor: React.FC<MergeBlockEditorProps> = ({ block }) => {
     }
 
     // Return early if origin droplet IDs are the same
-    if (originDropletId1 === originDropletId2) {
+    if (originDropletId1 === originDropletId2 && originDropletId1 !== '' && originDropletId2 !== '') {
       setSameOriginDropletId(true);
       return;
     }
