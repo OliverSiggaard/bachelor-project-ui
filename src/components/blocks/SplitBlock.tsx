@@ -4,6 +4,7 @@ import {Divider, Typography} from "@mui/material";
 import {Block, SplitBlockInfo} from "../../types/blockTypes";
 import {BlockColors} from "../../enums/blockColors";
 import {BlockIcons} from "../../enums/BlockIcons";
+import AvailableDropletIdDisplay from "./custom-block-information-displays/AvailableDropletIdDisplay";
 
 interface SplitBlockProps {
   block: Block;
@@ -13,7 +14,6 @@ const SplitBlock: React.FC<SplitBlockProps> = ({ block }) => {
 
   const info = block.info as SplitBlockInfo;
 
-  const originDropletId: string = info?.originDropletId || "-";
   const resultDropletId1: string = info?.resultDropletId1 || "-";
   const resultDropletId2: string = info?.resultDropletId2 || "-";
   const posX1: string = info?.posX1 || "-";
@@ -37,7 +37,7 @@ const SplitBlock: React.FC<SplitBlockProps> = ({ block }) => {
 
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
-          <span>{originDropletId}</span>
+          <AvailableDropletIdDisplay block={block} />
           <span>Drop 2</span>
           <span>{resultDropletId2}</span>
           <span>({posX2},{posY2})</span>

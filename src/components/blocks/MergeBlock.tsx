@@ -4,6 +4,7 @@ import {Divider, Typography} from "@mui/material";
 import {Block, MergeBlockInfo} from "../../types/blockTypes";
 import {BlockColors} from "../../enums/blockColors";
 import {BlockIcons} from "../../enums/BlockIcons";
+import AvailableDropletIdDisplay from "./custom-block-information-displays/AvailableDropletIdDisplay";
 
 interface MergeBlockProps {
   block: Block;
@@ -14,8 +15,6 @@ const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
   const info = block.info as MergeBlockInfo;
 
   const resultDropletId: string = info?.resultDropletId || "-";
-  const dropletId1: string = info?.originDropletId1 || "-";
-  const dropletId2: string = info?.originDropletId2 || "-";
   const posX: string = info?.posX || "-";
   const posY: string = info?.posY || "-";
 
@@ -35,8 +34,8 @@ const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
 
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
-          <span>{dropletId1}</span>
-          <span>{dropletId2}</span>
+          <AvailableDropletIdDisplay block={block} num={1} />
+          <AvailableDropletIdDisplay block={block} num={2} />
           <span>{resultDropletId}</span>
           <span>({posX},{posY})</span>
         </Typography>

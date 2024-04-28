@@ -4,6 +4,7 @@ import {Divider, Typography} from "@mui/material";
 import {Block, StoreBlockInfo} from "../../types/blockTypes";
 import {BlockColors} from "../../enums/blockColors";
 import {BlockIcons} from "../../enums/BlockIcons";
+import AvailableDropletIdDisplay from "./custom-block-information-displays/AvailableDropletIdDisplay";
 
 interface StoreBlockProps {
   block: Block;
@@ -13,7 +14,6 @@ const StoreBlock: React.FC<StoreBlockProps> = ({ block }) => {
 
   const info = block.info as StoreBlockInfo;
 
-  const dropletId: string = info?.dropletId || "-";
   const posX: string = info?.posX || "-";
   const posY: string = info?.posY || "-";
   const time: string = info?.time || "-";
@@ -32,7 +32,7 @@ const StoreBlock: React.FC<StoreBlockProps> = ({ block }) => {
           <span>Time:</span>
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
-          <span>{dropletId}</span>
+          <AvailableDropletIdDisplay block={block} />
           <span>({posX},{posY})</span>
           <span>{time} ms</span>
         </Typography>

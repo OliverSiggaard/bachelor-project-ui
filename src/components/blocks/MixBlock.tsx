@@ -4,6 +4,7 @@ import {Divider, Typography} from "@mui/material";
 import {Block, MixBlockInfo} from "../../types/blockTypes";
 import {BlockColors} from "../../enums/blockColors";
 import {BlockIcons} from "../../enums/BlockIcons";
+import AvailableDropletIdDisplay from "./custom-block-information-displays/AvailableDropletIdDisplay";
 
 interface MixBlockProps {
   block: Block;
@@ -13,7 +14,6 @@ const MixBlock: React.FC<MixBlockProps> = ({ block }) => {
 
   const info = block.info as MixBlockInfo;
 
-  const dropletId: string = info?.dropletId || "-";
   const posX: string = info?.posX || "-";
   const posY: string = info?.posY || "-";
   const xSize: string = info?.xSize || "-";
@@ -33,7 +33,7 @@ const MixBlock: React.FC<MixBlockProps> = ({ block }) => {
           <span>Size:</span>
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
-          <span>{dropletId}</span>
+          <AvailableDropletIdDisplay block={block} />
           <span>({posX},{posY})</span>
           <span>{xSize} x {ySize}</span>
         </Typography>

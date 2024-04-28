@@ -1,10 +1,8 @@
 import {
   Block,
   InputBlockInfo,
-  MergeBlockInfo, MixBlockInfo,
-  MoveBlockInfo,
-  OutputBlockInfo,
-  SplitBlockInfo, StoreBlockInfo
+  MergeBlockInfo,
+  SplitBlockInfo,
 } from "../types/blockTypes";
 
 // Return all available dropletIds up until the given index
@@ -45,59 +43,4 @@ export function getAvailableDropletIdsForIndex (blocks: Block[], index: number):
     }
   }
   return dropletIds;
-}
-
-// Distribute removal of dropletId based on block type
-export function removeDropletId(block: Block, blockToRemove: Block) {
-  if (!block?.info || !blockToRemove?.info) return block;
-  switch (blockToRemove.type) {
-    case "input":
-      removeDropletIdFromBlockInfo(block.type, block.info, (blockToRemove.info as InputBlockInfo).dropletId);
-      break;
-    case "merge":
-      removeDropletIdFromBlockInfo(block.type, block.info, (blockToRemove.info as MergeBlockInfo).resultDropletId);
-      break;
-    case "split":
-      removeDropletIdFromBlockInfo(block.type, block.info, (blockToRemove.info as SplitBlockInfo).resultDropletId1);
-      removeDropletIdFromBlockInfo(block.type, block.info, (blockToRemove.info as SplitBlockInfo).resultDropletId2);
-      break;
-    default:
-      break;
-  }
-  return block;
-}
-
-// Removes droppedId from blockInfo based on blockType if it depends on the removed dropletId
-// remove dropletId for output, move, mix, store
-// remove origin droplets for merge
-// remove origin droplet for split
-export function removeDropletIdFromBlockInfo(blockType: string, blockInfo: any, dropletIdToRemove: string) {
-  switch (blockType) {
-    case "output":
-    case "move":
-    case "mix":
-    case "store":
-      const info = blockInfo as OutputBlockInfo | MoveBlockInfo | MixBlockInfo | StoreBlockInfo;
-      if (info.dropletId === dropletIdToRemove) {
-        blockInfo.dropletId = "";
-      }
-      break;
-    case "merge":
-      const mergeBlockInfo = blockInfo as MergeBlockInfo;
-      if (mergeBlockInfo.originDropletId1 === dropletIdToRemove) {
-        mergeBlockInfo.originDropletId1 = "";
-      }
-      if (mergeBlockInfo.originDropletId2 === dropletIdToRemove) {
-        mergeBlockInfo.originDropletId2 = "";
-      }
-      break;
-    case "split":
-      const splitBlockInfo = blockInfo as SplitBlockInfo;
-      if (splitBlockInfo.originDropletId === dropletIdToRemove) {
-        splitBlockInfo.originDropletId = "";
-      }
-      break;
-    default:
-      break;
-  }
 }

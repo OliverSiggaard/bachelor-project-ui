@@ -4,7 +4,6 @@ import {
   CodeBlockInfo,
 } from "../types/blockTypes";
 import update from 'immutability-helper'
-import {removeDropletId} from "../utils/dropletIdUtils";
 
 interface BlocksState {
   blocks: Block[];
@@ -26,17 +25,6 @@ const blockSlice = createSlice({
     },
     removeBlock(state, action: PayloadAction<number>) {
       const indexToRemove = action.payload;
-
-      // Check that index is within bounds:
-      if (indexToRemove < 0 || indexToRemove >= state.blocks.length) {
-        return state;
-      }
-
-      // Remove dropletIds for blocks that depend on the removed block
-      const blockToRemove = state.blocks[indexToRemove];
-      if (blockToRemove.info !== undefined) {
-        state.blocks = state.blocks.map(block => removeDropletId(block, blockToRemove));
-      }
 
       // Remove block at given index
       state.blocks.splice(indexToRemove, 1)

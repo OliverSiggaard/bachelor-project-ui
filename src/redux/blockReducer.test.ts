@@ -1,5 +1,5 @@
 import blockReducer, { addBlock, removeBlock, moveBlock, deleteAll, editBlock, selectBlock } from './blockReducer';
-import {Block, CodeBlockInfo, MoveBlockInfo, OutputBlockInfo} from "../types/blockTypes";
+import {Block, CodeBlockInfo} from "../types/blockTypes";
 
 describe("Block Reducer", () => {
   let initialState: { blocks: Block[]; selectedIndex: number | null };
@@ -36,23 +36,11 @@ describe("Block Reducer", () => {
     expect(nextState.blocks).toHaveLength(2);
     expect(nextState.selectedIndex).toBe(null);
 
-    // Check that block indexes are updated correctly:
+    // Check that block indexes are updated correctly and the blocks contains the correct info:
     expect(nextState.blocks[0].index).toEqual(prevState.blocks[1].index - 1);
     expect(nextState.blocks[1].index).toEqual(prevState.blocks[2].index - 1);
-
-    // Check that block info is the same except for the dropletId that was removed from the input block
-    // and that the dropletId is indeed removed
-    const {dropletId: prevDropId1, ...prevInfo1} = prevState.blocks[1].info as MoveBlockInfo;
-    const {dropletId: nextDropId1, ...nextInfo1} = nextState.blocks[0].info as MoveBlockInfo;
-    expect(nextInfo1).toEqual(prevInfo1);
-    expect(prevDropId1).toEqual("1");
-    expect(nextDropId1).toEqual("");
-
-    const {dropletId: prevDropId2, ...prevInfo2} = prevState.blocks[2].info as OutputBlockInfo;
-    const {dropletId: nextDropId2, ...nextInfo2} = nextState.blocks[1].info as OutputBlockInfo;
-    expect(nextInfo2).toEqual(prevInfo2);
-    expect(prevDropId2).toEqual("1");
-    expect(nextDropId2).toEqual("");
+    expect(nextState.blocks[0].info).toEqual(prevState.blocks[1].info);
+    expect(nextState.blocks[1].info).toEqual(prevState.blocks[2].info);
   });
   test("removeBlock when there are no blocks", () => {
     initialState.blocks = []; // Remove blocks from initial state
