@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Button, TextField} from "@mui/material";
+import {Button} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, StoreBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
 import PositionInput from "./custom-block-editor-inputs/PositionInput";
+import DecimalInput from "./custom-block-editor-inputs/DecimalInput";
 
 interface StoreBlockEditorProps {
   block: Block;
@@ -57,12 +58,7 @@ const StoreBlockEditor: React.FC<StoreBlockEditorProps> = ({ block }) => {
         setPosX={setPosX}
         setPosY={setPosY}
       />
-      <TextField
-        variant="outlined"
-        label="Time (ms)"
-        value={time}
-        onChange={(e) => setTime(e.target.value)}
-      />
+      <DecimalInput value={time} setValue={setTime} text="Time (ms)" />
       <div className="flex flex-row space-x-3">
         <Button variant="contained" fullWidth={true} color="error" onClick={() => dispatch(removeBlock(block.index))}>
           Delete

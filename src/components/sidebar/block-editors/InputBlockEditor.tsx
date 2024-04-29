@@ -5,6 +5,7 @@ import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, InputBlockInfo} from "../../../types/blockTypes";
 import PositionInput from "./custom-block-editor-inputs/PositionInput";
 import {getAvailableDropletIdsForIndex} from "../../../utils/dropletIdUtils";
+import DecimalInput from "./custom-block-editor-inputs/DecimalInput";
 
 interface InputBlockEditorProps {
   block: Block;
@@ -78,12 +79,7 @@ const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
         setPosX={setPosX}
         setPosY={setPosY}
       />
-      <TextField
-        variant="outlined"
-        label="Volume (µl)"
-        value={volume}
-        onChange={(e) => setVolume(e.target.value)}
-      />
+      <DecimalInput value={volume} setValue={setVolume} text="Volume (µl)" />
       <div className="flex flex-row space-x-3">
         <Button variant="contained" fullWidth={true} color="error" onClick={() => dispatch(removeBlock(block.index))}>
           Delete
