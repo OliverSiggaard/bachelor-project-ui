@@ -4,6 +4,7 @@ import {Divider, Typography} from "@mui/material";
 import {Block, OutputBlockInfo} from "../../types/blockTypes";
 import {BlockColors} from "../../enums/blockColors";
 import {BlockIcons} from "../../enums/BlockIcons";
+import AvailableDropletIdDisplay from "./custom-block-information-displays/AvailableDropletIdDisplay";
 
 interface OutputBlockProps {
     block: Block;
@@ -11,16 +12,10 @@ interface OutputBlockProps {
 
 const OutputBlock: React.FC<OutputBlockProps> = ({ block }) => {
 
-  let dropletId: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
+  const info = block.info as OutputBlockInfo;
 
-  if (block.info !== undefined) {
-    const info = block.info as OutputBlockInfo;
-    dropletId = info.dropletId;
-    posX = info.posX;
-    posY = info.posY;
-  }
+  const posX: string = info?.posX || "-";
+  const posY: string = info?.posY || "-";
 
   return (
     <BaseBlock index={block.index} color={BlockColors.OutputBlockColor}>
@@ -35,7 +30,7 @@ const OutputBlock: React.FC<OutputBlockProps> = ({ block }) => {
           <span>Pos:</span>
         </Typography>
         <Typography className="flex flex-col space-y-2.5 text-right">
-          <span>{dropletId}</span>
+          <AvailableDropletIdDisplay block={block} />
           <span>({posX},{posY})</span>
         </Typography>
       </div>

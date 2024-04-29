@@ -51,7 +51,8 @@ describe("StoreBlock Component", () => {
     );
 
     expect(screen.getByText("Store")).toBeInTheDocument();
-    expect(screen.getAllByText("-").length).toBe(2);
+    expect(screen.getByText("-")).toBeInTheDocument();
     expect(screen.getByText("(-,-)")).toBeInTheDocument();
+    expect(screen.getByText("- ms")).toBeInTheDocument();
   });
 });

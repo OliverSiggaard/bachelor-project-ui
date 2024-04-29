@@ -11,12 +11,9 @@ interface RepeatBlockProps {
 
 const RepeatBlock: React.FC<RepeatBlockProps> = ({ block }) => {
 
-  let times: string = '-';
+  const info = block.info as RepeatBlockInfo;
 
-  if (block.info !== undefined) {
-    const info = block.info as RepeatBlockInfo;
-    times = info.times + " times";
-  }
+  const times = info?.times || "-";
 
   return (
     <BaseBlock index={block.index} color={BlockColors.RepeatBlockColor}>
@@ -30,7 +27,7 @@ const RepeatBlock: React.FC<RepeatBlockProps> = ({ block }) => {
           <span>Repeat:</span>
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
-          <span>{times}</span>
+          <span>{times} times</span>
         </Typography>
       </div>
     </BaseBlock>

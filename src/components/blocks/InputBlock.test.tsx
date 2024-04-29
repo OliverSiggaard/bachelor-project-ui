@@ -51,7 +51,8 @@ describe("InputBlock Component", () => {
     );
 
     expect(screen.getByText("Input")).toBeInTheDocument();
-    expect(screen.getAllByText("-").length).toBe(2);
+    expect(screen.getByText("-")).toBeInTheDocument();
     expect(screen.getByText("(-,-)")).toBeInTheDocument();
+    expect(screen.getByText("- µl")).toBeInTheDocument();
   });
 });

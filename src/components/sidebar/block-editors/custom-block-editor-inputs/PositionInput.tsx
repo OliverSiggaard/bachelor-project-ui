@@ -4,13 +4,13 @@ import {TextField} from "@mui/material";
 interface PositionInputProps {
   posX: string;
   posY: string;
-  setPosX: (pos: string) => void;
-  setPosY: (pos: string) => void;
+  setPosX: (posX: string) => void;
+  setPosY: (posY: string) => void;
   textPosX?: string;
   textPosY?: string;
 }
 
-const AutocompleteDropletId: React.FC<PositionInputProps> = ({
+const PositionInput: React.FC<PositionInputProps> = ({
   posX,
   posY,
   setPosX,
@@ -48,4 +48,4 @@ const AutocompleteDropletId: React.FC<PositionInputProps> = ({
   );
 };
 
-export default AutocompleteDropletId;
+export default PositionInput;

@@ -4,6 +4,7 @@ import {Divider, Typography} from "@mui/material";
 import {Block, MoveBlockInfo} from "../../types/blockTypes";
 import {BlockColors} from "../../enums/blockColors";
 import {BlockIcons} from "../../enums/BlockIcons";
+import AvailableDropletIdDisplay from "./custom-block-information-displays/AvailableDropletIdDisplay";
 
 interface MoveBlockProps {
     block: Block;
@@ -11,16 +12,10 @@ interface MoveBlockProps {
 
 const MoveBlock: React.FC<MoveBlockProps> = ({ block }) => {
 
-  let dropletId: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
+  const info = block.info as MoveBlockInfo;
 
-  if (block.info !== undefined) {
-    const info = block.info as MoveBlockInfo;
-    dropletId = info.dropletId;
-    posX = info.posX;
-    posY = info.posY;
-  }
+  const posX: string = info?.posX || "-";
+  const posY: string = info?.posY || "-";
 
   return (
     <BaseBlock index={block.index} color={BlockColors.MoveBlockColor}>
@@ -35,7 +30,7 @@ const MoveBlock: React.FC<MoveBlockProps> = ({ block }) => {
           <span>Pos:</span>
         </Typography>
         <Typography className="flex flex-col space-y-2.5 text-right">
-          <span>{dropletId}</span>
+          <AvailableDropletIdDisplay block={block} />
           <span>({posX},{posY})</span>
         </Typography>
       </div>

@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Button, TextField} from "@mui/material";
+import {Button} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, MixBlockInfo} from "../../../types/blockTypes";
-import AutocompleteDropletId from "./block-editor-utils/AutocompleteDropletId";
-import PositionInput from "./block-editor-utils/PositionInput";
+import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
+import PositionInput from "./custom-block-editor-inputs/PositionInput";
+import MixAreaInput from "./custom-block-editor-inputs/MixAreaInput";
 
 interface MixBlockEditorProps {
   block: Block;
@@ -61,20 +62,12 @@ const MixBlockEditor: React.FC<MixBlockEditorProps> = ({ block }) => {
         setPosX={setPosX}
         setPosY={setPosY}
       />
-      <div className="flex flex-row space-x-3">
-        <TextField
-          variant="outlined"
-          label="x-Size"
-          value={xSize}
-          onChange={(e) => setXSize(e.target.value)}
-        />
-        <TextField
-          variant="outlined"
-          label="y-Size"
-          value={ySize}
-          onChange={(e) => setYSize(e.target.value)}
-        />
-      </div>
+      <MixAreaInput
+        sizeX={xSize}
+        sizeY={ySize}
+        setSizeX={setXSize}
+        setSizeY={setYSize}
+      />
       <div className="flex flex-row space-x-3">
         <Button variant="contained" fullWidth={true} color="error" onClick={() => dispatch(removeBlock(block.index))}>
           Delete
