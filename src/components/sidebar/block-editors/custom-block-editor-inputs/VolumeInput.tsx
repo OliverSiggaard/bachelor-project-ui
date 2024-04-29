@@ -1,13 +1,13 @@
 import React from 'react';
 import {TextField} from "@mui/material";
 
-interface DecimalInputProps {
-  value: string;
-  setValue: (value: string) => void;
+interface VolumeInputProps {
+  volume: string;
+  setVolume: (volume: string) => void;
   text?: string;
 }
 
-const DecimalInput: React.FC<DecimalInputProps> = ({value, setValue, text = "Value"}) => {
+const VolumeInput: React.FC<VolumeInputProps> = ({volume, setVolume, text = "Volume (µl)"}) => {
   const numberPattern = /^[0-9]*\.?[0-9]*$/;
 
   return (
@@ -15,11 +15,11 @@ const DecimalInput: React.FC<DecimalInputProps> = ({value, setValue, text = "Val
       <TextField
         variant="outlined"
         label={text}
-        value={value}
+        value={volume}
         onChange={(e) => {
           const value = e.target.value;
           if (numberPattern.test(value)) {
-            setValue(value);
+            setVolume(value);
           }
         }}
       />
@@ -27,4 +27,4 @@ const DecimalInput: React.FC<DecimalInputProps> = ({value, setValue, text = "Val
   );
 };
 
-export default DecimalInput;
+export default VolumeInput;

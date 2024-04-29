@@ -5,7 +5,7 @@ import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, StoreBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
 import PositionInput from "./custom-block-editor-inputs/PositionInput";
-import DecimalInput from "./custom-block-editor-inputs/DecimalInput";
+import TimeInput from "./custom-block-editor-inputs/TimeInput";
 
 interface StoreBlockEditorProps {
   block: Block;
@@ -58,7 +58,7 @@ const StoreBlockEditor: React.FC<StoreBlockEditorProps> = ({ block }) => {
         setPosX={setPosX}
         setPosY={setPosY}
       />
-      <DecimalInput value={time} setValue={setTime} text="Time (ms)" />
+      <TimeInput time={time} setTime={setTime} />
       <div className="flex flex-row space-x-3">
         <Button variant="contained" fullWidth={true} color="error" onClick={() => dispatch(removeBlock(block.index))}>
           Delete
