@@ -9,6 +9,7 @@ import {Block} from "../../types/blockTypes";
 import {convertBlocksToActions} from "../../conversion/blocksToActionsConverter";
 import {useApiCall} from "../../api/useApiCall";
 import {downloadFile, getCompiledProgramFileName, getDmfConfigurationFileName} from "../../utils/fileUtils";
+import CompilationErrorDialog from "./dialogs/CompilationErrorDialog";
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -22,14 +23,32 @@ const Navbar: React.FC = () => {
   const openRunDialog = () => { setRunDialogOpen(true) };
   const closeRunDialog = () => { setRunDialogOpen(false) };
 
+  interface ExecutionResult {
+    errorMessage: string;
+    compiledProgram: string;
+    dmfConfiguration: any;
+  }
+
+  // Define TypeScript interfaces for your API error response if you know the structure.
+  interface ApiErrorResponse {
+    response?: {
+      data?: ExecutionResult;
+    }
+  }
+
+  const [executionResult, setExecutionResult] = useState<ExecutionResult | null>(null);
   const [CompilationStatusSnackbarOpen, setCompilationStatusSnackbarOpen] = useState<boolean>(false);
+  const [isErrorDialogOpen, setIsErrorDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { loading, success, sendRequest } = useApiCall();
+
+  // Define TypeScript interfaces for your API error response if you know the structure.
 
   const handleSendProgramToBackend = async () => {
     try {
       const programActions = convertBlocksToActions(blocks);
-      const executionResult = await sendRequest(
+      const result = await sendRequest(
         "/api/compile",
         "POST",
         programActions,
@@ -37,19 +56,41 @@ const Navbar: React.FC = () => {
           "Content-Type": "application/json",
         }
       );
-      // Extract the compiled program and dmf configuration from the response (should match the backends execution result)
-      const compiledProgram = executionResult.compiledProgram;
-      const dmfConfiguration = JSON.stringify(executionResult.dmfConfiguration, null, 2);
 
-      // Initiate automatic download of the compiled program and dmf configuration
-      downloadFile(compiledProgram, getCompiledProgramFileName(), "text-plain");
-      downloadFile(dmfConfiguration, getDmfConfigurationFileName(), "application/json");
-    } catch (error) {
-      console.error("An error occurred while sending the program to the backend:", error);
-    } finally {
+      setExecutionResult(result);
+      handleDownloadFiles();
       setCompilationStatusSnackbarOpen(true);
+
+    } catch (error) {
+      setCompilationStatusSnackbarOpen(false);
+      const apiError = error as ApiErrorResponse;
+      const result = apiError?.response?.data;
+
+      if(!result) {
+        return;
+      }
+
+      setExecutionResult(result);
+      // Handle specific error message display
+      if (result.errorMessage) {
+        setErrorMessage(result.errorMessage);
+        setIsErrorDialogOpen(true);
+      } else {
+        setErrorMessage("An error occurred, but no error message was provided.");
+        setIsErrorDialogOpen(true);
+      }
     }
   }
+
+  const handleDownloadFiles = () => {
+    if (!executionResult) return;
+
+    const compiledProgram = executionResult.compiledProgram;
+    const dmfConfiguration = JSON.stringify(executionResult.dmfConfiguration, null, 2);
+
+    downloadFile(compiledProgram, getCompiledProgramFileName(), "text/plain");
+    downloadFile(dmfConfiguration, getDmfConfigurationFileName(), "application/json");
+  };
 
   return (
     <AppBar position="static" sx={{ height: '64px' }}>
@@ -112,6 +153,12 @@ const Navbar: React.FC = () => {
           {success ? "Program compiled successfully!" : "Program compilation failed!"}
         </Alert>
       </Snackbar>
+      <CompilationErrorDialog
+        open={isErrorDialogOpen}
+        onClose={() => setIsErrorDialogOpen(false)}
+        onRun={() => handleDownloadFiles()}
+        error={errorMessage}
+      />
     </AppBar>
   );
 };
