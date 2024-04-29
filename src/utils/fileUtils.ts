@@ -21,3 +21,9 @@ export const getDmfConfigurationFileName = () => {
   const currentTime = new Date().toLocaleTimeString('da-DK').replaceAll(".", "");
   return `dmf_configuration_${currentTime}.json`;
 }
+
+// Utility function to create a filename for the program sketch (.json file)
+export const getProgramSketchFileName = () => {
+  const currentTime = new Date().toLocaleTimeString('da-DK').replaceAll(".", "");
+  return `program_sketch_${currentTime}.json`;
+}

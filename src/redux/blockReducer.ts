@@ -74,6 +74,10 @@ const blockSlice = createSlice({
       const index = action.payload;
       state.selectedIndex = (index !== null && index >= 0 && index < state.blocks.length) ? index : null;
     },
+    overwriteBlocks(state, action: PayloadAction<Block[]>) {
+      state.blocks = action.payload;
+      state.selectedIndex = null;
+    }
   },
 });
 
@@ -84,6 +88,7 @@ export const {
   deleteAll,
   editBlock,
   selectBlock,
+  overwriteBlocks,
 } = blockSlice.actions;
 
 export default blockSlice.reducer;
