@@ -59,6 +59,21 @@ const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
     setDropletIdInvalid(false);
   }
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        handleSave();
+      }
+      if (e.key === 'Escape') {
+        dispatch(selectBlock(null));
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [dispatch, dropletId, posX, posY, volume]); // eslint-disable-line
+
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
       <div style={{fontSize: 24, textAlign: "center"}}>Input Block</div>
