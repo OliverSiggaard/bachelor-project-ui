@@ -6,6 +6,7 @@ import {Block, SplitBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
 import PositionInput from "./custom-block-editor-inputs/PositionInput";
 import {getAvailableDropletIdsForIndex} from "../../../utils/dropletIdUtils";
+import {useKeyboardShortcut} from "./useKeyboardShortcut";
 
 interface SplitBlockEditorProps {
   block: Block;
@@ -82,6 +83,8 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
     setResultDropletId1Invalid(false);
     setResultDropletId2Invalid(false);
   }
+
+  useKeyboardShortcut(handleSave, [originDropletId, resultDropletId1, resultDropletId2, posX1, posY1, posX2, posY2]);
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>

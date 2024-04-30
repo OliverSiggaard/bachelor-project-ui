@@ -6,6 +6,7 @@ import {Block, MixBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
 import PositionInput from "./custom-block-editor-inputs/PositionInput";
 import MixAreaInput from "./custom-block-editor-inputs/MixAreaInput";
+import {useKeyboardShortcut} from "./useKeyboardShortcut";
 
 interface MixBlockEditorProps {
   block: Block;
@@ -51,6 +52,8 @@ const MixBlockEditor: React.FC<MixBlockEditorProps> = ({ block }) => {
     setXSize('');
     setYSize('');
   }
+
+  useKeyboardShortcut(handleSave, [dropletId, posX, posY, xSize, ySize]);
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>

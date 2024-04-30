@@ -6,6 +6,7 @@ import {Block, MergeBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
 import PositionInput from "./custom-block-editor-inputs/PositionInput";
 import {getAvailableDropletIdsForIndex} from "../../../utils/dropletIdUtils";
+import {useKeyboardShortcut} from "./useKeyboardShortcut";
 
 interface MergeBlockEditorProps {
   block: Block;
@@ -68,6 +69,8 @@ const MergeBlockEditor: React.FC<MergeBlockEditorProps> = ({ block }) => {
     setPosX('');
     setPosY('');
   }
+
+  useKeyboardShortcut(handleSave, [originDropletId1, originDropletId2, resultDropletId, posX, posY]);
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>

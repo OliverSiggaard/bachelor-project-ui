@@ -6,6 +6,7 @@ import {Block, InputBlockInfo} from "../../../types/blockTypes";
 import PositionInput from "./custom-block-editor-inputs/PositionInput";
 import {getAvailableDropletIdsForIndex} from "../../../utils/dropletIdUtils";
 import VolumeInput from "./custom-block-editor-inputs/VolumeInput";
+import {useKeyboardShortcut} from "./useKeyboardShortcut";
 
 interface InputBlockEditorProps {
   block: Block;
@@ -59,20 +60,7 @@ const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
     setDropletIdInvalid(false);
   }
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-        e.preventDefault();
-        handleSave();
-      }
-      if (e.key === 'Escape') {
-        dispatch(selectBlock(null));
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [dispatch, dropletId, posX, posY, volume]); // eslint-disable-line
+  useKeyboardShortcut(handleSave, [dropletId, posX, posY, volume])
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>

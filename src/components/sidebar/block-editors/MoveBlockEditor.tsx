@@ -5,6 +5,7 @@ import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, MoveBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
 import PositionInput from "./custom-block-editor-inputs/PositionInput";
+import {useKeyboardShortcut} from "./useKeyboardShortcut";
 
 interface MoveBlockEditorProps {
   block: Block;
@@ -42,6 +43,8 @@ const MoveBlockEditor: React.FC<MoveBlockEditorProps> = ({ block }) => {
     setPosX('');
     setPosY('');
   }
+
+  useKeyboardShortcut(handleSave, [dropletId, posX, posY]);
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>

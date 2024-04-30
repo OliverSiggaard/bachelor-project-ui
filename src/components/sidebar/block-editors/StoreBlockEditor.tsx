@@ -6,6 +6,7 @@ import {Block, StoreBlockInfo} from "../../../types/blockTypes";
 import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
 import PositionInput from "./custom-block-editor-inputs/PositionInput";
 import TimeInput from "./custom-block-editor-inputs/TimeInput";
+import {useKeyboardShortcut} from "./useKeyboardShortcut";
 
 interface StoreBlockEditorProps {
   block: Block;
@@ -47,6 +48,8 @@ const StoreBlockEditor: React.FC<StoreBlockEditorProps> = ({ block }) => {
     setPosY('');
     setTime('');
   }
+
+  useKeyboardShortcut(handleSave, [dropletId, posX, posY, time]);
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
