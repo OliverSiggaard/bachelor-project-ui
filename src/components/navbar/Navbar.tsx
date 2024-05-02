@@ -22,14 +22,13 @@ import RunDialog from "./dialogs/RunDialog";
 import {Block} from "../../types/blockTypes";
 import {convertBlocksToActions} from "../../conversion/blocksToActionsConverter";
 import {useApiCall} from "../../api/useApiCall";
-import {downloadFile, getCompiledProgramFileName, getDmfConfigurationFileName} from "../../utils/fileUtils";
-import CompilationErrorDialog from "./dialogs/CompilationErrorDialog";
 import {
   downloadFile,
   getCompiledProgramFileName,
   getDmfConfigurationFileName,
-  getProgramSketchFileName,
+  getProgramSketchFileName
 } from "../../utils/fileUtils";
+import CompilationErrorDialog from "./dialogs/CompilationErrorDialog";
 import {validateUploadedBlocks} from "../../utils/programSketchUtils";
 
 const Navbar: React.FC = () => {
@@ -52,7 +51,14 @@ const Navbar: React.FC = () => {
   const closeDropdownMenu = () => { setDropdownMenuAnchorEl(null) };
 
 
+  // API call (result, status, error)
+  const [executionResult, setExecutionResult] = useState<ExecutionResult | null>(null);
   const [compilationStatusSnackbarOpen, setCompilationStatusSnackbarOpen] = useState<boolean>(false);
+  const [isErrorDialogOpen, setIsErrorDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const { loading, success, sendRequest } = useApiCall();
+
   // Should match backends execution result
   interface ExecutionResult {
     compiledProgram: string;
@@ -66,15 +72,6 @@ const Navbar: React.FC = () => {
       data?: ExecutionResult;
     }
   }
-
-  const [executionResult, setExecutionResult] = useState<ExecutionResult | null>(null);
-  const [CompilationStatusSnackbarOpen, setCompilationStatusSnackbarOpen] = useState<boolean>(false);
-  const [isErrorDialogOpen, setIsErrorDialogOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const { loading, success, sendRequest } = useApiCall();
-
-
 
   const handleSendProgramToBackend = async () => {
     try {
