@@ -5,38 +5,44 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  Divider
 } from "@mui/material";
 
 interface CompilationErrorDialogProps {
   open: boolean;
   onClose: () => void;
-  onRun: () => void;
+  onDownload: () => void;
   error: string;
 }
 
-const CompilationErrorDialog: React.FC<CompilationErrorDialogProps> = ({ open, onClose, onRun, error }) => {
+const CompilationErrorDialog: React.FC<CompilationErrorDialogProps> = ({ open, onClose, onDownload, error }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
-        {"An error occurred while compiling the program."}
+        {"The following error occurred while compiling the program:"}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          {error}
+          <p style={{ color: 'red', marginBottom: "15px"}}>
+            {error}
+          </p>
+          <Divider />
+          <p style={{marginTop: "15px"}}>
+            You can still download the partial program and try to debug the error.
+          </p>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined"
-                onClick={() => {onClose(); onRun()}}>
-          Download partially compiled program files
+        <Button variant="outlined" onClick={onClose}>
+          Cancel
         </Button>
         <Button
           variant="contained"
-          onClick={onClose}
+          onClick={() => { onClose(); onDownload(); }}
           color="error"
         >
-          Edit program
+          Download Partial Program
         </Button>
       </DialogActions>
     </Dialog>

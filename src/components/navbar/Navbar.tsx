@@ -23,13 +23,14 @@ const Navbar: React.FC = () => {
   const openRunDialog = () => { setRunDialogOpen(true) };
   const closeRunDialog = () => { setRunDialogOpen(false) };
 
+  // Should match backends execution result
   interface ExecutionResult {
-    errorMessage: string;
     compiledProgram: string;
-    dmfConfiguration: any;
+    dmfConfiguration: JSON;
+    errorMessage: string;
   }
 
-  // Define TypeScript interfaces for your API error response if you know the structure.
+  // Structure of the error response from the backend
   interface ApiErrorResponse {
     response?: {
       data?: ExecutionResult;
@@ -42,8 +43,6 @@ const Navbar: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const { loading, success, sendRequest } = useApiCall();
-
-  // Define TypeScript interfaces for your API error response if you know the structure.
 
   const handleSendProgramToBackend = async () => {
     try {
@@ -59,35 +58,33 @@ const Navbar: React.FC = () => {
 
       setExecutionResult(result);
       handleDownloadFiles();
-      setCompilationStatusSnackbarOpen(true);
-
     } catch (error) {
-      setCompilationStatusSnackbarOpen(false);
+      console.log(error)
       const apiError = error as ApiErrorResponse;
       const result = apiError?.response?.data;
 
-      if(!result) {
-        return;
-      }
-
+      if(!result) return;
       setExecutionResult(result);
-      // Handle specific error message display
-      if (result.errorMessage) {
-        setErrorMessage(result.errorMessage);
-        setIsErrorDialogOpen(true);
-      } else {
-        setErrorMessage("An error occurred, but no error message was provided.");
-        setIsErrorDialogOpen(true);
-      }
+
+      // Set error message to be displayed in the error dialog
+      result.errorMessage
+        ? setErrorMessage(result.errorMessage)
+        : setErrorMessage("An error occurred, but no error message was provided.");
+
+      setIsErrorDialogOpen(true);
+    } finally {
+      setCompilationStatusSnackbarOpen(true);
     }
   }
 
   const handleDownloadFiles = () => {
     if (!executionResult) return;
 
+    // Extracting compiled program and dmf configuration from the response
     const compiledProgram = executionResult.compiledProgram;
     const dmfConfiguration = JSON.stringify(executionResult.dmfConfiguration, null, 2);
 
+    // Initiating automatic browser download of compiled program and dmf configuration
     downloadFile(compiledProgram, getCompiledProgramFileName(), "text/plain");
     downloadFile(dmfConfiguration, getDmfConfigurationFileName(), "application/json");
   };
@@ -156,7 +153,7 @@ const Navbar: React.FC = () => {
       <CompilationErrorDialog
         open={isErrorDialogOpen}
         onClose={() => setIsErrorDialogOpen(false)}
-        onRun={() => handleDownloadFiles()}
+        onDownload={() => handleDownloadFiles()}
         error={errorMessage}
       />
     </AppBar>
