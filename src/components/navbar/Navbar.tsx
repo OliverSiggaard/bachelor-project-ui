@@ -88,7 +88,6 @@ const Navbar: React.FC = () => {
       setExecutionResult(result);
       handleDownloadFiles();
     } catch (error) {
-      console.log(error)
       const apiError = error as ApiErrorResponse;
       const result = apiError?.response?.data;
 
@@ -137,6 +136,9 @@ const Navbar: React.FC = () => {
       reader.readAsText(file);
     }
   }
+
+  // Allow partial download if compiled program is not empty or dmf configuration is not null
+  const allowPartialDownload = executionResult?.compiledProgram !== "" || executionResult?.dmfConfiguration !== null;
 
   return (
     <AppBar position="static" sx={{height: '64px'}}>
@@ -240,6 +242,7 @@ const Navbar: React.FC = () => {
         open={isErrorDialogOpen}
         onClose={() => setIsErrorDialogOpen(false)}
         onDownload={() => handleDownloadFiles()}
+        allowPartialDownload={allowPartialDownload}
         error={errorMessage}
       />
     </AppBar>

@@ -54,7 +54,7 @@ const AvailableDropletIdDisplay: React.FC<AvailableDropletIdDisplayProps> = ({ b
       break;
   }
 
-  return <span style={{color: available ? TextColors.normalBlockText : TextColors.dropletIdUnavailable}}>{dropletId}</span>
+  return <span style={{color: available ? TextColors.normalBlockText : TextColors.errorText}}>{dropletId}</span>
 };
 
 export default AvailableDropletIdDisplay;
