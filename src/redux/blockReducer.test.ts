@@ -35,12 +35,12 @@ describe("Block Reducer", () => {
 
     expect(nextState.blocks).toHaveLength(2);
     expect(nextState.selectedIndex).toBe(null);
-    // Check that block indexes are updated correctly:
+
+    // Check that block indexes are updated correctly and the blocks contains the correct info:
     expect(nextState.blocks[0].index).toEqual(prevState.blocks[1].index - 1);
     expect(nextState.blocks[1].index).toEqual(prevState.blocks[2].index - 1);
     expect(nextState.blocks[0].info).toEqual(prevState.blocks[1].info);
     expect(nextState.blocks[1].info).toEqual(prevState.blocks[2].info);
-
   });
   test("removeBlock when there are no blocks", () => {
     initialState.blocks = []; // Remove blocks from initial state

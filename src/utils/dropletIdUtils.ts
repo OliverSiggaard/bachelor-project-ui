@@ -1,4 +1,9 @@
-import {Block, InputBlockInfo, MergeBlockInfo, SplitBlockInfo} from "../types/blockTypes";
+import {
+  Block,
+  InputBlockInfo,
+  MergeBlockInfo,
+  SplitBlockInfo,
+} from "../types/blockTypes";
 
 // Return all available dropletIds up until the given index
 // add index for input block
@@ -17,7 +22,8 @@ export function getAvailableDropletIdsForIndex (blocks: Block[], index: number):
 
     if (block.type === "input") {
       // Add dropletId for input block
-      dropletIds.push((block.info as InputBlockInfo).dropletId);
+      const dropletId = (block.info as InputBlockInfo).dropletId;
+      if (dropletId !== "") dropletIds.push(dropletId); // Only add if dropletId is not empty
     } else if (block.type === "output") {
       // Remove dropletId for output block
       dropletIds = dropletIds.filter(id => id !== (block.info as InputBlockInfo).dropletId);
@@ -25,12 +31,15 @@ export function getAvailableDropletIdsForIndex (blocks: Block[], index: number):
       // Remove origin droplets and add result droplet for merge block
       dropletIds = dropletIds.filter(id => id !== (block.info as MergeBlockInfo).originDropletId1);
       dropletIds = dropletIds.filter(id => id !== (block.info as MergeBlockInfo).originDropletId2);
-      dropletIds.push((block.info as MergeBlockInfo).resultDropletId);
+      const resultDropletId = (block.info as MergeBlockInfo).resultDropletId;
+      if (resultDropletId !== "") dropletIds.push(resultDropletId); // Only add if resultDropletId is not empty
     } else if (block.type === "split") {
       // Remove origin droplet and add result droplets for split block
       dropletIds = dropletIds.filter(id => id !== (block.info as SplitBlockInfo).originDropletId);
-      dropletIds.push((block.info as SplitBlockInfo).resultDropletId1);
-      dropletIds.push((block.info as SplitBlockInfo).resultDropletId2);
+      const resultDropletId1 = (block.info as SplitBlockInfo).resultDropletId1;
+      const resultDropletId2 = (block.info as SplitBlockInfo).resultDropletId2;
+      if (resultDropletId1 !== "") dropletIds.push(resultDropletId1); // Only add if resultDropletId1 is not empty
+      if (resultDropletId2 !== "") dropletIds.push(resultDropletId2); // Only add if resultDropletId2 is not empty
     }
   }
   return dropletIds;

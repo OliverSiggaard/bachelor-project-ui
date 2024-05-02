@@ -4,6 +4,7 @@ import {Divider, Typography} from "@mui/material";
 import {Block, MergeBlockInfo} from "../../types/blockTypes";
 import {BlockColors} from "../../enums/blockColors";
 import {BlockIcons} from "../../enums/BlockIcons";
+import AvailableDropletIdDisplay from "./custom-block-information-displays/AvailableDropletIdDisplay";
 
 interface MergeBlockProps {
   block: Block;
@@ -11,22 +12,11 @@ interface MergeBlockProps {
 
 const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
 
-  let resultDropletId: string = '-';
-  let dropletId1: string = '-';
-  let dropletId2: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
+  const info = block.info as MergeBlockInfo;
 
-  if (block.info !== undefined) {
-    const info = block.info as MergeBlockInfo;
-    resultDropletId = info.resultDropletId;
-    dropletId1 = info.originDropletId1;
-    dropletId2 = info.originDropletId2;
-    posX = info.posX;
-    posY = info.posY;
-  }
-
-
+  const resultDropletId: string = info?.resultDropletId || "-";
+  const posX: string = info?.posX || "-";
+  const posY: string = info?.posY || "-";
 
   return (
     <BaseBlock index={block.index} color={BlockColors.MergeBlockColor}>
@@ -39,13 +29,13 @@ const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
         <Typography className="flex flex-col justify-between">
           <span>Drop 1:</span>
           <span>Drop 2:</span>
-          <span>Result ID:</span>
+          <span>Res ID:</span>
           <span>Pos:</span>
 
         </Typography>
         <Typography className="flex flex-col justify-between text-right">
-          <span>{dropletId1}</span>
-          <span>{dropletId2}</span>
+          <AvailableDropletIdDisplay block={block} num={1} />
+          <AvailableDropletIdDisplay block={block} num={2} />
           <span>{resultDropletId}</span>
           <span>({posX},{posY})</span>
         </Typography>

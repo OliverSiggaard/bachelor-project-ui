@@ -11,18 +11,12 @@ interface InputBlockProps {
 
 const InputBlock: React.FC<InputBlockProps> = ({ block }) => {
 
-  let dropletId: string = '-';
-  let posX: string = '-';
-  let posY: string = '-';
-  let volume: string = '-';
+  const info = block.info as InputBlockInfo;
 
-  if (block.info !== undefined) {
-    const info = block.info as InputBlockInfo;
-    dropletId = info.dropletId;
-    posX = info.posX;
-    posY = info.posY;
-    volume = info.volume + " µl";
-  }
+  const dropletId: string = info?.dropletId || "-";
+  const posX: string = info?.posX || "-";
+  const posY: string = info?.posY || "-";
+  const volume: string = info?.volume || "-";
 
   return (
     <BaseBlock index={block.index} color={BlockColors.InputBlockColor}>
@@ -40,7 +34,7 @@ const InputBlock: React.FC<InputBlockProps> = ({ block }) => {
         <Typography className="flex flex-col justify-between text-right">
           <span>{dropletId}</span>
           <span>({posX},{posY})</span>
-          <span>{volume}</span>
+          <span>{volume} µl</span>
         </Typography>
       </div>
     </BaseBlock>

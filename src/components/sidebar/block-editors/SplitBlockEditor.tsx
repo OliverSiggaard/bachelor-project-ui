@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Button, TextField} from "@mui/material";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, SplitBlockInfo} from "../../../types/blockTypes";
-import AutocompleteDropletId from "./block-editor-utils/AutocompleteDropletId";
-import PositionInput from "./block-editor-utils/PositionInput";
+import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
+import PositionInput from "./custom-block-editor-inputs/PositionInput";
+import {getAvailableDropletIdsForIndex} from "../../../utils/dropletIdUtils";
+import {useKeyboardShortcut} from "./useKeyboardShortcut";
 
 interface SplitBlockEditorProps {
   block: Block;
@@ -16,11 +18,15 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
   const [originDropletId, setOriginDropletId] = useState('');
   const [resultDropletId1, setResultDropletId1] = useState('');
   const [resultDropletId2, setResultDropletId2] = useState('');
-  const [ratio, setRatio] = useState('');
   const [posX1, setPosX1] = useState('');
   const [posY1, setPosY1] = useState('');
   const [posX2, setPosX2] = useState('');
   const [posY2, setPosY2] = useState('');
+  const [resultDropletId1Invalid, setResultDropletId1Invalid] = useState(false);
+  const [resultDropletId2Invalid, setResultDropletId2Invalid] = useState(false);
+
+  const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
+  const dropletIds = getAvailableDropletIdsForIndex(blocks, block.index!);
 
   useEffect(() => {
     if (block.info) {
@@ -28,7 +34,6 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
       setOriginDropletId(blockInfo.originDropletId);
       setResultDropletId1(blockInfo.resultDropletId1);
       setResultDropletId2(blockInfo.resultDropletId2);
-      setRatio(blockInfo.ratio);
       setPosX1(blockInfo.posX1);
       setPosY1(blockInfo.posY1);
       setPosX2(blockInfo.posX2);
@@ -41,11 +46,23 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
       originDropletId: originDropletId,
       resultDropletId1: resultDropletId1,
       resultDropletId2: resultDropletId2,
-      ratio: ratio,
       posX1: posX1,
       posY1: posY1,
       posX2: posX2,
       posY2: posY2,
+    }
+
+    // Check if some combination of result droplet IDs are invalid
+    if ((dropletIds.includes(resultDropletId1) && dropletIds.includes(resultDropletId2)) || resultDropletId1 === resultDropletId2) {
+      setResultDropletId1Invalid(true);
+      setResultDropletId2Invalid(true);
+      return;
+    } else if (dropletIds.includes(resultDropletId1)) {
+      setResultDropletId1Invalid(true);
+      return;
+    } else if (dropletIds.includes(resultDropletId2)) {
+      setResultDropletId2Invalid(true);
+      return;
     }
 
     // Dispatch new info and de-select block
@@ -56,12 +73,18 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
     setOriginDropletId('');
     setResultDropletId1('');
     setResultDropletId2('');
-    setRatio('');
     setPosX1('');
     setPosY1('');
     setPosX2('');
     setPosY2('');
   }
+
+  const resetInvalidStates = () => {
+    setResultDropletId1Invalid(false);
+    setResultDropletId2Invalid(false);
+  }
+
+  useKeyboardShortcut(handleSave, [originDropletId, resultDropletId1, resultDropletId2, posX1, posY1, posX2, posY2]);
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
@@ -71,19 +94,23 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
         variant="outlined"
         label="Result Droplet 1 ID"
         value={resultDropletId1}
-        onChange={(e) => setResultDropletId1(e.target.value)}
+        onChange={(e) => {
+          setResultDropletId1(e.target.value);
+          resetInvalidStates();
+        }}
+        error={resultDropletId1Invalid}
+        helperText={resultDropletId1Invalid ? "Droplet ID must be unique" : ""}
       />
       <TextField
         variant="outlined"
         label="Result Droplet 2 ID"
         value={resultDropletId2}
-        onChange={(e) => setResultDropletId2(e.target.value)}
-      />
-      <TextField
-        variant="outlined"
-        label="Ratio"
-        value={ratio}
-        onChange={(e) => setRatio(e.target.value)}
+        onChange={(e) => {
+          setResultDropletId2(e.target.value);
+          resetInvalidStates()
+        }}
+        error={resultDropletId2Invalid}
+        helperText={resultDropletId2Invalid ? "Droplet ID must be unique" : ""}
       />
       <PositionInput
         posX={posX1}

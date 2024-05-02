@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Button, TextField} from "@mui/material";
+import {Button} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {editBlock, removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {Block, StoreBlockInfo} from "../../../types/blockTypes";
-import AutocompleteDropletId from "./block-editor-utils/AutocompleteDropletId";
-import PositionInput from "./block-editor-utils/PositionInput";
+import AutocompleteDropletId from "./custom-block-editor-inputs/AutocompleteDropletId";
+import PositionInput from "./custom-block-editor-inputs/PositionInput";
+import TimeInput from "./custom-block-editor-inputs/TimeInput";
+import {useKeyboardShortcut} from "./useKeyboardShortcut";
 
 interface StoreBlockEditorProps {
   block: Block;
@@ -47,6 +49,8 @@ const StoreBlockEditor: React.FC<StoreBlockEditorProps> = ({ block }) => {
     setTime('');
   }
 
+  useKeyboardShortcut(handleSave, [dropletId, posX, posY, time]);
+
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
       <div style={{fontSize: 24, textAlign: "center"}}>Store Block</div>
@@ -57,12 +61,7 @@ const StoreBlockEditor: React.FC<StoreBlockEditorProps> = ({ block }) => {
         setPosX={setPosX}
         setPosY={setPosY}
       />
-      <TextField
-        variant="outlined"
-        label="Time (ms)"
-        value={time}
-        onChange={(e) => setTime(e.target.value)}
-      />
+      <TimeInput time={time} setTime={setTime} />
       <div className="flex flex-row space-x-3">
         <Button variant="contained" fullWidth={true} color="error" onClick={() => dispatch(removeBlock(block.index))}>
           Delete

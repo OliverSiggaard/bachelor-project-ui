@@ -17,7 +17,6 @@ describe("SplitBlock Component", () => {
         originDropletId: "testId1",
         resultDropletId1: "testId2",
         resultDropletId2: "testId3",
-        ratio: "0.4",
         posX1: "5",
         posY1: "6",
         posX2: "15",
@@ -37,8 +36,6 @@ describe("SplitBlock Component", () => {
     expect(screen.getByText("testId1")).toBeInTheDocument();
     expect(screen.getByText("testId2")).toBeInTheDocument();
     expect(screen.getByText("testId3")).toBeInTheDocument();
-    expect(screen.getByText("0.4")).toBeInTheDocument();
-    expect(screen.getByText("0.6")).toBeInTheDocument();
     expect(screen.getByText("(5,6)")).toBeInTheDocument();
     expect(screen.getByText("(15,6)")).toBeInTheDocument();
   });
@@ -59,7 +56,7 @@ describe("SplitBlock Component", () => {
     );
 
     expect(screen.getByText("Split")).toBeInTheDocument();
-    expect(screen.getAllByText("-").length).toBe(5);
+    expect(screen.getAllByText("-").length).toBe(3);
     expect(screen.getAllByText("(-,-)").length).toBe(2);
   });
 });

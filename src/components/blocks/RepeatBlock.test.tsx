@@ -46,6 +46,6 @@ describe("RepeatBlock Component", () => {
     );
 
     expect(screen.getByText("Repeat")).toBeInTheDocument();
-    expect(screen.getAllByText("-").length).toBe(1);
+    expect(screen.getByText("- times")).toBeInTheDocument();
   });
 });
