@@ -26,8 +26,9 @@ import {
   downloadFile,
   getCompiledProgramFileName,
   getDmfConfigurationFileName,
-  getProgramSketchFileName,
+  getProgramSketchFileName
 } from "../../utils/fileUtils";
+import CompilationErrorDialog from "./dialogs/CompilationErrorDialog";
 import {validateUploadedBlocks} from "../../utils/programSketchUtils";
 
 const Navbar: React.FC = () => {
@@ -50,16 +51,32 @@ const Navbar: React.FC = () => {
   const closeDropdownMenu = () => { setDropdownMenuAnchorEl(null) };
 
 
+  // API call (result, status, error)
+  const [executionResult, setExecutionResult] = useState<ExecutionResult | null>(null);
   const [compilationStatusSnackbarOpen, setCompilationStatusSnackbarOpen] = useState<boolean>(false);
+  const [isErrorDialogOpen, setIsErrorDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { loading, success, sendRequest } = useApiCall();
 
+  // Should match backends execution result
+  interface ExecutionResult {
+    compiledProgram: string;
+    dmfConfiguration: JSON;
+    errorMessage: string;
+  }
 
+  // Structure of the error response from the backend
+  interface ApiErrorResponse {
+    response?: {
+      data?: ExecutionResult;
+    }
+  }
 
   const handleSendProgramToBackend = async () => {
     try {
       const programActions = convertBlocksToActions(blocks);
-      const executionResult = await sendRequest(
+      const result = await sendRequest(
         "/api/compile",
         "POST",
         programActions,
@@ -67,19 +84,38 @@ const Navbar: React.FC = () => {
           "Content-Type": "application/json",
         }
       );
-      // Extract the compiled program and dmf configuration from the response (should match the backends execution result)
-      const compiledProgram = executionResult.compiledProgram;
-      const dmfConfiguration = JSON.stringify(executionResult.dmfConfiguration, null, 2);
 
-      // Initiate automatic download of the compiled program and dmf configuration
-      downloadFile(compiledProgram, getCompiledProgramFileName(), "text-plain");
-      downloadFile(dmfConfiguration, getDmfConfigurationFileName(), "application/json");
+      setExecutionResult(result);
+      handleDownloadFiles();
     } catch (error) {
-      console.error("An error occurred while sending the program to the backend:", error);
+      const apiError = error as ApiErrorResponse;
+      const result = apiError?.response?.data;
+
+      if(!result) return;
+      setExecutionResult(result);
+
+      // Set error message to be displayed in the error dialog
+      result.errorMessage
+        ? setErrorMessage(result.errorMessage)
+        : setErrorMessage("An error occurred, but no error message was provided.");
+
+      setIsErrorDialogOpen(true);
     } finally {
       setCompilationStatusSnackbarOpen(true);
     }
   }
+
+  const handleDownloadFiles = () => {
+    if (!executionResult) return;
+
+    // Extracting compiled program and dmf configuration from the response
+    const compiledProgram = executionResult.compiledProgram;
+    const dmfConfiguration = JSON.stringify(executionResult.dmfConfiguration, null, 2);
+
+    // Initiating automatic browser download of compiled program and dmf configuration
+    downloadFile(compiledProgram, getCompiledProgramFileName(), "text/plain");
+    downloadFile(dmfConfiguration, getDmfConfigurationFileName(), "application/json");
+  };
 
   const downloadProgramSketch = () => {
     downloadFile(JSON.stringify(blocks, null, 2), getProgramSketchFileName(), "application/json");
@@ -100,6 +136,9 @@ const Navbar: React.FC = () => {
       reader.readAsText(file);
     }
   }
+
+  // Allow partial download if compiled program is not empty or dmf configuration is not null
+  const allowPartialDownload = executionResult?.compiledProgram !== "" || executionResult?.dmfConfiguration !== null;
 
   return (
     <AppBar position="static" sx={{height: '64px'}}>
@@ -199,6 +238,13 @@ const Navbar: React.FC = () => {
           {success ? "Program compiled successfully!" : "Program compilation failed!"}
         </Alert>
       </Snackbar>
+      <CompilationErrorDialog
+        open={isErrorDialogOpen}
+        onClose={() => setIsErrorDialogOpen(false)}
+        onDownload={() => handleDownloadFiles()}
+        allowPartialDownload={allowPartialDownload}
+        error={errorMessage}
+      />
     </AppBar>
   );
 };
