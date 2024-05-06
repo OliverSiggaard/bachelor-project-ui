@@ -56,7 +56,11 @@ const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, children }) => {
   }
 
   return (
-    <div ref={ref} onDragStart={handleSelectBlock} onClick={handleSelectBlock}
+    <div
+      ref={ref}
+      onDragStart={handleSelectBlock}
+      onClick={handleSelectBlock}
+      data-testid="block"
       style={{
         backgroundColor: color,
         width: 150,

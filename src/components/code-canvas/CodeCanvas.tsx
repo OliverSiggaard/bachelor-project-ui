@@ -10,8 +10,6 @@ import MergeBlock from "../blocks/MergeBlock";
 import SplitBlock from '../blocks/SplitBlock';
 import MixBlock from '../blocks/MixBlock';
 import StoreBlock from "../blocks/StoreBlock";
-import IfBlock from "../blocks/IfBlock";
-import RepeatBlock from "../blocks/RepeatBlock";
 
 const CodeCanvas: React.FC = () => {
   const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
@@ -34,10 +32,6 @@ const CodeCanvas: React.FC = () => {
           return renderMixBlock(block, index);
       case 'store':
           return renderStoreBlock(block, index);
-      case 'if':
-          return renderIfBlock(block, index);
-      case 'repeat':
-          return renderRepeatBlock(block, index);
       default:
         return null;
     }
@@ -99,22 +93,8 @@ const CodeCanvas: React.FC = () => {
     </div>
   );
 
-  const renderIfBlock = (block: Block, index: number) => (
-    <div className="flex flex-row items-center" key={index}>
-      <IfBlock block={block} />
-      {index !== blocks.length - 1 && <Arrow />}
-    </div>
-  );
-
-  const renderRepeatBlock = (block: Block, index: number) => (
-    <div className="flex flex-row items-center" key={index}>
-      <RepeatBlock block={block} />
-      {index !== blocks.length - 1 && <Arrow />}
-    </div>
-  );
-
   const Arrow = () => (
-    <div className="flex items-center">
+    <div className="flex items-center" data-testid="arrow">
       <ArrowForward />
     </div>
   );

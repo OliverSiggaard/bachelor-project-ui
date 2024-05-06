@@ -4,7 +4,7 @@ export interface Block {
   info?: CodeBlockInfo;
 }
 
-export type CodeBlockInfo = InputBlockInfo | OutputBlockInfo | MoveBlockInfo | MergeBlockInfo | SplitBlockInfo | MixBlockInfo | StoreBlockInfo | IfBlockInfo | RepeatBlockInfo // Add more blocks here
+export type CodeBlockInfo = InputBlockInfo | OutputBlockInfo | MoveBlockInfo | MergeBlockInfo | SplitBlockInfo | MixBlockInfo | StoreBlockInfo;
 
 export interface InputBlockInfo {
   dropletId: string;
@@ -57,19 +57,3 @@ export interface StoreBlockInfo {
   posY: string;
   time: string;
 }
-
-//TODO: How to handle if block in the UI?
-export interface IfBlockInfo {
-  condition: string;
-}
-
-//TODO: How to handle repeat block in the UI?
-export interface RepeatBlockInfo {
-  times: string;
-}
-
-
-
-
-
-// Define interfaces for more blocks here
