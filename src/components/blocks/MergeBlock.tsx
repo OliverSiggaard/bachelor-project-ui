@@ -25,15 +25,14 @@ const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
         <span>Merge</span>
       </Typography>
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
-      <div style={{ height: "90px", display: "flex", justifyContent: "space-between", margin: "7px 10px 10px 10px" }}>
-        <Typography className="flex flex-col justify-between">
+      <div style={{ height: "95px", display: "flex", justifyContent: "space-between", margin: "7px 10px 10px 10px" }}>
+        <Typography className="flex flex-col justify-between whitespace-nowrap" style={{marginRight: "10px"}}>
           <span>Drop 1:</span>
           <span>Drop 2:</span>
           <span>Res ID:</span>
           <span>Pos:</span>
-
         </Typography>
-        <Typography className="flex flex-col justify-between text-right">
+        <Typography className="flex flex-col justify-between text-right overflow-hidden whitespace-nowrap">
           <AvailableDropletIdDisplay block={block} num={1} />
           <AvailableDropletIdDisplay block={block} num={2} />
           <span>{resultDropletId}</span>

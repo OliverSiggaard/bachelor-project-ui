@@ -26,12 +26,12 @@ const InputBlock: React.FC<InputBlockProps> = ({ block }) => {
       </Typography>
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
       <div style={{ height: "90px", display: "flex", justifyContent: "space-between", margin: "10px 10px 10px 10px" }}>
-        <Typography className="flex flex-col justify-between">
+        <Typography className="flex flex-col justify-between" style={{marginRight: "10px"}}>
           <span>ID:</span>
           <span>Pos:</span>
           <span>Vol:</span>
         </Typography>
-        <Typography className="flex flex-col justify-between text-right">
+        <Typography className="flex flex-col justify-between text-right overflow-hidden whitespace-nowrap">
           <span>{dropletId}</span>
           <span>({posX},{posY})</span>
           <span>{volume} µl</span>
