@@ -74,9 +74,11 @@ const Navbar: React.FC = () => {
   }
 
   const handleSendProgramToBackend = async () => {
+    let result: any = undefined;
+    setExecutionResult(null);
     try {
       const programActions = convertBlocksToActions(blocks);
-      const result = await sendRequest(
+      result = await sendRequest(
         "/api/compile",
         "POST",
         programActions,
@@ -84,33 +86,29 @@ const Navbar: React.FC = () => {
           "Content-Type": "application/json",
         }
       );
-
-      setExecutionResult(result);
-      handleDownloadFiles();
+      handleDownloadFiles(result);
     } catch (error) {
       const apiError = error as ApiErrorResponse;
-      const result = apiError?.response?.data;
-
-      if(!result) return;
-      setExecutionResult(result);
+      result = apiError?.response?.data;
 
       // Set error message to be displayed in the error dialog
-      result.errorMessage
+      result?.errorMessage
         ? setErrorMessage(result.errorMessage)
         : setErrorMessage("An error occurred, but no error message was provided.");
 
       setIsErrorDialogOpen(true);
     } finally {
       setCompilationStatusSnackbarOpen(true);
+      setExecutionResult(result);
     }
   }
 
-  const handleDownloadFiles = () => {
-    if (!executionResult) return;
+  const handleDownloadFiles = (result: ExecutionResult) => {
+    if (!result) return;
 
     // Extracting compiled program and dmf configuration from the response
-    const compiledProgram = executionResult.compiledProgram;
-    const dmfConfiguration = JSON.stringify(executionResult.dmfConfiguration, null, 2);
+    const compiledProgram = result.compiledProgram;
+    const dmfConfiguration = JSON.stringify(result.dmfConfiguration, null, 2);
 
     // Initiating automatic browser download of compiled program and dmf configuration
     downloadFile(compiledProgram, getCompiledProgramFileName(), "text/plain");
@@ -241,7 +239,7 @@ const Navbar: React.FC = () => {
       <CompilationErrorDialog
         open={isErrorDialogOpen}
         onClose={() => setIsErrorDialogOpen(false)}
-        onDownload={() => handleDownloadFiles()}
+        onDownload={() => handleDownloadFiles(executionResult as ExecutionResult)}
         allowPartialDownload={allowPartialDownload}
         error={errorMessage}
       />
