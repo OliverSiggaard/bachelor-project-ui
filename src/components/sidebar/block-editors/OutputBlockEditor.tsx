@@ -47,7 +47,7 @@ const OutputBlockEditor: React.FC<OutputBlockEditorProps> = ({ block }) => {
   useKeyboardShortcut(handleSave, [dropletId, posX, posY]);
 
   return (
-    <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
+    <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}} data-testid="output-block-editor">
       <div style={{fontSize: 24, textAlign: "center"}}>Output Block</div>
       <AutocompleteDropletId dropletId={dropletId} setDropletId={setDropletId} />
       <PositionInput

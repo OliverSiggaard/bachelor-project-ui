@@ -48,7 +48,12 @@ const BlockEditor: React.FC = () => {
       {blockIndex !== null &&
         <div>
           <Divider orientation="horizontal" sx={{borderTopWidth: 3}}/>
-          <Button className="w-full" color="secondary" onClick={() => dispatch(selectBlock(null))}>
+          <Button
+            className="w-full"
+            color="secondary"
+            data-testid="close-block-editor-button"
+            onClick={() => dispatch(selectBlock(null))}
+          >
             <KeyboardArrowDown/>
           </Button>
           {renderBlockEditor()}

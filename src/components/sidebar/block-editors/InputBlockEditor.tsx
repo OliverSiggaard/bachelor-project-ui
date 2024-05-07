@@ -63,7 +63,7 @@ const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
   useKeyboardShortcut(handleSave, [dropletId, posX, posY, volume])
 
   return (
-    <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
+    <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}} data-testid="input-block-editor">
       <div style={{fontSize: 24, textAlign: "center"}}>Input Block</div>
       <TextField
         variant="outlined"

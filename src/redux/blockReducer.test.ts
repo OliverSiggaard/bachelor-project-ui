@@ -179,4 +179,59 @@ describe("Block Reducer", () => {
 
     expect(nextState.selectedIndex).toEqual(null);
   });
+
+  test("overwriteBlocks when blocks array is empty", () => {
+    const newBlocks: Block[] = [
+      {index: 0, type: "input", info: {dropletId: "1", posX: "1", posY: "1", volume: "10"}},
+      {index: 1, type: "move", info: {dropletId: "1", posX: "6", posY: "6"}},
+      {index: 2, type: "output", info: {dropletId: "1", posX: "6", posY: "6"}},
+    ];
+
+    const action = { type: 'block/overwriteBlocks', payload: newBlocks };
+    const nextState = blockReducer(initialState, action);
+
+    expect(nextState.blocks).toEqual(newBlocks);
+    expect(nextState.selectedIndex).toBe(null);
+  });
+  test("overwriteBlocks when blocks array is not empty", () => {
+    const initialState = {
+      blocks: [
+        {index: 0, type: "input", info: {dropletId: "1", posX: "6", posY: "3", volume: "6"}},
+        {index: 1, type: "move", info: {dropletId: "1", posX: "10", posY: "10"}},
+      ],
+      selectedIndex: null,
+    };
+
+    const newBlocks: Block[] = [
+      {index: 0, type: "input", info: {dropletId: "1", posX: "1", posY: "1", volume: "10"}},
+      {index: 1, type: "move", info: {dropletId: "1", posX: "6", posY: "6"}},
+      {index: 2, type: "output", info: {dropletId: "1", posX: "6", posY: "6"}},
+    ];
+
+    const action = { type: 'block/overwriteBlocks', payload: newBlocks };
+    const nextState = blockReducer(initialState, action);
+
+    expect(nextState.blocks).toEqual(newBlocks);
+    expect(nextState.selectedIndex).toBe(null);
+  });
+  test("overwriteBlocks removes selected index", () => {
+    const initialState = {
+      blocks: [
+        {index: 0, type: "input", info: {dropletId: "1", posX: "6", posY: "3", volume: "6"}},
+        {index: 1, type: "move", info: {dropletId: "1", posX: "10", posY: "10"}},
+      ],
+      selectedIndex: 0,
+    };
+
+    const newBlocks: Block[] = [
+      {index: 0, type: "input", info: {dropletId: "1", posX: "1", posY: "1", volume: "10"}},
+      {index: 1, type: "move", info: {dropletId: "1", posX: "6", posY: "6"}},
+      {index: 2, type: "output", info: {dropletId: "1", posX: "6", posY: "6"}},
+    ];
+
+    const action = { type: 'block/overwriteBlocks', payload: newBlocks };
+    const nextState = blockReducer(initialState, action);
+
+    expect(nextState.selectedIndex).toBe(null);
+  });
 });

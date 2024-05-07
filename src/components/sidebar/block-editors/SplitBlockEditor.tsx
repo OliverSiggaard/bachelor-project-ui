@@ -87,7 +87,7 @@ const SplitBlockEditor: React.FC<SplitBlockEditorProps> = ({ block }) => {
   useKeyboardShortcut(handleSave, [originDropletId, resultDropletId1, resultDropletId2, posX1, posY1, posX2, posY2]);
 
   return (
-    <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}}>
+    <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}} data-testid="split-block-editor">
       <div style={{fontSize: 24, textAlign: "center"}}>Split Block</div>
       <AutocompleteDropletId dropletId={originDropletId} setDropletId={setOriginDropletId} text="Origin Droplet ID" />
       <TextField
