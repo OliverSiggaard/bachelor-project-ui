@@ -70,7 +70,7 @@ const MergeBlockEditor: React.FC<MergeBlockEditorProps> = ({ block }) => {
     setPosY('');
   }
 
-  useKeyboardShortcut(handleSave, [originDropletId1, originDropletId2, resultDropletId, posX, posY]);
+  useKeyboardShortcut(handleSave, block.index, [originDropletId1, originDropletId2, resultDropletId, posX, posY]);
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}} data-testid="merge-block-editor">

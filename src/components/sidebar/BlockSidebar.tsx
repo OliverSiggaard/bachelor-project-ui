@@ -1,5 +1,4 @@
-import React from 'react';
-import {Button} from "@mui/material";
+import React, {useEffect} from 'react';
 import {addBlock} from "../../redux/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {Block} from "../../types/blockTypes";
@@ -17,11 +16,20 @@ const BlockSidebar: React.FC = () => {
     dispatch(addBlock({index: newBlockId, type: type}));
   }
 
-  const logBlocks = () => {
-    for (let i = 0; i < blocks.length; i++) {
-      console.log(blocks.at(i));
+  // Log blocks by pressing ctrl/cmd + shift + l
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
+        e.preventDefault();
+        for (let i = 0; i < blocks.length; i++) {
+          console.log(blocks[i]);
+        }
+      }
     }
-  }
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [blocks]);
+
 
   const blockButtons = [
     { color: BlockColors.InputBlockColor, icon: BlockIcons.InputBlockIcon, text: "Input Block", type: "input" },
@@ -48,11 +56,6 @@ const BlockSidebar: React.FC = () => {
       <div className="overflow-auto" style={{direction: "rtl"}}>
         <div className="flex flex-col items-center space-y-6" style={{padding: "25px 20px", direction: "ltr"}}>
           {AddBlockButtons}
-          <div style={{height: 40}}/>
-          <span>Temporary Dev Buttons :</span>
-          <Button variant="contained" color="secondary" onClick={logBlocks} sx={{width: 200, minHeight: 40}}>
-            Log Blocks
-          </Button>
         </div>
       </div>
       <BlockEditor />

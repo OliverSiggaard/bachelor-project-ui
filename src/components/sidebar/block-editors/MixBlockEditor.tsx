@@ -53,7 +53,7 @@ const MixBlockEditor: React.FC<MixBlockEditorProps> = ({ block }) => {
     setYSize('');
   }
 
-  useKeyboardShortcut(handleSave, [dropletId, posX, posY, xSize, ySize]);
+  useKeyboardShortcut(handleSave, block.index, [dropletId, posX, posY, xSize, ySize]);
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}} data-testid="mix-block-editor">

@@ -49,7 +49,7 @@ const StoreBlockEditor: React.FC<StoreBlockEditorProps> = ({ block }) => {
     setTime('');
   }
 
-  useKeyboardShortcut(handleSave, [dropletId, posX, posY, time]);
+  useKeyboardShortcut(handleSave, block.index, [dropletId, posX, posY, time]);
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}} data-testid="store-block-editor">

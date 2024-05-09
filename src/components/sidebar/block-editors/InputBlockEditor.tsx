@@ -60,7 +60,7 @@ const InputBlockEditor: React.FC<InputBlockEditorProps> = ({ block }) => {
     setDropletIdInvalid(false);
   }
 
-  useKeyboardShortcut(handleSave, [dropletId, posX, posY, volume])
+  useKeyboardShortcut(handleSave, block.index, [dropletId, posX, posY, volume])
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}} data-testid="input-block-editor">

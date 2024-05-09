@@ -44,7 +44,7 @@ const MoveBlockEditor: React.FC<MoveBlockEditorProps> = ({ block }) => {
     setPosY('');
   }
 
-  useKeyboardShortcut(handleSave, [dropletId, posX, posY]);
+  useKeyboardShortcut(handleSave, block.index, [dropletId, posX, posY]);
 
   return (
     <div className="flex flex-col space-y-3" style={{margin: "0px 20px 20px 20px"}} data-testid="move-block-editor">
