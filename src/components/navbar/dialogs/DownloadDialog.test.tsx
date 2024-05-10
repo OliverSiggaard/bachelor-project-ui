@@ -1,18 +1,19 @@
 import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render, screen} from '@testing-library/react';
-import RunDialog from './RunDialog';
+import DownloadDialog from './DownloadDialog';
 
-describe("RunDialog component", () => {
+import '@testing-library/jest-dom/extend-expect';
+
+describe("DownloadDialog component", () => {
   const onCloseMock = jest.fn();
-  const onRunMock = jest.fn();
+  const onDownloadMock = jest.fn();
 
-  test("Should render runDialog component with correct content", () => {
+  test("Should render downloadDialog component with correct content", () => {
     render(
-      <RunDialog
+      <DownloadDialog
         open={true}
         onClose={onCloseMock}
-        onRun={onRunMock}
+        onDownload={onDownloadMock}
         loading={false}
       />
     );
@@ -24,10 +25,10 @@ describe("RunDialog component", () => {
 
   test("Should call onClose when cancel button is clicked", () => {
     render(
-      <RunDialog
+      <DownloadDialog
         open={true}
         onClose={onCloseMock}
-        onRun={onRunMock}
+        onDownload={onDownloadMock}
         loading={false}
       />
     );
@@ -39,10 +40,10 @@ describe("RunDialog component", () => {
 
   test("Should call onRun and onClose when download button is clicked", () => {
     render(
-      <RunDialog
+      <DownloadDialog
         open={true}
         onClose={onCloseMock}
-        onRun={onRunMock}
+        onDownload={onDownloadMock}
         loading={false}
       />
     );
@@ -50,6 +51,6 @@ describe("RunDialog component", () => {
     fireEvent.click(screen.getByText("Download"));
 
     expect(onCloseMock).toHaveBeenCalled();
-    expect(onRunMock).toHaveBeenCalled();
+    expect(onDownloadMock).toHaveBeenCalled();
   });
 });

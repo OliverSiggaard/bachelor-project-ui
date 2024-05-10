@@ -1,4 +1,9 @@
-import {downloadFile, getCompiledProgramFileName, getDmfConfigurationFileName} from "./fileUtils";
+import {
+  downloadFile,
+  getCompiledProgramFileName,
+  getDmfConfigurationFileName,
+  getProgramSketchFileName
+} from "./fileUtils";
 
 describe("fileUtils", () => {
   describe("downloadFile", () => {
@@ -85,6 +90,26 @@ describe("fileUtils", () => {
       const fileName = getDmfConfigurationFileName();
 
       expect(fileName).toBe("dmf_configuration_081624.json");
+    });
+  });
+
+  describe("getProgramSketchFileName", () => {
+    let mockDate: any;
+    let dateSpy: any;
+
+    beforeEach(() => {
+      mockDate = new Date("2024-04-07T08:16:24");
+      dateSpy = jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+    });
+
+    afterEach(() => {
+      dateSpy.mockRestore();
+    });
+
+    test("Should return a filename in the correct format with the current time", () => {
+      const fileName = getProgramSketchFileName();
+
+      expect(fileName).toBe("program_sketch_081624.json");
     });
   });
 });
