@@ -32,6 +32,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-typescript": "^7.24.1",
+    "jest": "^27.5.1",
     "react-test-renderer": "^18.2.0",
     "redux-mock-store": "^1.5.4"
   },
@@ -61,7 +62,7 @@
   },
   "jest": {
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!react-dnd|core-dnd|@react-dnd|dnd-core|react-dnd-html5-backend)"
+      "<rootDir>/node_modules/(?!react-dnd|core-dnd|@react-dnd|dnd-core|react-dnd-html5-backend|axios)"
     ]
   }
 }

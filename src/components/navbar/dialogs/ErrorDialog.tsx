@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import {TextColors} from "../../../enums/textColors";
 
-interface CompilationErrorDialogProps {
+interface ErrorDialogProps {
   open: boolean;
   onClose: () => void;
   onDownload: () => void;
@@ -18,25 +18,25 @@ interface CompilationErrorDialogProps {
   error: string;
 }
 
-const CompilationErrorDialog: React.FC<CompilationErrorDialogProps> = ({ open, onClose, onDownload, allowPartialDownload, error }) => {
+const ErrorDialog: React.FC<ErrorDialogProps> = ({ open, onClose, onDownload, allowPartialDownload, error }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
         {"The following error occurred while compiling the program:"}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          <div style={{color: TextColors.errorText, marginBottom: "15px", fontStyle: "italic"}}>
+        <DialogContentText sx={{marginBottom: "15px"}}>
+          <span style={{color: TextColors.errorText, fontStyle: "italic"}}>
             "{error}"
-          </div>
-          <Divider/>
-          <div style={{marginTop: "15px"}}>
-            {allowPartialDownload ? (
-              "You can still download the partial program and try to debug the error."
-            ) : (
-              "Download of the partial program is not possible."
-            )}
-          </div>
+          </span>
+        </DialogContentText>
+        <Divider />
+        <DialogContentText sx={{marginTop: "15px"}}>
+          {allowPartialDownload ? (
+            "You can still download the partial program and try to debug the error."
+          ) : (
+            "Download of the partial program is not possible."
+          )}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -56,4 +56,4 @@ const CompilationErrorDialog: React.FC<CompilationErrorDialogProps> = ({ open, o
   );
 };
 
-export default CompilationErrorDialog;
+export default ErrorDialog;

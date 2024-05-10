@@ -389,15 +389,24 @@ describe("dropletIdUtils", () => {
         },
         {
           index: 4,
-          type: "output",
+          type: "move",
           info: {
             dropletId: "testId4",
-            posX: "10",
-            posY: "10",
+            posX: "5",
+            posY: "5",
           }
         },
         {
           index: 5,
+          type: "output",
+          info: {
+            dropletId: "testId4",
+            posX: "5",
+            posY: "5",
+          }
+        },
+        {
+          index: 6,
           type: "output",
           info: {
             dropletId: "testId5",
@@ -411,7 +420,8 @@ describe("dropletIdUtils", () => {
       expect(getAvailableDropletIdsForIndex(mockBlocks, 2)).toEqual(["testId1", "testId2"]);
       expect(getAvailableDropletIdsForIndex(mockBlocks, 3)).toEqual(["testId3"]);
       expect(getAvailableDropletIdsForIndex(mockBlocks, 4)).toEqual(["testId4", "testId5"]);
-      expect(getAvailableDropletIdsForIndex(mockBlocks, 5)).toEqual(["testId5"]);
+      expect(getAvailableDropletIdsForIndex(mockBlocks, 5)).toEqual(["testId4", "testId5"]);
+      expect(getAvailableDropletIdsForIndex(mockBlocks, 6)).toEqual(["testId5"]);
     });
   });
 });

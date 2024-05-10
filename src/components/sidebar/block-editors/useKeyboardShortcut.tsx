@@ -1,8 +1,8 @@
 import {useEffect} from "react";
-import {selectBlock} from "../../../redux/blockReducer";
+import {removeBlock, selectBlock} from "../../../redux/blockReducer";
 import {useDispatch} from "react-redux";
 
-export const useKeyboardShortcut = (handleSave: () => void, dependencies: any[]) => {
+export const useKeyboardShortcut = (handleSave: () => void, index: number, dependencies: any[]) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -10,6 +10,10 @@ export const useKeyboardShortcut = (handleSave: () => void, dependencies: any[])
       if ((e.ctrlKey || e.metaKey) && e.key === 's') {
         e.preventDefault();
         handleSave();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Backspace') {
+        e.preventDefault();
+        dispatch(removeBlock(index));
       }
       if (e.key === 'Escape') {
         e.preventDefault();

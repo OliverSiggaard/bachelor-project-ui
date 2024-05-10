@@ -18,7 +18,7 @@ import {DeleteForever, Download, MoreVert, Save, UploadFile} from "@mui/icons-ma
 import {useDispatch, useSelector} from "react-redux";
 import {deleteAll, overwriteBlocks} from "../../redux/blockReducer";
 import DeleteDialog from "./dialogs/DeleteDialog";
-import RunDialog from "./dialogs/RunDialog";
+import DownloadDialog from "./dialogs/DownloadDialog";
 import {Block} from "../../types/blockTypes";
 import {convertBlocksToActions} from "../../conversion/blocksToActionsConverter";
 import {useApiCall} from "../../api/useApiCall";
@@ -28,7 +28,7 @@ import {
   getDmfConfigurationFileName,
   getProgramSketchFileName
 } from "../../utils/fileUtils";
-import CompilationErrorDialog from "./dialogs/CompilationErrorDialog";
+import ErrorDialog from "./dialogs/ErrorDialog";
 import {validateUploadedBlocks} from "../../utils/programSketchUtils";
 
 const Navbar: React.FC = () => {
@@ -40,10 +40,10 @@ const Navbar: React.FC = () => {
   const openDeleteDialog = () => { setDeleteDialogOpen(true) };
   const closeDeleteDialog = () => { setDeleteDialogOpen(false) };
 
-  // Run dialog
-  const [runDialogOpen, setRunDialogOpen] = useState<boolean>(false);
-  const openRunDialog = () => { setRunDialogOpen(true) };
-  const closeRunDialog = () => { setRunDialogOpen(false) };
+  // Download dialog
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false);
+  const openDownloadDialog = () => { setDownloadDialogOpen(true) };
+  const closeDownloadDialog = () => { setDownloadDialogOpen(false) };
 
   // Dropdown menu
   const [dropdownMenuAnchorEl, setDropdownMenuAnchorEl] = useState<null | HTMLElement>(null);
@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
   }
 
   const handleSendProgramToBackend = async () => {
-    let result: any = undefined;
+    let result: any = null;
     setExecutionResult(null);
     try {
       const programActions = convertBlocksToActions(blocks);
@@ -92,9 +92,13 @@ const Navbar: React.FC = () => {
       result = apiError?.response?.data;
 
       // Set error message to be displayed in the error dialog
-      result?.errorMessage
-        ? setErrorMessage(result.errorMessage)
-        : setErrorMessage("An error occurred, but no error message was provided.");
+      if (result === undefined) { // Check if the error is due to not being able to connect to the backend
+        setErrorMessage("Could not connect to backend.");
+      } else {
+        result?.errorMessage
+          ? setErrorMessage(result.errorMessage)
+          : setErrorMessage("An error occurred, but no error message was provided.");
+      }
 
       setIsErrorDialogOpen(true);
     } finally {
@@ -135,8 +139,11 @@ const Navbar: React.FC = () => {
     }
   }
 
-  // Allow partial download if compiled program is not empty or dmf configuration is not null
-  const allowPartialDownload = executionResult?.compiledProgram !== "" || executionResult?.dmfConfiguration !== null;
+  // Allow partial download if compiled program is not empty or dmf configuration is not null or undefined
+  const allowPartialDownload = executionResult?.compiledProgram !== undefined
+    && executionResult?.compiledProgram !== ""
+    && executionResult?.dmfConfiguration !== undefined
+    && executionResult?.dmfConfiguration !== null;
 
   return (
     <AppBar position="static" sx={{height: '64px'}}>
@@ -155,6 +162,7 @@ const Navbar: React.FC = () => {
             size="large"
             color="inherit"
             onClick={openDeleteDialog}
+            data-testid="delete-all-button"
           >
             <DeleteForever sx={{fontSize: "26px"}}/>
           </IconButton>
@@ -165,7 +173,8 @@ const Navbar: React.FC = () => {
             size="large"
             color="inherit"
             disabled={loading}
-            onClick={openRunDialog}
+            onClick={openDownloadDialog}
+            data-testid="download-button"
           >
             <Download sx={{fontSize: "26px"}}/>
           </IconButton>
@@ -175,6 +184,7 @@ const Navbar: React.FC = () => {
             size="large"
             color="inherit"
             onClick={openDropdownMenu}
+            data-testid="more-button"
           >
             <MoreVert sx={{fontSize: "26px"}}/>
           </IconButton>
@@ -213,10 +223,10 @@ const Navbar: React.FC = () => {
         onClose={closeDeleteDialog}
         onDelete={() => dispatch(deleteAll())}
       />
-      <RunDialog
-        open={runDialogOpen}
-        onClose={closeRunDialog}
-        onRun={() => handleSendProgramToBackend()}
+      <DownloadDialog
+        open={downloadDialogOpen}
+        onClose={closeDownloadDialog}
+        onDownload={() => handleSendProgramToBackend()}
         loading={loading}
       />
       {loading && (
@@ -236,7 +246,7 @@ const Navbar: React.FC = () => {
           {success ? "Program compiled successfully!" : "Program compilation failed!"}
         </Alert>
       </Snackbar>
-      <CompilationErrorDialog
+      <ErrorDialog
         open={isErrorDialogOpen}
         onClose={() => setIsErrorDialogOpen(false)}
         onDownload={() => handleDownloadFiles(executionResult as ExecutionResult)}

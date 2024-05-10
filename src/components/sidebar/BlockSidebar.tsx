@@ -1,5 +1,4 @@
-import React from 'react';
-import {Button} from "@mui/material";
+import React, {useEffect} from 'react';
 import {addBlock} from "../../redux/blockReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {Block} from "../../types/blockTypes";
@@ -7,29 +6,30 @@ import BlockEditor from "./block-editors/BlockEditor";
 import AddBlockButton from "./AddBlockButton";
 import {BlockColors} from "../../enums/blockColors";
 import {BlockIcons} from "../../enums/BlockIcons";
-import {getAvailableDropletIdsForIndex} from "../../utils/dropletIdUtils";
 
 const BlockSidebar: React.FC = () => {
   const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
   const dispatch = useDispatch();
-  const index = useSelector((state: {selectedIndex: number | null}) => state.selectedIndex);
 
   const addBlockOfType = (type: string) => {
     const newBlockId = blocks.length;
     dispatch(addBlock({index: newBlockId, type: type}));
   }
 
-  const logBlocks = () => {
-    for (let i = 0; i < blocks.length; i++) {
-      console.log(blocks.at(i));
+  // Log blocks by pressing ctrl/cmd + shift + l
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'l' || e.key === 'L')) {
+        e.preventDefault();
+        for (let i = 0; i < blocks.length; i++) {
+          console.log(blocks[i]);
+        }
+      }
     }
-  }
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [blocks]);
 
-  const logDropletIds = () => {
-    if (index !== null) {
-      console.log(getAvailableDropletIdsForIndex(blocks, index).toString());
-    }
-  }
 
   const blockButtons = [
     { color: BlockColors.InputBlockColor, icon: BlockIcons.InputBlockIcon, text: "Input Block", type: "input" },
@@ -52,18 +52,10 @@ const BlockSidebar: React.FC = () => {
   ));
 
   return (
-    <div className="flex flex-col" style={{ minWidth: 260, maxWidth: 260 }}>
+    <div className="flex flex-col justify-between" style={{ minWidth: 260, maxWidth: 260 }}>
       <div className="overflow-auto" style={{direction: "rtl"}}>
         <div className="flex flex-col items-center space-y-6" style={{padding: "25px 20px", direction: "ltr"}}>
           {AddBlockButtons}
-          <div style={{height: 40}}/>
-          <span>Temporary Dev Buttons :</span>
-          <Button variant="contained" color="secondary" onClick={logBlocks} sx={{width: 200, minHeight: 40}}>
-            Log Blocks
-          </Button>
-          <Button variant="contained" color="secondary" onClick={logDropletIds} sx={{width: 200, minHeight: 40}}>
-            Log available Droplet IDs for selected block
-          </Button>
         </div>
       </div>
       <BlockEditor />
