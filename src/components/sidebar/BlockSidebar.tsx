@@ -19,7 +19,7 @@ const BlockSidebar: React.FC = () => {
   // Log blocks by pressing ctrl/cmd + shift + l
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'l') {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'l' || e.key === 'L')) {
         e.preventDefault();
         for (let i = 0; i < blocks.length; i++) {
           console.log(blocks[i]);
