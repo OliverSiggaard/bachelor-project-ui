@@ -52,7 +52,7 @@ const BlockSidebar: React.FC = () => {
   ));
 
   return (
-    <div className="flex flex-col" style={{ minWidth: 260, maxWidth: 260 }}>
+    <div className="flex flex-col justify-between" style={{ minWidth: 260, maxWidth: 260 }}>
       <div className="overflow-auto" style={{direction: "rtl"}}>
         <div className="flex flex-col items-center space-y-6" style={{padding: "25px 20px", direction: "ltr"}}>
           {AddBlockButtons}

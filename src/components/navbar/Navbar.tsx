@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
   }
 
   const handleSendProgramToBackend = async () => {
-    let result: any = undefined;
+    let result: any = null;
     setExecutionResult(null);
     try {
       const programActions = convertBlocksToActions(blocks);
@@ -92,9 +92,13 @@ const Navbar: React.FC = () => {
       result = apiError?.response?.data;
 
       // Set error message to be displayed in the error dialog
-      result?.errorMessage
-        ? setErrorMessage(result.errorMessage)
-        : setErrorMessage("An error occurred, but no error message was provided.");
+      if (result === undefined) { // Check if the error is due to not being able to connect to the backend
+        setErrorMessage("Could not connect to backend.");
+      } else {
+        result?.errorMessage
+          ? setErrorMessage(result.errorMessage)
+          : setErrorMessage("An error occurred, but no error message was provided.");
+      }
 
       setIsErrorDialogOpen(true);
     } finally {
@@ -135,8 +139,11 @@ const Navbar: React.FC = () => {
     }
   }
 
-  // Allow partial download if compiled program is not empty or dmf configuration is not null
-  const allowPartialDownload = executionResult?.compiledProgram !== "" || executionResult?.dmfConfiguration !== null;
+  // Allow partial download if compiled program is not empty or dmf configuration is not null or undefined
+  const allowPartialDownload = executionResult?.compiledProgram !== undefined
+    && executionResult?.compiledProgram !== ""
+    && executionResult?.dmfConfiguration !== undefined
+    && executionResult?.dmfConfiguration !== null;
 
   return (
     <AppBar position="static" sx={{height: '64px'}}>
