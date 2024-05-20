@@ -14,82 +14,82 @@ import StoreBlock from "../blocks/StoreBlock";
 const CodeCanvas: React.FC = () => {
   const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
 
-  const renderBlock = (block: Block, index: number) => {
+  const renderBlock = (block: Block) => {
     switch (block.type) {
       case 'base':
-        return renderBaseBlock(block, index);
+        return renderBaseBlock(block);
       case 'input':
-        return renderInputBlock(block, index);
+        return renderInputBlock(block);
       case 'output':
-          return renderOutputBlock(block, index);
+          return renderOutputBlock(block);
       case 'move':
-          return renderMoveBlock(block, index);
+          return renderMoveBlock(block);
       case 'merge':
-          return renderMergeBlock(block, index);
+          return renderMergeBlock(block);
       case 'split':
-          return renderSplitBlock(block, index);
+          return renderSplitBlock(block);
       case 'mix':
-          return renderMixBlock(block, index);
+          return renderMixBlock(block);
       case 'store':
-          return renderStoreBlock(block, index);
+          return renderStoreBlock(block);
       default:
         return null;
     }
   };
 
-  const renderBaseBlock = (block: Block, index: number) => (
-    <div className="flex flex-row items-center" key={index}>
+  const renderBaseBlock = (block: Block) => (
+    <div className="flex flex-row items-center" key={block.index}>
       <BaseBlock index={block.index} color={"lightgrey"} />
-      {index !== blocks.length - 1 && <Arrow />}
+      {block.index !== blocks.length - 1 && <Arrow />}
     </div>
   );
 
-  const renderInputBlock = (block: Block, index: number) => (
-    <div className="flex flex-row items-center" key={index}>
+  const renderInputBlock = (block: Block) => (
+    <div className="flex flex-row items-center" key={block.index}>
       <InputBlock block={block} />
-      {index !== blocks.length - 1 && <Arrow />}
+      {block.index !== blocks.length - 1 && <Arrow />}
     </div>
   );
 
-  const renderOutputBlock = (block: Block, index: number) => (
-      <div className="flex flex-row items-center" key={index}>
+  const renderOutputBlock = (block: Block) => (
+      <div className="flex flex-row items-center" key={block.index}>
         <OutputBlock block={block} />
-        {index !== blocks.length - 1 && <Arrow />}
+        {block.index !== blocks.length - 1 && <Arrow />}
       </div>
   );
 
-  const renderMoveBlock = (block: Block, index: number) => (
-    <div className="flex flex-row items-center" key={index}>
+  const renderMoveBlock = (block: Block) => (
+    <div className="flex flex-row items-center" key={block.index}>
       <MoveBlock block={block} />
-      {index !== blocks.length - 1 && <Arrow />}
+      {block.index !== blocks.length - 1 && <Arrow />}
     </div>
   );
 
-  const renderMergeBlock = (block: Block, index: number) => (
-    <div className="flex flex-row items-center" key={index}>
+  const renderMergeBlock = (block: Block) => (
+    <div className="flex flex-row items-center" key={block.index}>
       <MergeBlock block={block} />
-      {index !== blocks.length - 1 && <Arrow />}
+      {block.index !== blocks.length - 1 && <Arrow />}
     </div>
   );
 
-  const renderSplitBlock = (block: Block, index: number) => (
-    <div className="flex flex-row items-center" key={index}>
+  const renderSplitBlock = (block: Block) => (
+    <div className="flex flex-row items-center" key={block.index}>
       <SplitBlock block={block} />
-      {index !== blocks.length - 1 && <Arrow />}
+      {block.index !== blocks.length - 1 && <Arrow />}
     </div>
   );
 
-  const renderMixBlock = (block: Block, index: number) => (
-    <div className="flex flex-row items-center" key={index}>
+  const renderMixBlock = (block: Block) => (
+    <div className="flex flex-row items-center" key={block.index}>
       <MixBlock block={block} />
-      {index !== blocks.length - 1 && <Arrow />}
+      {block.index !== blocks.length - 1 && <Arrow />}
     </div>
   );
 
-  const renderStoreBlock = (block: Block, index: number) => (
-    <div className="flex flex-row items-center" key={index}>
+  const renderStoreBlock = (block: Block) => (
+    <div className="flex flex-row items-center" key={block.index}>
       <StoreBlock block={block} />
-      {index !== blocks.length - 1 && <Arrow />}
+      {block.index !== blocks.length - 1 && <Arrow />}
     </div>
   );
 
@@ -102,7 +102,7 @@ const CodeCanvas: React.FC = () => {
   return (
     <div className="h-full w-full relative overflow-y-auto">
       <div className="flex flex-row flex-wrap" style={{margin: 10}}>
-        {blocks.map((block, i) => renderBlock(block, i))}
+        {blocks.map((block) => renderBlock(block))}
       </div>
     </div>
   );
