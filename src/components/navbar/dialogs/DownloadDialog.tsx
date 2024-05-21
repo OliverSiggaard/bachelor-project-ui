@@ -31,7 +31,7 @@ const DownloadDialog: React.FC<DownloadDialogProps> = ({ open, onClose, onDownlo
         <Divider/>
         <DialogContentText sx={{marginTop: "15px"}}>
           <Info sx={{fontSize: "20px"}} />
-          <span style={{marginLeft: "5px", fontSize: "14px"}}>You might have to allow download of multiple files in your browser.</span>
+          <span style={{marginLeft: "5px", fontSize: "14px"}}>You will have to allow automatic downloads in your browser.</span>
         </DialogContentText>
       </DialogContent>
       <DialogActions>

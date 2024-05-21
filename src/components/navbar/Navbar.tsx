@@ -116,7 +116,7 @@ const Navbar: React.FC = () => {
 
     // Initiating automatic browser download of compiled program and dmf configuration
     downloadFile(compiledProgram, getCompiledProgramFileName(), "text/plain");
-    downloadFile(dmfConfiguration, getDmfConfigurationFileName(), "application/json");
+    setTimeout(() => downloadFile(dmfConfiguration, getDmfConfigurationFileName(), "application/json"), 50);
   };
 
   const downloadProgramSketch = () => {
