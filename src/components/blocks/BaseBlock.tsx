@@ -22,7 +22,7 @@ const BaseBlock: React.FC<BaseBlockProps> = ({ index, color, children }) => {
   const selectedBlock = useSelector((state: { selectedIndex: number | null }) => state.selectedIndex);
   const dispatch = useDispatch();
 
-  // Drop target - each block acts as a drop target that allows blocks to switch place
+  // Drop target - each block acts as a drop target that allows blocks to change position in regard to other blocks
   const [, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
     accept: dndItemTypes.BLOCK,
     collect(monitor) {

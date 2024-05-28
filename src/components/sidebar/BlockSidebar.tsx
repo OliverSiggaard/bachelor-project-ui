@@ -12,8 +12,8 @@ const BlockSidebar: React.FC = () => {
   const dispatch = useDispatch();
 
   const addBlockOfType = (type: string) => {
-    const newBlockId = blocks.length;
-    dispatch(addBlock({index: newBlockId, type: type}));
+    const newBlockIndex = blocks.length;
+    dispatch(addBlock({index: newBlockIndex, type: type}));
   }
 
   // Log blocks by pressing ctrl/cmd + shift + l

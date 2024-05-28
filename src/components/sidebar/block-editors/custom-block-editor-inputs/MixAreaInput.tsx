@@ -18,7 +18,7 @@ const MixAreaInput: React.FC<MixAreaInputProps> = ({
   textSizeX = "x-Size",
   textSizeY = "y-Size"
 }) => {
-  const numberPattern = /^[0-9]*$/;
+  const numberPattern = /^(?!0+$)[0-9]*$/;
 
   return (
     <div className="flex flex-row space-x-3">

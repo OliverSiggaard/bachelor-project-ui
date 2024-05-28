@@ -30,7 +30,7 @@ const SplitBlock: React.FC<SplitBlockProps> = ({ block }) => {
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
       <div style={{ height: "95px", display: "flex", justifyContent: "space-between", margin: "7px 10px 10px 10px" }}>
         <Typography className="flex flex-col justify-between overflow-hidden whitespace-nowrap" style={{marginRight: "10px"}}>
-          <span>Drop ID:</span>
+          <span>Orig ID:</span>
           <span>Res 1:</span>
           <span>{resultDropletId1}</span>
           <span>({posX1},{posY1})</span>

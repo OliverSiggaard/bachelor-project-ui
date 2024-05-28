@@ -29,12 +29,12 @@ const StoreBlock: React.FC<StoreBlockProps> = ({ block }) => {
         <Typography className="flex flex-col justify-between" style={{marginRight: "10px"}}>
           <span>ID:</span>
           <span>Pos:</span>
-          <span>Time:</span>
+          <span>Ticks:</span>
         </Typography>
         <Typography className="flex flex-col justify-between text-right overflow-hidden whitespace-nowrap">
           <AvailableDropletIdDisplay block={block} />
           <span>({posX},{posY})</span>
-          <span>{time} ms</span>
+          <span>{time}</span>
         </Typography>
       </div>
     </BaseBlock>

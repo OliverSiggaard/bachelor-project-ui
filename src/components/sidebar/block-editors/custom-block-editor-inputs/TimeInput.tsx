@@ -7,8 +7,8 @@ interface TimeInputProps {
   text?: string;
 }
 
-const TimeInput: React.FC<TimeInputProps> = ({time, setTime, text = "Time (ms)"}) => {
-  const numberPattern = /^[0-9]*$/;
+const TimeInput: React.FC<TimeInputProps> = ({time, setTime, text = "Ticks"}) => {
+  const numberPattern = /^(?!0+$)[0-9]*$/;
 
   return (
     <TextField

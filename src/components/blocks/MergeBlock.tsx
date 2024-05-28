@@ -27,8 +27,8 @@ const MergeBlock: React.FC<MergeBlockProps> = ({ block }) => {
       <Divider orientation="horizontal" flexItem sx={{borderWidth: "1px", backgroundColor: "#242424", margin: "5px"}}/>
       <div style={{ height: "95px", display: "flex", justifyContent: "space-between", margin: "7px 10px 10px 10px" }}>
         <Typography className="flex flex-col justify-between whitespace-nowrap" style={{marginRight: "10px"}}>
-          <span>Drop 1:</span>
-          <span>Drop 2:</span>
+          <span>Orig 1:</span>
+          <span>Orig 2:</span>
           <span>Res ID:</span>
           <span>Pos:</span>
         </Typography>

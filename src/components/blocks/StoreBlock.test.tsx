@@ -32,7 +32,7 @@ describe("StoreBlock Component", () => {
     expect(screen.getByText("Store")).toBeInTheDocument();
     expect(screen.getByText("testId1")).toBeInTheDocument();
     expect(screen.getByText("(15,10)")).toBeInTheDocument();
-    expect(screen.getByText("50 ms")).toBeInTheDocument();
+    expect(screen.getByText("50")).toBeInTheDocument();
   });
 
   test("Renders store block with undefined info", () => {
@@ -51,8 +51,7 @@ describe("StoreBlock Component", () => {
     );
 
     expect(screen.getByText("Store")).toBeInTheDocument();
-    expect(screen.getByText("-")).toBeInTheDocument();
+    expect(screen.getAllByText("-").length).toBe(2);
     expect(screen.getByText("(-,-)")).toBeInTheDocument();
-    expect(screen.getByText("- ms")).toBeInTheDocument();
   });
 });
