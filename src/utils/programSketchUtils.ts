@@ -8,6 +8,7 @@ export const validateUploadedBlocks = (uploadedFileContent: string)=> {
       validateBlockType(block); // Check if block type is valid
       validateBlockInfo(block); // Check if block info is valid
     }
+    validateBlockIndexes(uploadedBlocks); // Check if block indexes are unique
     return true;
   } catch (error) {
     console.error(error);
@@ -46,4 +47,12 @@ const validateBlockInfo = (block: Block) => {
 
 const getInvalidBlockErrorMessage = (block: Block) => {
   return "Invalid " + block.type + " block info found in uploaded program sketch: " + JSON.stringify(block.info);
+}
+
+const validateBlockIndexes = (blocks: Block[]) => {
+  blocks.forEach((block, index) => {
+    if (block.index !== index) {
+      throw new Error("Invalid block index found in uploaded program sketch: " + block.index);
+    }
+  });
 }

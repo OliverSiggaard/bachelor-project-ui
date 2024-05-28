@@ -87,4 +87,71 @@ describe("programSketchUtils", () => {
 
     expect(validateUploadedBlocks(blocks)).toBe(true);
   });
+  test("Should throw error message for duplicate block index", () => {
+    const blocks = JSON.stringify([
+      {
+        index: 0,
+        type: "input",
+        info: {
+          dropletId: "testId1",
+          posX: "10",
+          posY: "5",
+          volume: "5"
+        }
+      },
+      {
+        index: 0,
+        type: "output",
+        info: {
+          dropletId: "testId1",
+          posX: "10",
+          posY: "5"
+        }
+      }
+    ]);
+
+    expect(validateUploadedBlocks(blocks)).toBe("Invalid block index found in uploaded program sketch: 0");
+  });
+  test("Should throw error message for missing block indexes", () => {
+    const blocks = JSON.stringify([
+      {
+        type: "input",
+        index: 2,
+        info: {
+          dropletId: "testId1",
+          posX: "10",
+          posY: "5",
+          volume: "5"
+        }
+      }
+    ]);
+
+    expect(validateUploadedBlocks(blocks)).toBe("Invalid block index found in uploaded program sketch: 2");
+  });
+  test("Should throw error message for wrong order block index", () => {
+    const blocks = JSON.stringify([
+      {
+        index: 1,
+        type: "input",
+        info: {
+          dropletId: "testId1",
+          posX: "10",
+          posY: "5",
+          volume: "5"
+        }
+      },
+      {
+        index: 0,
+        type: "output",
+        info: {
+          dropletId: "testId1",
+          posX: "10",
+          posY: "5"
+        }
+      }
+    ]);
+
+    expect(validateUploadedBlocks(blocks)).toBe("Invalid block index found in uploaded program sketch: 1");
+
+  });
 });
