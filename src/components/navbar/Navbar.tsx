@@ -29,6 +29,8 @@ import {
   getProgramSketchFileName
 } from "../../utils/fileUtils";
 import ErrorDialog from "./dialogs/ErrorDialog";
+import {AxiosError} from "axios";
+import {checkReadyToCompile} from "../../utils/compileValidationUtils";
 import {validateUploadedBlocks} from "../../utils/programSketchUtils";
 
 const Navbar: React.FC = () => {
@@ -77,6 +79,7 @@ const Navbar: React.FC = () => {
     let result: any = null;
     setExecutionResult(null);
     try {
+      checkReadyToCompile(blocks); // Check that blocks are ready to compile - throws error if not
       const programActions = convertBlocksToActions(blocks);
       result = await sendRequest(
         "/api/compile",
@@ -92,10 +95,12 @@ const Navbar: React.FC = () => {
       result = apiError?.response?.data;
 
       // Set error message to be displayed in the error dialog
-      if (result === undefined) { // Check if the error is due to not being able to connect to the backend
-        setErrorMessage("Could not connect to backend.");
+      if (result === undefined && error) { // Check if error is before response from backend
+        error instanceof AxiosError // Check if network error (often due to backend not running)
+          ? setErrorMessage("Could not connect to the backend.")
+          : setErrorMessage(error.toString());
       } else {
-        result?.errorMessage
+        result?.errorMessage // Check if error message was provided by the backend
           ? setErrorMessage(result.errorMessage)
           : setErrorMessage("An error occurred, but no error message was provided.");
       }
