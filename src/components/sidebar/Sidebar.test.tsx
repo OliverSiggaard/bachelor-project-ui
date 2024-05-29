@@ -1,10 +1,10 @@
 import React from "react";
-
-import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from "@testing-library/react";
 import {Provider} from "react-redux";
 import Sidebar from "./Sidebar";
 import configureStore from "redux-mock-store";
+
+import '@testing-library/jest-dom/extend-expect';
 
 const renderSidebarWithProviders = (store: any) => {
   return render(
