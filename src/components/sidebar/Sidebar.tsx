@@ -7,7 +7,7 @@ import AddBlockButton from "./AddBlockButton";
 import {BlockColors} from "../../enums/blockColors";
 import {BlockIcons} from "../../enums/BlockIcons";
 
-const BlockSidebar: React.FC = () => {
+const Sidebar: React.FC = () => {
   const blocks = useSelector((state: { blocks: Block[] }) => state.blocks);
   const dispatch = useDispatch();
 
@@ -63,4 +63,4 @@ const BlockSidebar: React.FC = () => {
   );
 };
 
-export default BlockSidebar;
+export default Sidebar;
