@@ -1,7 +1,7 @@
 import React from 'react';
 import {Divider} from "@mui/material";
 import Navbar from "../components/navbar/Navbar";
-import BlockSidebar from "../components/sidebar/BlockSidebar";
+import Sidebar from "../components/sidebar/Sidebar";
 import CodeCanvas from "../components/code-canvas/CodeCanvas";
 
 const MainPage: React.FC = () => {
@@ -11,7 +11,7 @@ const MainPage: React.FC = () => {
         <Navbar />
       </div>
       <div className="flex flex-row" style={{height: "calc(100vh - 64px)"}}>
-        <BlockSidebar />
+        <Sidebar />
         <Divider orientation="vertical" flexItem sx={{borderRightWidth: 3}}/>
         <div className="flex flex-col w-full">
           <CodeCanvas />
