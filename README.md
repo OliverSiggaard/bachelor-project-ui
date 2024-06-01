@@ -20,3 +20,7 @@ To create a production-optimized build of application with the best performance.
 ### `npm test -- --coverage`
 
 To run the tests with coverage.
+
+-----
+
+The backend application for this project can be found at this [repository](https://github.com/OliverSiggaard/BachelorProject).
