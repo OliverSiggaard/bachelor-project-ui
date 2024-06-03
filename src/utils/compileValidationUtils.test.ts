@@ -76,7 +76,7 @@ describe("compileValidationUtils", () => {
         index: 1,
         type: "output",
         info: {
-          dropletId: "testId2",
+          dropletId: "testId1",
           posX: "20",
           posY: "",
         }
@@ -100,7 +100,7 @@ describe("compileValidationUtils", () => {
         index: 1,
         type: "output",
         info: {
-          dropletId: "testId2",
+          dropletId: "testId1",
           posX: "20",
           posY: "10",
         }
