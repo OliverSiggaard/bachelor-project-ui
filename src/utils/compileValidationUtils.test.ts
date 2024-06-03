@@ -182,4 +182,110 @@ describe("compileValidationUtils", () => {
     ];
     expect(() => checkReadyToCompile(blocks)).toThrow("Block 0 is missing info.");
   });
+  test("Should throw error if output block has invalid droplet ID", () => {
+    const blocks: Block[] = [
+      {
+        index: 0,
+        type: "input",
+        info: {
+          dropletId: "testId1",
+          posX: "10",
+          posY: "5",
+          volume: "5"
+        }
+      },
+      {
+        index: 1,
+        type: "output",
+        info: {
+          dropletId: "testId2",
+          posX: "20",
+          posY: "10",
+        }
+      }
+    ];
+    expect(() => checkReadyToCompile(blocks)).toThrow("Block 1 has an invalid droplet ID.");
+  });
+  test("Should throw error if merge block has invalid origin droplet IDs", () => {
+    const blocks: Block[] = [
+      {
+        index: 0,
+        type: "merge",
+        info: {
+          originDropletId1: "testId1",
+          originDropletId2: "testId2",
+          resultDropletId: "testId3",
+          posX: "10",
+          posY: "5"
+        }
+      }
+    ];
+    expect(() => checkReadyToCompile(blocks)).toThrow("Block 0 has an invalid droplet ID.");
+  });
+  test("Should throw error if split block has invalid origin droplet ID", () => {
+    const blocks: Block[] = [
+      {
+        index: 0,
+        type: "split",
+        info: {
+          originDropletId: "testId1",
+          resultDropletId1: "testId2",
+          resultDropletId2: "testId3",
+          posX1: "10",
+          posY1: "5",
+          posX2: "20",
+          posY2: "5"
+        }
+      }
+    ];
+    expect(() => checkReadyToCompile(blocks)).toThrow("Block 0 has an invalid droplet ID.");
+  });
+  test("Should not throw error if all blocks have valid info", () => {
+    const blocks: Block[] = [
+      {
+        index: 0,
+        type: "input",
+        info: {
+          dropletId: "testId1",
+          posX: "10",
+          posY: "5",
+          volume: "10"
+        }
+      },
+      {
+        index: 1,
+        type: "split",
+        info: {
+          originDropletId: "testId1",
+          resultDropletId1: "testId2",
+          resultDropletId2: "testId3",
+          posX1: "10",
+          posY1: "5",
+          posX2: "20",
+          posY2: "5"
+        }
+      },
+      {
+        index: 2,
+        type: "merge",
+        info: {
+          originDropletId1: "testId2",
+          originDropletId2: "testId3",
+          resultDropletId: "testId4",
+          posX: "10",
+          posY: "5"
+        }
+      },
+      {
+        index: 3,
+        type: "output",
+        info: {
+          dropletId: "testId4",
+          posX: "10",
+          posY: "5",
+        }
+      }
+    ];
+    expect(() => checkReadyToCompile(blocks)).not.toThrow();
+  });
 });
